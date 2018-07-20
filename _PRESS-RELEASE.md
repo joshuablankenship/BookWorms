@@ -1,4 +1,4 @@
-# Project Name #
+# Book Worms #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -16,29 +16,29 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+## Book Worms ##
+  <!-- > Name the product in a way the reader (i.e. your target customers) will understand. -->
 
-## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+## Metacritic for children's books ##
+  <!-- > Describe who the market for the product is and what benefit they get. One sentence only underneath the title. -->
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > Allows children to easily find new books to read that are sorted by rating, age appropriateness, and reading level. If a free ebook is available, children can start reading, and if not, links to purchase the book will be provided.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Finding a good age-appropriate book can be laborious, requiring searches to mulitple web sites.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > Our app simplifies this process, by providing all the neccesary web searches, and delivering the results, the books, with a kid-friendly user experience.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "My son's gonna love finding books on this app!"
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > Sign in and the highest rated books for your age will immediately be displayed. Click on any books that interest you to begin reading.  Many books are availabe online for free.  Search for more books by title, author, genre, reading level, or ISBN.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "Finding books is fun!"
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Begin the search for your next favorite book!

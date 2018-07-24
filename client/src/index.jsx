@@ -31,9 +31,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>HELLO WORLD</h1>
+        {/* <h1>HELLO WORLD</h1> */}
         {/* <List items={this.state.items} /> */}
-        <Main items={this.state.items} />
+        <Main />
 
       </div>
     );

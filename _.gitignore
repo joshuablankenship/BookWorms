@@ -23,7 +23,7 @@ build/
 dist/
 
 # Config
-server/config.js
+config.js
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:

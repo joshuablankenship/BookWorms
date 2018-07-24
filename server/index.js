@@ -8,7 +8,15 @@ const helpers = require('./helpers.js')
 const app = express();
 
 
- app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/../client/dist'));
+ 
+
+app.get('/googleData', (req, res) => {
+    helpers.googleBooks()
+    .then((res) => console.log(res.data.items[0]))
+    .catch((err) => console.log(err))
+
+});
 
 // this is the average rating pulled from the HTML data.data.split('<average_rating>')[1].slice(0, 4)
 // this will pull description from gooReads 90% data.data.split('<description>')[1].split(']')[0].slice(9)

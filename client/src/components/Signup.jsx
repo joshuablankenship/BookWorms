@@ -28,7 +28,7 @@ class Signup extends React.Component {
                 <div className="form-group">
                     <label className="col-sm-3 control-label">Username</label>
                     <div className="col-sm-9">
-                        <input type="email" placeholder="Username" className="form-control" name="username" onChange={this.handleChange}/>
+                        <input type="text" placeholder="Username" className="form-control" name="username" onChange={this.handleChange}/>
                     </div>
                 </div>
                 <div className="form-group">

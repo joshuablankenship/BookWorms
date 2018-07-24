@@ -2,9 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import List from './components/List.jsx';
-import Main from './components/Main.jsx';
-
+import List from './components/List.jsx';
+import Login from './components/Login.jsx';
+import Signup from './components/Signup.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,11 +31,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {/* <h1>HELLO WORLD</h1> */}
-        {/* <List items={this.state.items} /> */}
-        <Main />
-
+        <h1>Bookworms</h1>
+        
+        <Login  />
       </div>
+      
     );
   }
 }

@@ -8,6 +8,7 @@ const helpers = require('./helpers.js')
 const app = express();
 
 
+<<<<<<< HEAD
  app.use(express.static(__dirname + '/../client/dist'));
 
 // this is the average rating pulled from the HTML data.data.split('<average_rating>')[1].slice(0, 4)
@@ -22,6 +23,20 @@ app.get('/title', (req, res) => {
     .catch(err => console.log(err));
    
 });
+=======
+app.use(express.static(__dirname + '/../client/dist'));
+
+
+// app.get('/items', (req, res) => {
+//     items.selectAll((err, data) => {
+//         if (err) {
+//             res.sendStatus(500);
+//         } else {
+//             res.json(data);
+//         }
+//     });
+// });
+>>>>>>> 7cc4107cc79881514d08b8a08c2cb1c29400d9bc
 
 app.listen(3000, () => {
     console.log('listening on port 3000!');

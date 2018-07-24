@@ -11,15 +11,12 @@ const app = express();
  app.use(express.static(__dirname + '/../client/dist'));
 
 
-app.get('/books', (req, res) => {
-    let title = req.body.title;
-    items.selectAll((err, data) => {
-        if (err) {
-            res.sendStatus(500);
-        } else {
-            res.json(data);
-        }
-    });
+app.get('/title', (req, res) => {
+    // let title = req.body.title;
+    helpers.goodReadsData('Where The Wild Things Are')
+    .then(data => console.log(data.data))
+    .catch(err => console.log(err));
+   
 });
 
 app.listen(3000, () => {

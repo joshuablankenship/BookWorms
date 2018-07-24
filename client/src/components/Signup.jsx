@@ -26,19 +26,19 @@ class Signup extends React.Component {
             <form className="form-horizontal" role="form">
                 <h2>Signup</h2>
                 <div className="form-group">
-                    <label for="email" className="col-sm-3 control-label">Username</label>
+                    <label className="col-sm-3 control-label">Username</label>
                     <div className="col-sm-9">
                         <input type="email" placeholder="Username" className="form-control" name="username" onChange={this.handleChange}/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="password" className="col-sm-3 control-label">Password</label>
+                    <label className="col-sm-3 control-label">Password</label>
                     <div className="col-sm-9">
                         <input type="password" placeholder="Password" className="form-control" name="password" onChange={this.handleChange}/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="birthDate" className="col-sm-3 control-label">Date of Birth</label>
+                    <label className="col-sm-3 control-label">Date of Birth</label>
                     <div className="col-sm-9">
                         <input type="date" id="birthDate" className="form-control" name="birthDate" onChange={this.handleChange}/>
                     </div>

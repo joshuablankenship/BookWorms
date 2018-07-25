@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js')
-
+const db = require('../database/index.js')
 // const items = require('');
 
 const app = express();

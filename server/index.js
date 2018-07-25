@@ -8,7 +8,7 @@ const db = require('../database/index.js')
 const app = express();
 
 
- app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/../client/dist'));
 
 // this is the average rating pulled from the HTML data.data.split('<average_rating>')[1].slice(0, 4)
 // this will pull description from gooReads 90% data.data.split('<description>')[1].split(']')[0].slice(9)
@@ -20,7 +20,7 @@ app.get('/title', (req, res) => {
     //     console.log(data.data.split('<description>')[1].split(']')[0].slice(9))
     // })
     // .catch(err => console.log(err));
-   
+
 });
 
 app.listen(3000, () => {

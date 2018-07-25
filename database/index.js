@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const MONGOLINK= require('../config.js');
-mongoose.connect(MONGOLINK);
+// mongoose.connect(MONGOLINK);
 
 const db = mongoose.connection;
 

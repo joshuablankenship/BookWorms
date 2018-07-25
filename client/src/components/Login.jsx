@@ -22,15 +22,15 @@ class Login extends React.Component {
         return (
           <div className="container">
             <form className="form-horizontal" role="form">
-                <h2>Login</h2>
+                                                 <h2>Login</h2>
                 <div className="form-group">
-                    <label for="email" className="col-sm-3 control-label">Username</label>
+                    <label  className="col-sm-3 control-label">Username</label>
                     <div className="col-sm-9">
-                        <input type="email" placeholder="Username" className="form-control" name="username" onChange={this.handleChange}/>
+                        <input type="text" placeholder="Username" className="form-control" name="username" onChange={this.handleChange}/>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="password" className="col-sm-3 control-label">Password</label>
+                    <label className="col-sm-3 control-label">Password</label>
                     <div className="col-sm-9">
                         <input type="password" placeholder="Password" className="form-control" name="password" onChange={this.handleChange}/>
                     </div>
@@ -41,6 +41,13 @@ class Login extends React.Component {
                         <button type="submit" className="btn btn-primary btn-block">Login</button>
                     </div>
                 </div>
+                <div className="form-group">
+                    <div className="col-sm-9 col-sm-offset-11">
+                    <a href="/signup" className="btn btn-lg link-btn">Sign Up</a>
+
+                    </div>
+                </div>
+                
             </form> 
         </div> 
         );

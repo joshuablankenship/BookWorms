@@ -46,7 +46,7 @@ const Main = props => (
       </div>
     </div> 
   </nav>
-  
+
   {/* toggle between Recomendations and Favorites */}
   <div className="container">
     <div className="row" style={{ paddingBottom: "20px" }}>

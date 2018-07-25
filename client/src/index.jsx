@@ -6,22 +6,24 @@ import List from './components/List.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Main from './components/Main.jsx';
+import DATA from '../../mockData.js'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
+      items: []
+    
     };
   }
-
+  
   componentDidMount() {
     // $.ajax({
     //   url: '/items',
     //   success: (data) => {
-    //     this.setState({
-    //       items: data,
-    //     });
+        this.setState({
+          items: DATA,
+        });
     //   },
     //   error: (err) => {
     //     console.log('err', err);

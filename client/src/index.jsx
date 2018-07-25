@@ -34,7 +34,7 @@ class App extends React.Component {
       <div>
         {/* <h1>Bookworms</h1> */}
         
-        <Main  />
+        <Main />
       </div>
       
     );

@@ -12,8 +12,20 @@ app.use(express.static(__dirname + '/../client/dist'));
  
 // res.data.items[0] will access the first book on search of a title. with a proper title this works well.
 app.get('/googleData', (req, res) => {
-    helpers.googleBooks('Sherlock Holmes and the hounds of baskerville')
-    .then((res) => console.log(res.data.items[0]))
+    helpers.googleBooks('Naked Lunch')
+    .then((res) => {
+        // console.log(res.data.items[0]);
+        const info = res.data.items[0].volumeInfo;
+        const longDescript = info.description; //full description
+        const genres = info.categories; // array of genre strings, often 1 element 
+        const rating = +info.averageRating; //number rating can be whole number or number.number in the range of 0-5
+        // const ageRating = info.maturityRating;// USELESS!!! naked lunch listed not mature
+        const coverImage = info.imageLinks.thumbnail; //url to large format thumbnail
+        const shortDescript = res.data.items[0].searchInfo.textSnippet
+        const ISBN10 = info.industryIdentifiers[0].identifier
+        const ISBN13 = info.industryIdentifiers[1].identifier
+        console.log(ISBN10, ISBN13)
+    })
     .catch((err) => console.log(err))
 
 });

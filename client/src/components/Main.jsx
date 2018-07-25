@@ -46,6 +46,8 @@ const Main = props => (
       </div>
     </div> 
   </nav>
+  
+  {/* toggle between Recomendations and Favorites */}
   <div className="container">
     <div className="row" style={{ paddingBottom: "20px" }}>
       <div className="col-md-12 text-center">
@@ -56,15 +58,25 @@ const Main = props => (
       </div>
     </div>
   </div>
+
+  {/* vvv map this section  vvv */}
   <div className="container">
     <div className="media">
       <div className="media-left">
         <a href="#">
           <img className="media-object" src="https://images.gr-assets.com/books/1474154022l/3.jpg" alt="Harry Potter book cover" height="50%"></img>
         </a>
-        <button type="button" className="btn btn-default btn-sm">
-          <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span> Favorite
-        </button>
+          <div className="btn-group-vertical" role="group" aria-label="...">
+            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
+              Critic Rating <span className="badge">4</span>
+            </button>
+            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
+              User Rating <span className="badge">4</span>
+            </button>
+            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
+              Favorite <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            </button>
+          </div>
       </div>
       <div className="media-body">
         <h4 className="media-heading">Harry Potter and the Sorcerer's Stone</h4>
@@ -78,6 +90,8 @@ const Main = props => (
       </div>
     </div>
   </div>
+    {/* ^^^ map this section  ^^^ */}
+
 </div>  
 
 );

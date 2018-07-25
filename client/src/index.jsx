@@ -5,6 +5,7 @@ import $ from 'jquery';
 import List from './components/List.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
+import Main from './components/Main.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +32,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Bookworms</h1>
+        {/* <h1>Bookworms</h1> */}
+        
         <Main  />
       </div>
       

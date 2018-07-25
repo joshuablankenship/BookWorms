@@ -11,7 +11,7 @@ const app = express();
 
 
 app.use(express.static(__dirname + '/../client/dist'));
- 
+
 // res.data.items[0] will access the first book on search of a title. with a proper title this works well.
 app.get('/googleData', (req, res) => {
     helpers.googleBooks('Naked Lunch')
@@ -42,7 +42,7 @@ app.get('/goodreads', (req, res) => {
         console.log(data.data.split('<description>')[1].split(']')[0].slice(9))
     })
     .catch(err => console.log(err));
-   
+    
 });
 
 

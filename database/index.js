@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const MONGOLINK= require('../config.js');
-// mongoose.connect(MONGOLINK);
+const MONGOLINK = require('../config.js');
+
+mongoose.connect(MONGOLINK.MONGOLINK);
 
 const db = mongoose.connection;
 
@@ -15,30 +16,30 @@ db.once('open', () => {
 const userSchema = mongoose.Schema({
   username: String,
   password: String,
-  
 });
 
 const User = mongoose.model('User', userSchema);
 
 const saveUser = (name, pass) => {
-  let user = new User({
+  const user = new User({
     username: name,
     password: pass,
   });
-  user.save( (error) => {
-    console.log(user);
-    console.log('Your user has been saved!');
+  user.save((error) => {
     if (error) {
       console.error(error);
+    } else {
+      console.log(user);
+      console.log('Your user has been saved!');
     }
   });
 };
-const findUser = (name, callback) => {
-  User.findOne({username: name}, (err, user) => {
+const findUser = (username, callback) => {
+  User.findOne({ username }, (err, user) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log("found", name)
+      console.log('found', username);
       callback(null, user);
     }
   });

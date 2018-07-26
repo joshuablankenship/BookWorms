@@ -17,7 +17,7 @@ const googleBooks = (title) => {
   return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${format}&key=${google}`);
 };
 
-const libThingISBN = (ISBN) => axios.get(`http://www.librarything.com/services/rest/1.1/?method=librarything.ck.getwork&isbn=${ISBN}&apikey=${libThing}`);
+const libThingISBN = ISBN => axios.get(`http://www.librarything.com/services/rest/1.1/?method=librarything.ck.getwork&isbn=${ISBN}&apikey=${libThing}`);
 
 module.exports = {
   goodReadsData,

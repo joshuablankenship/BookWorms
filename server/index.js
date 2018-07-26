@@ -23,13 +23,24 @@ app.get('/googleData', (req, response) => {
       // number rating can be whole number or number.number in the range of 0-5
       // const ageRating = info.maturityRating;// USELESS!!! naked lunch listed not mature
       const coverImage = info.imageLinks.thumbnail; // url to large format thumbnail
-      const shortDescript = res.data.items[0].searchInfo.textSnippet;
+      //   const shortDescript = res.data.items[0].searchInfo.textSnippet;
       const ISBN10 = info.industryIdentifiers[0].identifier;
       const ISBN13 = info.industryIdentifiers[1].identifier;
-      //   console.log(ISBN10, ISBN13);
-      response.json({
-        longDescript, genres, rating, coverImage, shortDescript, ISBN10, ISBN13,
-      });
+      helpers.libThingISBN(ISBN10)
+        .then((libThings) => {
+          const libThingRating = libThings.data.split('<rating>')[1].slice(0, 1);
+          response.json({
+            longDescript,
+            genres,
+            rating,
+            coverImage,
+            ISBN10,
+            ISBN13,
+            libThingRating,
+
+          });
+          //   console.log(ISBN10, ISBN13);
+        });
     })
     .catch(err => console.log(err));
 });

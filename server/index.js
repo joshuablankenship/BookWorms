@@ -9,26 +9,32 @@ const db = require('../database/index.js')
 
 const app = express();
 
+// parse application/json
+app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
 // res.data.items[0] will access the first book on search of a title. with a proper title this works well.
-app.get('/googleData', (req, res) => {
-    helpers.googleBooks('Naked Lunch')
+app.post('/googleData', (req, response) => {
+    let query = req.body.query;
+    helpers.googleBooks(query)
     .then((res) => {
-        // console.log(res.data.items[0]);
+        // console.log(res.data.items[0], 'res.data.items[0]');
         const info = res.data.items[0].volumeInfo;
+        const title = info.title;
         const longDescript = info.description; //full description
         const genres = info.categories; // array of genre strings, often 1 element 
         const rating = +info.averageRating; //number rating can be whole number or number.number in the range of 0-5
         // const ageRating = info.maturityRating;// USELESS!!! naked lunch listed not mature
         const coverImage = info.imageLinks.thumbnail; //url to large format thumbnail
-        const shortDescript = res.data.items[0].searchInfo.textSnippet
+        // const shortDescript = res.data.items[0].searchInfo.textSnippet
         const ISBN10 = info.industryIdentifiers[0].identifier
         const ISBN13 = info.industryIdentifiers[1].identifier
-        console.log(ISBN10, ISBN13)
+        // console.log(longDescript, genres, rating, coverImage);
+        response.json({title, longDescript, genres, rating, coverImage});
+        // response.send({ title, longDescript, genres, rating, coverImage });
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.error(err));
 
 });
 

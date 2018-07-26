@@ -27,6 +27,8 @@
   "dependencies": {
     "angular": "^1.6.3",
     "axios": "^0.18.0",
+    "bcrypt": "^3.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "connect-ensure-login": "^0.1.1",
     "express": "^4.15.0",

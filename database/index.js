@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const MONGOLINK= require('../config.js');
 const bcrypt = require('bcryptjs');
-mongoose.connect(MONGOLINK);
+mongoose.connect(MONGOLINK.MONGOLINK);
 // plug in the promise library:
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

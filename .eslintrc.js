@@ -5,11 +5,14 @@ module.exports = {
   },
   globals: {
     angular: false,
+    react: true
   },
-  rules: {
-    'import/extensions': 0,
-    'react/destructuring-assignment': 1,
-    'react/jsx-one-expression-per-line': 0,
-    // "indent": ["error", "tab"],
-  }
-};
+ parser: "babel-eslint",
+   "extends": "airbnb",
+   "rules": {
+     "no-unused-vars": 0,
+     "max-len": [1, 120, 2, {
+       ignoreComments: true
+     }],
+   }
+ }

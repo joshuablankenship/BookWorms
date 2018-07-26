@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const axios = require('axios');
 const config = require('../config.js');
 
@@ -17,10 +18,13 @@ const googleBooks = (title) => {
   return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${format}&key=${google}`);
 };
 
+const googleGenre = genre => axios.get(`https://www.googleapis.com/books/v1/volumes?q=${genre}&key=${google}&maxResults=40`);
+
 const libThingISBN = ISBN => axios.get(`http://www.librarything.com/services/rest/1.1/?method=librarything.ck.getwork&isbn=${ISBN}&apikey=${libThing}`);
 
 module.exports = {
   goodReadsData,
   googleBooks,
   libThingISBN,
+  googleGenre,
 };

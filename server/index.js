@@ -46,7 +46,10 @@ app.get('/goodreads', (req, res) => {
 });
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ea255b6da721c4a2a3d537b8db0b74215aebe10c
 app.listen(3000, () => {
     console.log('listening on port 3000!');
 });

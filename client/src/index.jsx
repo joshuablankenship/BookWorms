@@ -39,9 +39,8 @@ class App extends React.Component {
   }
 
   searchForBook (query) {
-    console.log('searchForBook called in index.jsx');
     console.log(query, 'query in index.jsx');
-    axios.get('/googleData', {query})
+    axios.post('/googleData', {query})
         .then(function (response) {
           console.log(response, 'response in index.jsx');
         })

@@ -6,9 +6,7 @@ import {
 	Redirect,
 	withRouter
 } from 'react-router-dom'
-import $ from 'jquery';
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
+
 
 const Nav = props => (
   

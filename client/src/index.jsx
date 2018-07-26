@@ -38,10 +38,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {/* <h1>Bookworms</h1> */}
         <Router>
 		<div>
-			
       <Route path="/" component={Nav}/>
       <Route path="/main" component={Main}/>
 			<Route path="/login" component={Login}/>

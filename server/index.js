@@ -1,6 +1,6 @@
 const express = require('express');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+let passport = require('passport');
+let Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
@@ -40,7 +40,8 @@ app.get('/googleData', (req, response) => {
             ISBN13,
             libThingRating,
 
-          });
+          })
+            .catch(err => console.log(err));
           //   console.log(ISBN10, ISBN13);
         });
     })

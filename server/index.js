@@ -14,6 +14,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // res.data.items[0] will access the first book on search of a title. with a proper title this works well.
 app.get('/googleData', (req, response) => {
+    console.log(req.body, 'req.body in server');
     // let title = req.body.title;
 
     helpers.googleBooks('Naked Lunch')

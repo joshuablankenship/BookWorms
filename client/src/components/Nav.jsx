@@ -1,4 +1,7 @@
 import React from 'react';
+import MainList from './MainList.jsx';
+import Search from './Search.jsx';
+
 import {
 	BrowserRouter as Router,
 	Route,
@@ -49,11 +52,14 @@ const Nav = props => (
             </ul>
           </li>
         </ul>
-          <form className="navbar-form navbar-left">
+          {/* <form className="navbar-form navbar-left">
             <div className="form-group">
               <input type="text" className="form-control" placeholder="Search"></input>
             </div>
             <button type="submit" className="btn btn-default">Submit</button>
+          </form> */}
+          <form className="navbar-form navbar-left">
+            <Search handleSearchInput={props.handleSearchInput}/>         
           </form>
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/signup">Signup</Link></li>
@@ -64,7 +70,8 @@ const Nav = props => (
     </div> 
   </nav>
 
-  
+    {props.items.map(item => <MainList item={item} key={item.title} />)}
+
 
 </div>  
 );

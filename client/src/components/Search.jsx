@@ -1,39 +1,63 @@
 import React from 'react';
-// import ListItem from './ListItem.jsx';
 
-const Search = props => (
-  <div>
-    <div className="container">
-      <div className="media">
-        <div className="media-left">
-          <a href="#">
-            <img className="media-object" src={props.item.coverImage} alt="book cover" height="50%"></img>
-          </a>
-          <div className="btn-group-vertical" role="group" aria-label="...">
-            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
-              Critic Rating <span className="badge">{props.item.rating}</span>
-            </button>
-            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
-              User Rating <span className="badge">{props.item.rating}</span>
-            </button>
-            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
-              Favorite <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-            </button>
-          </div>
-        </div>
-        <div className="media-body">
-          <h4 className="media-heading">{props.item.title}</h4>
-          {props.item.longDescript}
-        </div>
-        <div className="media-right">
-          <ul className="nav nav-pills">
-            <li role="presentation" className="disabled"><a href="#">Open Library</a></li>
-            <li role="presentation" className="disabled"><a href="#">Check local library</a></li>
-          </ul>
-        </div>
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: ''
+    };
+    // console.log(props, 'props in Search.jsx');
+  }
+
+  // handleInputChange(e) {
+  //   this.setState({ value: e.target.value });
+  //   this.props.handleSearchInput(e.target.value);
+  //   // console.log(this.state.value, 'this.state.value');
+  // }
+
+  handleInputChange(e) {
+    this.setState({ value: e.target.value });
+    // this.props.handleSearchInput(e.target.value);
+    // console.log(this.state.value, 'this.state.value');
+  }
+
+  handleOnclick() {
+    this.props.handleSearchInput(this.state.value);
+    this.setState({ value: '' });
+  }
+
+  handleKeyInput(e) {
+    if (e.key === 'Enter') {
+      this.props.handleSearchInput(this.state.value);
+      this.setState({ value: '' });
+    }
+  }
+
+  render() {
+    return (
+    <div>
+      <div type="text" className="form-group">
+        <input className="form-control" placeholder="Search"
+          type="text" value={this.state.value}
+          onKeyPress={this.handleKeyInput.bind(this)}
+          onChange={this.handleInputChange.bind(this)} />
       </div>
-    </div>
-  </div>
-);
+      <button type="submit" className="btn btn-default" onClick={this.handleOnclick.bind(this)}>Submit</button>
+          {/* <span className="glyphicon glyphicon-search"></span> */}
+    </div>       
+
+      // <div className="search-bar form-inline">
+      //   <input className="form-control"
+      //     type="text" value={this.state.value}
+      //     onKeyPress={this.handleKeyInput.bind(this)}
+      //     onChange={this.handleInputChange.bind(this)} />
+      //   <button className="btn hidden-sm-down" onClick={this.handleOnclick.bind(this)}>
+      //     <span className="glyphicon glyphicon-search"></span>
+      //   </button>
+      // </div>
+    );
+  }
+}
 
 export default Search;

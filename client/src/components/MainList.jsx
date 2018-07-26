@@ -1,5 +1,4 @@
 import React from 'react';
-// import ListItem from './ListItem.jsx';
 
 const MainList = props => (
   <div>

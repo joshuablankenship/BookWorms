@@ -13,13 +13,15 @@ class Search extends React.Component {
     this.setState({ value: e.target.value });
   }
 
-  handleOnclick() {
+  handleOnclick(e) {
+    e.preventDefault();
     this.props.handleSearchInput(this.state.value);
     this.setState({ value: '' });
   }
 
   handleKeyInput(e) {
     if (e.key === 'Enter') {
+      e.preventDefault();
       this.props.handleSearchInput(this.state.value);
       this.setState({ value: '' });
     }

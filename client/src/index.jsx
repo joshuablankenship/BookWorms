@@ -42,7 +42,7 @@ class App extends React.Component {
     console.log(query, 'query in index.jsx');
     axios.post('/googleData', {query})
         .then(function (response) {
-          console.log(response, 'response in index.jsx');
+          console.log(response.data, 'response in index.jsx');
         })
         .catch(function (error) {
           console.log(error, 'error in index.jsx');

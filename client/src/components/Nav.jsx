@@ -52,20 +52,14 @@ const Nav = props => (
             </ul>
           </li>
         </ul>
-          {/* <form className="navbar-form navbar-left">
-            <div className="form-group">
-              <input type="text" className="form-control" placeholder="Search"></input>
-            </div>
-            <button type="submit" className="btn btn-default">Submit</button>
-          </form> */}
-          <form className="navbar-form navbar-left">
-            <Search handleSearchInput={props.handleSearchInput}/>         
-          </form>
-          <ul className="nav navbar-nav navbar-right">
-            <li><Link to="/signup">Signup</Link></li>
-            <li><Link to="/login">Login Page</Link></li>
-            <button type="button" className="btn btn-default navbar-btn">Log out</button>
-          </ul>
+        <form className="navbar-form navbar-left">
+          <Search handleSearchInput={props.handleSearchInput}/>         
+        </form>
+        <ul className="nav navbar-nav navbar-right">
+          <li><Link to="/signup">Signup</Link></li>
+          <li><Link to="/login">Login Page</Link></li>
+          <button type="button" className="btn btn-default navbar-btn">Log out</button>
+        </ul>
       </div>
     </div> 
   </nav>

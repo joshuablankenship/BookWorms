@@ -30,7 +30,7 @@ app.post('/googleData', (req, response) => {
         // const shortDescript = res.data.items[0].searchInfo.textSnippet
         const ISBN10 = info.industryIdentifiers[0].identifier
         const ISBN13 = info.industryIdentifiers[1].identifier
-        console.log(longDescript, genres, rating, coverImage);
+        // console.log(longDescript, genres, rating, coverImage);
         response.json({title, longDescript, genres, rating, coverImage});
         // response.send({ title, longDescript, genres, rating, coverImage });
     })

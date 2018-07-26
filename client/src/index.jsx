@@ -41,11 +41,12 @@ class App extends React.Component {
   searchForBook (query) {
     console.log(query, 'query in index.jsx');
     axios.post('/googleData', {query})
-        .then(function (response) {
+        .then((response) => {
           console.log(response.data, 'response in index.jsx');
+          this.setState({ searchedItem: response.data });
           // this.state.searchedItem = response.data;
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error, 'error in index.jsx');
         });
   }  
@@ -57,11 +58,14 @@ class App extends React.Component {
           <div>
             {/* <Route path="/" component={Nav} items={this.state.items}/> */}
             <Route path="/" render={(props) => 
-              <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)}/>}
+              <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)}
+                searchedItem={this.statue.searchedItem} />}
             />
             {/* <Route path="/main" component={Main} /> */}
             <Route path="/main" render={(props) => 
-              <Main {...props} items={this.state.items} />} />
+              <Main {...props} items={this.state.items} 
+                // searchedItem={this.statue.searchedItem} 
+                />} />
 
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />

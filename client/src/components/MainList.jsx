@@ -1,5 +1,4 @@
 import React from 'react';
-// import ListItem from './ListItem.jsx';
 
 const MainList = props => (
   <div>
@@ -7,14 +6,14 @@ const MainList = props => (
       <div className="media">
         <div className="media-left">
           <a href="#">
-            <img className="media-object" src="https://images.gr-assets.com/books/1474154022l/3.jpg" alt="Harry Potter book cover" height="50%"></img>
+            <img className="media-object" src={props.item.coverImage } alt="Harry Potter book cover" height="50%"></img>
           </a>
           <div className="btn-group-vertical" role="group" aria-label="...">
             <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
-              Critic Rating <span className="badge">4</span>
+              Critic Rating <span className="badge">{props.item.rating}</span>
             </button>
             <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
-              User Rating <span className="badge">4</span>
+              User Rating <span className="badge">{props.item.rating}</span>
             </button>
             <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
               Favorite <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
@@ -22,8 +21,8 @@ const MainList = props => (
           </div>
         </div>
         <div className="media-body">
-          <h4 className="media-heading">Harry Potter and the Sorcerer's Stone</h4>
-          Harry Potter's life is miserable. His parents are dead and he's stuck with his heartless relatives, who force him to live in a tiny closet under the stairs. But his ...
+          <h4 className="media-heading">{props.item.title}</h4>
+          {props.item.longDescript}
       </div>
         <div className="media-right">
           <ul className="nav nav-pills">

@@ -1,13 +1,13 @@
 import React from 'react';
 // import ListItem from './ListItem.jsx';
 
-const MainList = props => (
+const Search = props => (
   <div>
     <div className="container">
       <div className="media">
         <div className="media-left">
           <a href="#">
-            <img className="media-object" src={props.item.coverImage } alt="Harry Potter book cover" height="50%"></img>
+            <img className="media-object" src={props.item.coverImage} alt="book cover" height="50%"></img>
           </a>
           <div className="btn-group-vertical" role="group" aria-label="...">
             <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
@@ -24,7 +24,7 @@ const MainList = props => (
         <div className="media-body">
           <h4 className="media-heading">{props.item.title}</h4>
           {props.item.longDescript}
-      </div>
+        </div>
         <div className="media-right">
           <ul className="nav nav-pills">
             <li role="presentation" className="disabled"><a href="#">Open Library</a></li>
@@ -36,4 +36,4 @@ const MainList = props => (
   </div>
 );
 
-export default MainList;
+export default Search;

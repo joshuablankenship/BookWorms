@@ -64,8 +64,8 @@ const Main = props => (
   </div>
     
   {/* There are {props.items.length} items. */}
-  {/* {props.items.map(item => <MainList item={item} />)} */}
-  <MainList  />
+    {props.items.map(item => <MainList item={item} key={item.title}/>)}
+  {/* <MainList  /> */}
   
 
 </div>  

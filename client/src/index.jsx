@@ -35,8 +35,8 @@ class App extends React.Component {
     return (
       <div>
         {/* <h1>Bookworms</h1> */}
-        
-        <Main />
+        <Main items={this.state.items} />
+        {/* <Main /> */}
       </div>
       
     );

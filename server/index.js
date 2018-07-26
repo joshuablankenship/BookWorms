@@ -1,6 +1,6 @@
 const express = require('express');
-let passport = require('passport');
-let Strategy = require('passport-local').Strategy;
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
@@ -15,7 +15,7 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // res.data.items[0] will access the first book on search of a title
 // with a proper title this works well.
 app.get('/googleData', (req, response) => {
-  helpers.googleBooks('Naked Lunch')
+  helpers.googleBooks('The Lord Of The Rings: The Two Towers')
     .then((res) => {
       // console.log(res.data.items[0]);
       const info = res.data.items[0].volumeInfo;
@@ -39,10 +39,7 @@ app.get('/googleData', (req, response) => {
             ISBN10,
             ISBN13,
             libThingRating,
-
-          })
-            .catch(err => console.log(err));
-          //   console.log(ISBN10, ISBN13);
+          });
         });
     })
     .catch(err => console.log(err));

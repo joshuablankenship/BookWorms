@@ -28,7 +28,7 @@ app.get('/googleData', (req, response) => {
       const ISBN13 = info.industryIdentifiers[1].identifier;
       helpers.libThingISBN(ISBN10)
         .then((libThings) => {
-          const libThingRating = libThings.data.split('<rating>')[1].slice(0, 1);
+          const libThingRating = +(libThings.data.split('<rating>')[1].slice(0, 1));
           response.json({
             longDescript,
             genres,

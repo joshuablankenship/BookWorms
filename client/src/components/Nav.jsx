@@ -1,7 +1,7 @@
 import React from 'react';
 import MainList from './MainList.jsx';
 import Search from './Search.jsx';
-
+import Login from './Login.jsx';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -66,7 +66,7 @@ const Nav = props => (
 
     {/* {props.items.map(item => <MainList item={item} key={item.title} />)} */}
 
-
+      
 </div>  
 );
               

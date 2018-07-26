@@ -20,8 +20,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       items: [],
-      searchedItem: null
+      searchedItem: null,
+      loggedIn: false
     };
+    this.searchForBook = query;
   }
   
   componentDidMount() {
@@ -51,14 +53,21 @@ class App extends React.Component {
   }  
 
   render() {
+    // if (this.state.loggedIn === false) {
+    //   return <Route path="/" render={(props) => 
+    //         <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)}/>}/>
+    //         <Login />
+    // }
     return (
+      
       <div>
         <Router>
           <div>
             {/* <Route path="/" component={Nav} items={this.state.items}/> */}
             <Route path="/" render={(props) => 
               <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)}/>}
-            />
+    
+    /> 
             {/* <Route path="/main" component={Main} /> */}
             <Route path="/main" render={(props) => 
               <Main {...props} items={this.state.items} />} />

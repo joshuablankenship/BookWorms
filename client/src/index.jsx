@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import Nav from './components/Nav.jsx';
 import Login from './components/Login.jsx';
-import Signup from './components/Signup.jsx';
+import SignUpPage from './containers/SignUpPage.jsx';
 import Main from './components/Main.jsx';
 import DATA from './mockData';
 
@@ -88,7 +88,7 @@ class App extends React.Component {
             />
 
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route path="/signup" component={SignUpPage} />
           </div>
         </Router>
       </div>

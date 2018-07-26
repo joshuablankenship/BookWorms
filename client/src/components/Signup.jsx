@@ -1,40 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
-class Signup extends React.Component {
-    constructor () {
-        super();
-        this.state = {
-          username: '',
-          password: '',
-          birthDate: '',
-          fantasy: ''
-        };
-        this.handleChange = this.handleChange.bind(this);
-      }
-      
-      handleChange (event) {
-        // check it out: we get the event.target.name (which will be either "username" or "password")
-        // and use it to target the key on our `state` object with the same name, using bracket syntax
-        this.setState({ [event.target.name]: event.target.value });
-        console.log(event.target.value);
-      }
-      
-      render () {
-        return (
+class Signup = ({
+    onSubmit,
+    onChange,
+    errors,
+    user,
+  }) => (
           <div className="container">
-            <form className="form-horizontal" role="form">
+            <form className="form-horizontal" role="form" onSubmit={onSubmit}>
                 <h2>Signup</h2>
+                {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className="form-group">
                     <label className="col-sm-3 control-label">Username</label>
                     <div className="col-sm-9">
-                        <input type="text" placeholder="Username" className="form-control" name="username" onChange={this.handleChange}/>
+                        <input type="text" placeholder="Username" className="form-control" name="username" onChange={onChange} errorText={errors.password}
+          value={user.password}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="col-sm-3 control-label">Password</label>
                     <div className="col-sm-9">
-                        <input type="password" placeholder="Password" className="form-control" name="password" onChange={this.handleChange}/>
+                        <input type="password" placeholder="Password" className="form-control" name="password"  onChange={onChange}
+          errorText={errors.password}
+          value={user.password}/>
                     </div>
                 </div>
                 <div className="form-group">
@@ -78,14 +68,19 @@ class Signup extends React.Component {
                  
                 <div className="form-group">
                     <div className="col-sm-9 col-sm-offset-3">
-                        <button type="submit" className="btn btn-primary btn-block">Signup</button>
+                        <button type="submit" className="btn btn-primary btn-block" label="Create New Account">Signup</button>
                     </div>
                 </div>
             </form> 
         </div> 
         );
-      }
-    }
+      
+    SignUpForm.propTypes = {
+        onSubmit: PropTypes.func.isRequired,
+        onChange: PropTypes.func.isRequired,
+        errors: PropTypes.object.isRequired,
+        user: PropTypes.object.isRequired
+      };
   
   // In the ES6 spec, files are "modules" and do not share a top-level scope
   // `var` declarations will only exist globally where explicitly defined

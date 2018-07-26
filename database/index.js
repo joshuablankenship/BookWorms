@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 const MONGOLINK= require('../config.js');
 const bcrypt = require('bcryptjs');
 mongoose.connect(MONGOLINK.MONGOLINK);
 // plug in the promise library:
 mongoose.Promise = global.Promise;
+=======
+const MONGOLINK = require('../config.js');
+
+mongoose.connect(MONGOLINK.MONGOLINK);
+
+>>>>>>> f8e037805c32b2d0ac6b5889961692a78601d29e
 const db = mongoose.connection;
 
 db.on('error', () => {
@@ -20,30 +27,30 @@ const userSchema = mongoose.Schema({
     index: { unique: true }
   },
   password: String,
-  
 });
 
 const User = mongoose.model('User', userSchema);
 
 const saveUser = (name, pass) => {
-  let user = new User({
+  const user = new User({
     username: name,
     password: pass,
   });
-  user.save( (error) => {
-    console.log(user);
-    console.log('Your user has been saved!');
+  user.save((error) => {
     if (error) {
       console.error(error);
+    } else {
+      console.log(user);
+      console.log('Your user has been saved!');
     }
   });
 };
-const findUser = (name, callback) => {
-  User.findOne({username: name}, (err, user) => {
+const findUser = (username, callback) => {
+  User.findOne({ username }, (err, user) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log("found", name)
+      console.log('found', username);
       callback(null, user);
     }
   });

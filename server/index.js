@@ -1,4 +1,6 @@
 const express = require('express');
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js')
@@ -42,6 +44,7 @@ app.get('/goodreads', (req, res) => {
     .catch(err => console.log(err));
     
 });
+
 
 app.listen(3000, () => {
     console.log('listening on port 3000!');

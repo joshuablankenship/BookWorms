@@ -64,7 +64,7 @@ const Nav = props => (
     </div> 
   </nav>
 
-    {props.items.map(item => <MainList item={item} key={item.title} />)}
+    {/* {props.items.map(item => <MainList item={item} key={item.title} />)} */}
 
 
 </div>  

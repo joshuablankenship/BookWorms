@@ -43,6 +43,7 @@ class App extends React.Component {
     axios.post('/googleData', {query})
         .then(function (response) {
           console.log(response.data, 'response in index.jsx');
+          // this.state.searchedItem = response.data;
         })
         .catch(function (error) {
           console.log(error, 'error in index.jsx');
@@ -59,7 +60,8 @@ class App extends React.Component {
               <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)}/>}
             />
             {/* <Route path="/main" component={Main} /> */}
-            <Route path="/main" render={(props) => <Main {...props} items={this.state.items} />} />
+            <Route path="/main" render={(props) => 
+              <Main {...props} items={this.state.items} />} />
 
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />

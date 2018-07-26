@@ -34,7 +34,7 @@ app.post('/googleData', (req, response) => {
         response.json({title, longDescript, genres, rating, coverImage});
         // response.send({ title, longDescript, genres, rating, coverImage });
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.error(err));
 
 });
 

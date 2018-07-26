@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
-<<<<<<< HEAD
 const MONGOLINK = require('../config.js');
 mongoose.connect(MONGOLINK.MONGOLINK);
-=======
-const MONGOLINK= require('../config.js');
-// mongoose.connect(MONGOLINK);
->>>>>>> 5b3f4832d49c8248b64916fb6c5608aa815a5984
 
 const db = mongoose.connection;
 

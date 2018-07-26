@@ -34,12 +34,12 @@ const saveUser = (name, pass) => {
     }
   });
 };
-const findUser = (name, callback) => {
-  User.findOne({ username: name }, (err, user) => {
+const findUser = (username, callback) => {
+  User.findOne({ username }, (err, user) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log('found', name);
+      console.log('found', username);
       callback(null, user);
     }
   });

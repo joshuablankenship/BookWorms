@@ -11,11 +11,10 @@ class Signup = ({
           <div className="container">
             <form className="form-horizontal" role="form" onSubmit={onSubmit}>
                 <h2>Signup</h2>
-                {errors.summary && <p className="error-message">{errors.summary}</p>}
                 <div className="form-group">
                     <label className="col-sm-3 control-label">Username</label>
                     <div className="col-sm-9">
-                        <input type="text" placeholder="Username" className="form-control" name="username" onChange={onChange} errorText={errors.password}
+                        <input type="text" placeholder="Username" className="form-control" name="username" onChange={onChange}
           value={user.password}/>
                     </div>
                 </div>

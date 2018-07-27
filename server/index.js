@@ -17,18 +17,18 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 
 // load passport strategies
-const localSignupStrategy = require('./server/passport/local-signup');
-const localLoginStrategy = require('./server/passport/local-login');
+const localSignupStrategy = require('./passport/local-signup');
+const localLoginStrategy = require('./passport/local-login');
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
 // pass the authentication checker middleware
-const authCheckMiddleware = require('./server/middleware/auth-check');
+const authCheckMiddleware = require('./middleware/auth-check');
 app.use('/api', authCheckMiddleware);
 
 // routes
-const authRoutes = require('./server/routes/auth');
-const apiRoutes = require('./server/routes/api');
+const authRoutes = require('./routes/auth');
+const apiRoutes = require('./routes/api');
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 
@@ -39,13 +39,19 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // res.data.items[0] will access the first book on search of a title
 // with a proper title this works well.
 app.get('/genreTest', (req, res) => {
-  helpers.googleGenre('Fiction')
+  helpers.googleGenre('NonFiction')
     .then((response) => {
       const booksByGenre = response.data.items;
       const highRated = [];
       booksByGenre.forEach((book) => {
         if (+book.volumeInfo.averageRating > 2) {
-          highRated.push(book.volumeInfo.title);
+          const highRatedBook = {
+            title: book.volumeInfo.title,
+            rating: +book.volumeInfo.averageRating,
+            coverImage: book.volumeInfo.imageLinks.thumbnail,
+
+          };
+          highRated.push(highRatedBook);
         }
       });
       const length = booksByGenre.length;
@@ -71,16 +77,23 @@ app.get('/googleData', (req, response) => {
       const ISBN13 = info.industryIdentifiers[1].identifier;
       helpers.libThingISBN(ISBN10)
         .then((libThings) => {
-          const libThingRating = +(libThings.data.split('<rating>')[1].slice(0, 1));
-          response.json({
-            longDescript,
-            genres,
-            rating,
-            coverImage,
-            ISBN10,
-            ISBN13,
-            libThingRating,
-          });
+          const libThingRating = (+(libThings.data.split('<rating>')[1].slice(0, 1))) / 2;
+          helpers.goodReadsData('Green Eggs and Ham')
+            .then((goodReads) => {
+              const gReadsRating = goodReads.data.split('<average_rating>')[1].slice(0, 4);
+              const aggregateRating = Math.floor(+rating + +libThingRating + +gReadsRating) / 3;
+              response.json({
+                longDescript,
+                genres,
+                rating,
+                coverImage,
+                ISBN10,
+                ISBN13,
+                libThingRating,
+                gReadsRating,
+                aggregateRating,
+              });
+            });
         });
     })
     .catch(err => console.log(err));

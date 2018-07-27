@@ -8,8 +8,7 @@ import {
 } from 'react-router-dom';
 import $ from 'jquery';
 import MainList from './MainList.jsx';
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
+
 
 const Main = props => (
 

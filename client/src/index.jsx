@@ -1,6 +1,8 @@
 import React from 'react';
-
-
+import ReactDOM from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import $ from 'jquery';
 import {
   BrowserRouter as Router,
@@ -10,15 +12,16 @@ import {
   withRouter,
 } from 'react-router-dom';
 import Nav from './components/Nav.jsx';
-import Login from './components/Login.jsx';
-import SignUpPage from './containers/SignUpPage.jsx';
+import LoginPage from './containers/LoginPage.jsx';
+import SignupPage from './containers/SignUpPage.jsx';
 import Main from './components/Main.jsx';
 import DATA from './mockData';
-import Auth from './modules/Auth';
+
 const axios = require('axios');
-
-
+// remove tap delay, essential for MaterialUI to work properly
+injectTapEventPlugin();
 class App extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -54,8 +57,9 @@ class App extends React.Component {
 
   render() {
     return (
-      
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div>
+        
         <Router>
           <div>            
             <Route
@@ -67,12 +71,12 @@ class App extends React.Component {
               path="/main"
               render={props => <Main {...props} items={this.state.items} />}
             />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={SignUpPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignupPage} />
           </div>
-       
         </Router>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

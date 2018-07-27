@@ -60,10 +60,10 @@ class App extends React.Component {
       items: [],
       authenticated: false
     };
-    this.searchForBook = (query) => {
-      console.log(query, 'query in index.jsx');
-      axios.post('/googleData', {
-        query,
+    this.searchForBook = (title) => {
+      console.log(title, 'query in index.jsx');
+      axios.get('/googleData', {
+        params: { title },
       })
         .then((response) => {
           this.setState({ items: [response.data] });

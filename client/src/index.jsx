@@ -20,8 +20,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
-      searchedItem: null,
+      items: []
     };
     this.searchForBook = (query) => {
       console.log(query, 'query in index.jsx');
@@ -29,11 +28,10 @@ class App extends React.Component {
         query,
       })
         .then((response) => {
-          console.log(response.data, 'response in index.jsx');
-          // this.state.searchedItem = response.data;
+          this.setState({ items: [response.data] });
         })
         .catch((error) => {
-          console.log(error, 'error in index.jsx');
+          console.error(error, 'error in index.jsx');
         });
     };
   }
@@ -52,61 +50,25 @@ class App extends React.Component {
     // });
   }
 
-  // searchForBook (query) {
-  //   console.log(query, 'query in index.jsx');
-  //   axios.post('/googleData', {query})
-  //       .then((response) => {
-  //         console.log(response.data, 'response in index.jsx');
-  //         this.setState({ searchedItem: response.data });
-  //         // this.state.searchedItem = response.data;
-  //       })
-  //       .catch((error) => {
-  //         console.log(error, 'error in index.jsx');
-  //       });
-  // }  
-  // searchForBook(query) {
-  //   console.log(query, 'query in index.jsx');
-  //   axios.post('/googleData', { query })
-  //     .then((response) => {
-  //       console.log(response.data, 'response in index.jsx');
-  //       // this.state.searchedItem = response.data;
-  //     })
-  //     .catch((error) => {
-  //       console.log(error, 'error in index.jsx');
-  //     });
-  // }
-
   render() {
     return (
       <div>
         <Router>
-          <div>
-            {/* <Route path="/" component={Nav} items={this.state.items}/> */}
-            {/* <Route path="/" render={(props) => 
-              <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)}
-                searchedItem={this.statue.searchedItem} />}
-            />
-            {/* <Route path="/main" component={Main} /> */}
-            {/* <Route path="/main" render={(props) => 
-              <Main {...props} items={this.state.items} 
-                // searchedItem={this.statue.searchedItem} 
-                // />} /> */}
+          <div>            
             <Route
               path="/"
-              render={props => <Nav {...props} items={this.state.items} handleSearchInput={this.searchForBook.bind(this)} />}
+              render={props => <Nav {...props} items={this.state.items} 
+                handleSearchInput={this.searchForBook.bind(this)} />}
             />
-            {/* <Route path="/main" component={Main} /> */}
             <Route
               path="/main"
               render={props => <Main {...props} items={this.state.items} />}
             />
-
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
           </div>
         </Router>
       </div>
-
     );
   }
 }

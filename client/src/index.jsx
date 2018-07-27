@@ -24,8 +24,8 @@ class App extends React.Component {
     };
     this.searchForBook = (query) => {
       console.log(query, 'query in index.jsx');
-      axios.post('/googleData', {
-        query,
+      axios.get('/googleData', {
+        params: {title: query}
       })
         .then((response) => {
           this.setState({ items: [response.data] });

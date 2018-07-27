@@ -31,6 +31,7 @@ class App extends React.Component {
         params: { title },
       })
         .then((response) => {
+          console.log(response.data)
           this.setState({ items: [response.data] });
         })
         .catch((error) => {

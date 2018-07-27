@@ -1,12 +1,13 @@
 /* eslint-disable prefer-destructuring */
-
+const MONGOLINK= require('../config.js');
 const express = require('express');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
-const db = require('../database/index.js');
+require('./models').connect(MONGOLINK.MONGOLINK);
+// const db = require('../database/index.js');
 // const items = require('');
 
 const app = express();

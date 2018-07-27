@@ -1,9 +1,10 @@
 import React from 'react';
+import React, { Component } from 'react';
+
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import $ from 'jquery';
 import {
   BrowserRouter as Router,
   Route,
@@ -20,12 +21,44 @@ import DATA from './mockData';
 const axios = require('axios');
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    Auth.isUserAuthenticated() ? (
+      <Component {...props} {...rest} />
+    ) : (
+      <Redirect to={{
+        pathname: '/',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
+const LoggedOutRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    Auth.isUserAuthenticated() ? (
+      <Redirect to={{
+        pathname: '/',
+        state: { from: props.location }
+      }}/>
+    ) : (
+      <Component {...props} {...rest} />
+    )
+  )}/>
+)
+
+const PropsRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    <Component {...props} {...rest} />
+  )}/>
+)
 class App extends React.Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      authenticated: false
     };
     this.searchForBook = (query) => {
       console.log(query, 'query in index.jsx');
@@ -48,31 +81,40 @@ class App extends React.Component {
     this.setState({
       items: DATA,
     });
+    this.toggleAuthenticateStatus();
     //   },
     //   error: (err) => {
     //     console.log('err', err);
     //   },
     // });
   }
-
+  toggleAuthenticateStatus() {
+    // check authenticated status and toggle state based on that
+    this.setState({ authenticated: Auth.isUserAuthenticated() })
+  }
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
       <div>
         
         <Router>
-          <div>            
+          <div>  
             <Route
               path="/"
               render={props => <Nav {...props} items={this.state.items} 
                 handleSearchInput={this.searchForBook.bind(this)} />}
             />
             <Route
-              path="/main"
-              render={props => <Main {...props} items={this.state.items} />}
+              path="/main" 
+              // render={props => <Main {...props} items={this.state.items} />}
             />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/signup" component={SignupPage} />
+            
+
+            <PropsRoute exact path="/" component={Nav} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+            <PrivateRoute path="/main" component={Main}/>
+            <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+            <LoggedOutRoute path="/signup" component={SignUpPage}/>
+            {/* <Route path="/logout" component={LogoutFunction}/> */}
           </div>
         </Router>
       </div>

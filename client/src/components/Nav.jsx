@@ -14,11 +14,7 @@ import {
 const Nav = props => (
   
 <div>
-{/* <ul>
-				<li><Link to="/">Main Page</Link></li>
-				<li><Link to="/login">Login Page</Link></li>
-				<li><Link to="/signup">Signup</Link></li>
-			</ul> */}
+
 	
   <nav className="navbar navbar-default">
     <div className="container-fluid">
@@ -64,7 +60,7 @@ const Nav = props => (
     </div> 
   </nav>
 
-  {props.items.map(item => <MainList item={item} key={item.title} />)}
+  {/* {props.items.map(item => <MainList item={item} key={item.title} />)} */}
 
 </div>  
 );

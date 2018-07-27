@@ -16,8 +16,12 @@ app.use(bodyParser.json());
 
 app.use(express.static(`${__dirname}/../client/dist`));
 
-// res.data.items[0] will access the first book on search of a title
-// with a proper title this works well.
+// skeleton of patch request for updating favrite title list of user
+app.patch('', (req, res) => {
+
+});
+
+
 app.get('/genreTest', (req, res) => {
   helpers.googleGenre('NonFiction')
     .then((response) => {
@@ -41,14 +45,17 @@ app.get('/genreTest', (req, res) => {
 });
 
 
-app.get('/googleDataTest', (req, response) => {
-  helpers.googleBooks('The Lord Of The Rings: The Two Towers')
+// res.data.items[0] will access the first book on search of a title. with a proper title this works well.
+app.get('/googleData', (req, response) => {
+  const query = req.query.title;
+  helpers.googleBooks(query)
     .then((res) => {
       // console.log(res.data.items[0]);
       const info = res.data.items[0].volumeInfo;
+      const title = info.title;
       const longDescript = info.description; // full description
       const genres = info.categories; // array of genre strings, often 1 element
-      const rating = +info.averageRating;
+      const rating = +info.averageRating || 2.75;
       // number rating can be whole number or number.number in the range of 0-5
       // const ageRating = info.maturityRating;// USELESS!!! naked lunch listed not mature
       const coverImage = info.imageLinks.thumbnail; // url to large format thumbnail
@@ -58,17 +65,16 @@ app.get('/googleDataTest', (req, response) => {
       helpers.libThingISBN(ISBN10)
         .then((libThings) => {
           const libThingRating = (+(libThings.data.split('<rating>')[1].slice(0, 1))) / 2;
-          helpers.goodReadsData('Green Eggs and Ham')
+          helpers.goodReadsData(query)
             .then((goodReads) => {
-              const gReadsRating = goodReads.data.split('<average_rating>')[1].slice(0, 4);
-              const aggregateRating = Math.floor(+rating + +libThingRating + +gReadsRating) / 3;
+              const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
+              const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating) / 3;
               response.json({
+                title,
                 longDescript,
                 genres,
                 rating,
                 coverImage,
-                ISBN10,
-                ISBN13,
                 libThingRating,
                 gReadsRating,
                 aggregateRating,
@@ -77,31 +83,6 @@ app.get('/googleDataTest', (req, response) => {
         });
     })
     .catch(err => console.log(err));
-});
-
-// res.data.items[0] will access the first book on search of a title. with a proper title this works well.
-app.get('/googleData', (req, response) => {
-  const query = req.query.title;
-  helpers.googleBooks(query)
-    .then((res) => {
-      // console.log(res.data.items[0], 'res.data.items[0]');
-      const info = res.data.items[0].volumeInfo;
-      const title = info.title;
-      const longDescript = info.description; // full description
-      const genres = info.categories; // array of genre strings, often 1 element
-      const rating = +info.averageRating; // number rating can be whole number or number.number in the range of 0-5
-      // const ageRating = info.maturityRating;// USELESS!!! naked lunch listed not mature
-      const coverImage = info.imageLinks.thumbnail; // url to large format thumbnail
-      // const shortDescript = res.data.items[0].searchInfo.textSnippet
-      const ISBN10 = info.industryIdentifiers[0].identifier;
-      const ISBN13 = info.industryIdentifiers[1].identifier;
-      // console.log(longDescript, genres, rating, coverImage);
-      response.json({
-        title, longDescript, genres, rating, coverImage,
-      });
-      // response.send({ title, longDescript, genres, rating, coverImage });
-    })
-    .catch(err => console.error(err));
 });
 
 // this is the average rating pulled from the HTML

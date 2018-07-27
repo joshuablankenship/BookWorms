@@ -41,7 +41,7 @@ app.get('/genreTest', (req, res) => {
 });
 
 
-app.get('/googleData', (req, response) => {
+app.get('/googleDataTest', (req, response) => {
   helpers.googleBooks('The Lord Of The Rings: The Two Towers')
     .then((res) => {
       // console.log(res.data.items[0]);
@@ -80,8 +80,8 @@ app.get('/googleData', (req, response) => {
 });
 
 // res.data.items[0] will access the first book on search of a title. with a proper title this works well.
-app.post('/googleData', (req, response) => {
-  const query = req.body.query;
+app.get('/googleData', (req, response) => {
+  const query = req.query.title;
   helpers.googleBooks(query)
     .then((res) => {
       // console.log(res.data.items[0], 'res.data.items[0]');

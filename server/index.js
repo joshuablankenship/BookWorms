@@ -58,7 +58,7 @@ app.get('/googleDataTest', (req, response) => {
       helpers.libThingISBN(ISBN10)
         .then((libThings) => {
           const libThingRating = (+(libThings.data.split('<rating>')[1].slice(0, 1))) / 2;
-          helpers.goodReadsData('Green Eggs and Ham')
+          helpers.goodReadsData('The Lord Of The Rings: The Two Towers')
             .then((goodReads) => {
               const gReadsRating = goodReads.data.split('<average_rating>')[1].slice(0, 4);
               const aggregateRating = Math.floor(+rating + +libThingRating + +gReadsRating) / 3;

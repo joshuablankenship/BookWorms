@@ -9,13 +9,22 @@ const MainList = props => (
             <img className="media-object" src={props.item.coverImage } alt="book cover" ></img>
           </a>
           <div className="btn-group-vertical" role="group" aria-label="...">
-            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
-              Critic Rating <span className="badge">{props.item.rating}</span>
+            <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="...">
+              Composite Critic Rating <span className="badge">{props.item.rating}</span>
             </button>
-            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
+            <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="...">
+              Critic Rating 1 <span className="badge">{props.item.rating}</span>
+            </button>
+            <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="...">
+              Critic Rating 2 <span className="badge">{props.item.rating}</span>
+            </button>
+            <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="...">
+              Critic Rating 3 <span className="badge">{props.item.rating}</span>
+            </button>
+            <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="...">
               User Rating <span className="badge">{props.item.rating}</span>
             </button>
-            <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">
+            <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="...">
               Favorite <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
             </button>
           </div>

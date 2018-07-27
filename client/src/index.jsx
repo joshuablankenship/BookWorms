@@ -1,26 +1,30 @@
-import React from 'react';
 import React, { Component } from 'react';
-
-import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import routes from './routes.js';
+
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Redirect,
-  withRouter,
-} from 'react-router-dom';
+  withRouter
+} from 'react-router-dom'
 import Nav from './components/Nav.jsx';
-import LoginPage from './containers/LoginPage.jsx';
-import SignupPage from './containers/SignUpPage.jsx';
-import Main from './components/Main.jsx';
 import DATA from './mockData';
 
+import HomePage from './components/HomePage.jsx';
+import LoginPage from './containers/LoginPage.jsx';
+import Logout from './containers/Logout.jsx';
+import SignUpPage from './containers/SignUpPage.jsx';
+import MainPage from './containers/MainPage.jsx';
+import Auth from './modules/Auth';
 const axios = require('axios');
+
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     Auth.isUserAuthenticated() ? (
@@ -52,75 +56,65 @@ const PropsRoute = ({ component: Component, ...rest }) => (
     <Component {...props} {...rest} />
   )}/>
 )
-class App extends React.Component {
-  
+
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
       authenticated: false
-    };
-    this.searchForBook = (title) => {
-      console.log(title, 'query in index.jsx');
-      axios.get('/googleData', {
-        params: { title },
+    }
+  
+  this.searchForBook = (title) => {
+    console.log(title, 'query in index.jsx');
+    axios.get('/googleData', {
+      params: { title },
+    })
+      .then((response) => {
+        this.setState({ items: [response.data] });
       })
-        .then((response) => {
-          this.setState({ items: [response.data] });
-        })
-        .catch((error) => {
-          console.error(error, 'error in index.jsx');
-        });
-    };
+      .catch((error) => {
+        console.error(error, 'error in index.jsx');
+      });
+  };
+}
+  componentDidMount() {
+    // check if user is logged in on refresh
+    this.toggleAuthenticateStatus()
   }
 
-  componentDidMount() {
-    // $.ajax({
-    //   url: '/items',
-    //   success: (data) => {
+  toggleAuthenticateStatus() {
     this.setState({
       items: DATA,
     });
-    this.toggleAuthenticateStatus();
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   },
-    // });
-  }
-  toggleAuthenticateStatus() {
     // check authenticated status and toggle state based on that
     this.setState({ authenticated: Auth.isUserAuthenticated() })
   }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <div>
-        
         <Router>
-          <div>  
-            <Route
+          <div>
+        <Route
               path="/"
               render={props => <Nav {...props} items={this.state.items} 
                 handleSearchInput={this.searchForBook.bind(this)} />}
             />
-            <Route
-              path="/main" 
-              // render={props => <Main {...props} items={this.state.items} />}
-            />
+
             
 
-            <PropsRoute exact path="/" component={Nav} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            <PrivateRoute path="/main" component={Main}/>
+            <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+            <PrivateRoute path="/main" component={MainPage}/>
             <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
             <LoggedOutRoute path="/signup" component={SignUpPage}/>
-            {/* <Route path="/logout" component={LogoutFunction}/> */}
+            <Route path="/logout" component={Logout} />
           </div>
+
         </Router>
-      </div>
       </MuiThemeProvider>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default App;

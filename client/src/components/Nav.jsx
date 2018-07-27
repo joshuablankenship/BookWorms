@@ -1,7 +1,8 @@
 import React from 'react';
 import MainList from './MainList.jsx';
 import Search from './Search.jsx';
-import Login from './Login.jsx';
+import LoginPage from '../containers/LoginPage.jsx';
+import Logout from '../containers/Logout.jsx';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -54,7 +55,7 @@ const Nav = props => (
         <ul className="nav navbar-nav navbar-right">
           <li><Link to="/signup">Signup</Link></li>
           <li><Link to="/login">Login Page</Link></li>
-          <button type="button" className="btn btn-default navbar-btn">Log out</button>
+          <li><Link to="/logout">Log out</Link></li>
         </ul>
       </div>
     </div> 

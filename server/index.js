@@ -19,13 +19,19 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // res.data.items[0] will access the first book on search of a title
 // with a proper title this works well.
 app.get('/genreTest', (req, res) => {
-  helpers.googleGenre('Fiction')
+  helpers.googleGenre('NonFiction')
     .then((response) => {
       const booksByGenre = response.data.items;
       const highRated = [];
       booksByGenre.forEach((book) => {
         if (+book.volumeInfo.averageRating > 2) {
-          highRated.push(book.volumeInfo.title);
+          let highRatedBook = {
+            title: book.volumeInfo.title,
+            rating: +book.volumeInfo.averageRating,
+            coverImage: book.volumeInfo.imageLinks.thumbnail,
+
+          };
+          highRated.push(highRatedBook);
         }
       });
       const length = booksByGenre.length;

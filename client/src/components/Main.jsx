@@ -18,7 +18,7 @@ const Main = ({ items, secretData, user}) => (
           </div>
         </div>
       </div>
-      {this.items}
+      {/* {this.items} */}
       {/* {this.items.map(item => <MainList item={item} key={item.title} />)} */}
   
     </div>

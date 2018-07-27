@@ -13,6 +13,7 @@ import {
 } from 'react-router-dom'
 import Nav from './components/Nav.jsx';
 import DATA from './mockData';
+import REVIEWS from './mockReview';
 
 import HomePage from './components/HomePage.jsx';
 import LoginPage from './containers/LoginPage.jsx';
@@ -62,6 +63,7 @@ class App extends Component {
     super(props);
     this.state = {
       items: [],
+<<<<<<< HEAD
       authenticated: false
     }
   
@@ -84,10 +86,36 @@ class App extends Component {
         
     };
   
+=======
+      reviews: [],
+      reviewToggled: false,
+    };
+    this.searchForBook = (title) => {
+      axios.get('/googleData', {
+        params: { title },
+      })
+        .then((response) => {
+          this.setState({ items: [response.data] });
+        })
+        .catch((error) => {
+          console.error(error, 'error in index.jsx');
+        });
+    };
+    this.reviewToggle = (item) => {
+      if (item) {
+        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
+      } else {
+        // if no item is passed in, set reviewToggled to false to revert to MainList view when searching
+        this.setState({ reviewToggled: false });
+      }
+    }
+  }
+>>>>>>> c5ae00fc1dc1678840c2d5ff9e789d507b82467b
 
   toggleAuthenticateStatus() {
     this.setState({
       items: DATA,
+      reviews: REVIEWS
     });
     // check authenticated status and toggle state based on that
     this.setState({ authenticated: Auth.isUserAuthenticated() })
@@ -100,9 +128,13 @@ class App extends Component {
           <div>
         <Route
               path="/"
-              render={props => <Nav {...props} items={this.state.items} 
-                handleSearchInput={this.searchForBook.bind(this)} />}
+              render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
+                reviewToggle={this.reviewToggle.bind(this)}
+                reviewToggled={this.state.reviewToggled}
+                handleSearchInput={this.searchForBook.bind(this)} 
+                />}
             />
+<<<<<<< HEAD
 
             
 
@@ -111,6 +143,17 @@ class App extends Component {
             <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
             <LoggedOutRoute path="/signup" component={SignUpPage}/>
             <Route path="/logout" component={Logout} />
+=======
+            <Route
+              path="/main"
+              render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
+                reviewToggle={this.reviewToggle.bind(this)} 
+                reviewToggled={this.state.reviewToggled}
+                handleSearchInput={this.searchForBook.bind(this)} />}
+            />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+>>>>>>> c5ae00fc1dc1678840c2d5ff9e789d507b82467b
           </div>
 
         </Router>

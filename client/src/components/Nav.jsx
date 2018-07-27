@@ -1,6 +1,9 @@
 import React from 'react';
 import MainList from './MainList.jsx';
+import ReviewList from './ReviewsList.jsx';
 import Search from './Search.jsx';
+import Reviews from './Reviews.jsx';
+
 
 import {
 	BrowserRouter as Router,
@@ -64,8 +67,11 @@ const Nav = props => (
     </div> 
   </nav>
 
-  {props.items.map(item => <MainList item={item} key={item.title} />)}
+  {/* {props.items.map(item => <MainList item={item} key={item.title} />)} */}
+  {props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)}
 
+  
+  
 </div>  
 );
               

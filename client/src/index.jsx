@@ -13,6 +13,7 @@ import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Main from './components/Main.jsx';
 import DATA from './mockData';
+import REVIEWS from './mockReview';
 
 const axios = require('axios');
 
@@ -20,7 +21,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      reviews: []
     };
     this.searchForBook = (query) => {
       console.log(query, 'query in index.jsx');
@@ -42,6 +44,7 @@ class App extends React.Component {
     //   success: (data) => {
     this.setState({
       items: DATA,
+      reviews: REVIEWS
     });
     //   },
     //   error: (err) => {
@@ -57,12 +60,12 @@ class App extends React.Component {
           <div>            
             <Route
               path="/"
-              render={props => <Nav {...props} items={this.state.items} 
+              render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
                 handleSearchInput={this.searchForBook.bind(this)} />}
             />
             <Route
               path="/main"
-              render={props => <Main {...props} items={this.state.items} />}
+              render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}/>}
             />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />

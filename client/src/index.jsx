@@ -13,6 +13,7 @@ import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Main from './components/Main.jsx';
 import DATA from './mockData';
+import REVIEWS from './mockReview';
 
 const axios = require('axios');
 
@@ -20,21 +21,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      reviews: [],
+      reviewToggled: false,
     };
     this.searchForBook = (title) => {
-      console.log(title, 'query in index.jsx');
       axios.get('/googleData', {
         params: { title },
       })
         .then((response) => {
-          console.log(response.data)
           this.setState({ items: [response.data] });
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');
         });
     };
+    this.reviewToggle = (item) => {
+      if (item) {
+        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
+      } else {
+        // if no item is passed in, set reviewToggled to false to revert to MainList view when searching
+        this.setState({ reviewToggled: false });
+      }
+    }
   }
 
   componentDidMount() {
@@ -43,6 +52,7 @@ class App extends React.Component {
     //   success: (data) => {
     this.setState({
       items: DATA,
+      reviews: REVIEWS
     });
     //   },
     //   error: (err) => {
@@ -58,12 +68,18 @@ class App extends React.Component {
           <div>            
             <Route
               path="/"
-              render={props => <Nav {...props} items={this.state.items} 
-                handleSearchInput={this.searchForBook.bind(this)} />}
+              render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
+                reviewToggle={this.reviewToggle.bind(this)}
+                reviewToggled={this.state.reviewToggled}
+                handleSearchInput={this.searchForBook.bind(this)} 
+                />}
             />
             <Route
               path="/main"
-              render={props => <Main {...props} items={this.state.items} />}
+              render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
+                reviewToggle={this.reviewToggle.bind(this)} 
+                reviewToggled={this.state.reviewToggled}
+                handleSearchInput={this.searchForBook.bind(this)} />}
             />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />

@@ -18,6 +18,7 @@ class Search extends React.Component {
     e.preventDefault();
     this.props.handleSearchInput(this.state.value);
     this.setState({ value: '' });
+    this.props.reviewToggle();
 
   }
 
@@ -26,6 +27,8 @@ class Search extends React.Component {
       e.preventDefault();
       this.props.handleSearchInput(this.state.value);
       this.setState({ value: '' });
+      this.props.reviewToggle();
+
     }
   }
 

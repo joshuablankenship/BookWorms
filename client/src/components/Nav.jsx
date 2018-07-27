@@ -1,6 +1,9 @@
 import React from 'react';
 import MainList from './MainList.jsx';
+import ReviewList from './ReviewsList.jsx';
 import Search from './Search.jsx';
+import Reviews from './Reviews.jsx';
+
 
 import {
 	BrowserRouter as Router,
@@ -53,7 +56,7 @@ const Nav = props => (
           </li>
         </ul>
         <form className="navbar-form navbar-left">
-          <Search handleSearchInput={props.handleSearchInput}/>         
+            <Search handleSearchInput={props.handleSearchInput} reviewToggle={props.reviewToggle}/>         
         </form>
         <ul className="nav navbar-nav navbar-right">
           <li><Link to="/signup">Signup</Link></li>
@@ -64,9 +67,18 @@ const Nav = props => (
     </div> 
   </nav>
 
-  {props.items.map(item => <MainList item={item} key={item.title} />)}
+  {/* if statement switches between MainList and Reviews */}
+    {props.reviewToggled ? props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)
+      : props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle} />)}
+  
 
-</div>  
+  
+  {/* {props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle}/>)} */}
+  {/* {props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)} */}
+
+  
+  
+  </div>  
 );
               
 export default Nav;

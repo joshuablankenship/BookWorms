@@ -19,7 +19,7 @@ const Main = ({ items, secretData, user}) => (
         </div>
       </div>
   
-      {this.state.items  .map(item => <MainList item={item} key={item.title} />)}
+      {/* {this.state.items  .map(item => <MainList item={item} key={item.title} />)} */}
   
     </div>
   );

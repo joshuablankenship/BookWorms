@@ -37,9 +37,12 @@ class App extends React.Component {
         });
     };
     this.reviewToggle = (item) => {
-      console.log(this.state.reviewToggled, 'this.state.reviewToggled in index')
-      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
-      console.log(this.state.reviewToggled, 'this.state.reviewToggled in index after setState')
+      if (item) {
+        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
+      } else {
+        // if no item is passed in, set reviewToggled to false to revert to MainList view when searching
+        this.setState({ reviewToggled: false });
+      }
     }
   }
 

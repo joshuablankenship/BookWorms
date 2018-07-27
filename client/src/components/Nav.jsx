@@ -56,7 +56,7 @@ const Nav = props => (
           </li>
         </ul>
         <form className="navbar-form navbar-left">
-          <Search handleSearchInput={props.handleSearchInput}/>         
+            <Search handleSearchInput={props.handleSearchInput} reviewToggle={props.reviewToggle}/>         
         </form>
         <ul className="nav navbar-nav navbar-right">
           <li><Link to="/signup">Signup</Link></li>
@@ -68,7 +68,6 @@ const Nav = props => (
   </nav>
 
   {/* if statement switches between MainList and Reviews */}
-  {console.log(props, 'props')}
     {props.reviewToggled ? props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)
       : props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle} />)}
   

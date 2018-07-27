@@ -9,12 +9,7 @@ class MainList extends React.Component {
     };
     this.handleOnclick = (e) => {
       e.preventDefault();
-      console.log(this.props.item, 'Review item clicked on in MainList');
       this.props.reviewToggle(this.props.item);
-      
-      // this.props.handleSearchInput(this.state.value);
-      // this.setState({ value: '' });
-
     }
   }
 

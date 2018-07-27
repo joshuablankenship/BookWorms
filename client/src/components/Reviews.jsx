@@ -55,21 +55,29 @@ class Reviews extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row" style={{ paddingTop: '20px' }}>
           <div className="col-md-6">
-            <div className="btn-group-vertical" role="group" aria-label="...">
-              <button type="button" className="btn-group btn btn-primary btn-lg" role="group" aria-label="...">
-                Composite Critic Rating <span className="badge">{this.props.item.rating}</span>
-              </button>
+            <div className="container-fluid" style={{ paddingTop: '20px' }}>
+              <div className="btn-group-vertical" role="group" aria-label="...">
+                <button type="button" className="btn-group btn btn-primary btn-lg" role="group" aria-label="...">
+                  Composite Critic Rating <span className="badge">{this.props.item.rating}</span>
+                </button>
+              </div>
             </div>
-            <h4 className="media-heading">Critics Reviews</h4>
-            {this.props.reviews.map(review => <ReviewsList review={review} key={review.reviewer} />)}
+            <div className="container-fluid" style={{ paddingTop: '20px' }}>
+              <h4 className="media-heading">Critics Reviews</h4>
+              {this.props.reviews.map(review => <ReviewsList review={review} key={review.reviewer} />)}
+            </div>
           </div>
           <div className="col-md-6">
-            <button type="button" className="btn-group btn btn-info btn-lg" role="group" aria-label="...">
-              Composite User Rating <span className="badge">{this.props.item.rating}</span>
-            </button>
-            <h4 className="media-heading">User Reviews</h4>
+            <div className="container-fluid" style={{ paddingTop: '20px' }}>
+              <button type="button" className="btn-group btn btn-info btn-lg" role="group" aria-label="...">
+                Composite User Rating <span className="badge">{this.props.item.rating}</span>
+              </button>
+            </div>
+            <div className="container-fluid" style={{ paddingTop: '20px' }}>
+              <h4 className="media-heading">User Reviews</h4>
+            </div>
           </div>
         </div>
       </div>

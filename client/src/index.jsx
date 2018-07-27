@@ -26,21 +26,19 @@ class App extends React.Component {
       reviewToggled: false,
     };
     this.searchForBook = (title) => {
-      console.log(title, 'query in index.jsx');
       axios.get('/googleData', {
         params: { title },
       })
         .then((response) => {
-          console.log(response.data)
           this.setState({ items: [response.data] });
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');
         });
     };
-    this.reviewToggle = () => {
+    this.reviewToggle = (item) => {
       console.log(this.state.reviewToggled, 'this.state.reviewToggled in index')
-      this.setState({ reviewToggled: !this.state.reviewToggled});
+      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
       console.log(this.state.reviewToggled, 'this.state.reviewToggled in index after setState')
     }
   }
@@ -69,12 +67,15 @@ class App extends React.Component {
               path="/"
               render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
                 reviewToggle={this.reviewToggle.bind(this)}
-                handleSearchInput={this.searchForBook.bind(this)} />}
+                reviewToggled={this.state.reviewToggled}
+                handleSearchInput={this.searchForBook.bind(this)} 
+                />}
             />
             <Route
               path="/main"
               render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
                 reviewToggle={this.reviewToggle.bind(this)} 
+                reviewToggled={this.state.reviewToggled}
                 handleSearchInput={this.searchForBook.bind(this)} />}
             />
             <Route path="/login" component={Login} />

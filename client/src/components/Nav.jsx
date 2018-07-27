@@ -68,13 +68,18 @@ const Nav = props => (
   </nav>
 
   {/* if statement switches between MainList and Reviews */}
+  {console.log(props, 'props')}
+    {props.reviewToggled ? props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)
+      : props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle} />)}
   
-  {props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle}/>)}
+
+  
+  {/* {props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle}/>)} */}
   {/* {props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)} */}
 
   
   
-</div>  
+  </div>  
 );
               
 export default Nav;

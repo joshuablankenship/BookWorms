@@ -22,7 +22,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       items: [],
-      reviews: []
+      reviews: [],
+      reviewToggled: false,
     };
     this.searchForBook = (title) => {
       console.log(title, 'query in index.jsx');
@@ -36,6 +37,11 @@ class App extends React.Component {
           console.error(error, 'error in index.jsx');
         });
     };
+    this.reviewToggle = () => {
+      console.log(this.state.reviewToggled, 'this.state.reviewToggled in index')
+      this.setState({ reviewToggled: !this.state.reviewToggled});
+      console.log(this.state.reviewToggled, 'this.state.reviewToggled in index after setState')
+    }
   }
 
   componentDidMount() {
@@ -61,11 +67,14 @@ class App extends React.Component {
             <Route
               path="/"
               render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
+                reviewToggle={this.reviewToggle.bind(this)}
                 handleSearchInput={this.searchForBook.bind(this)} />}
             />
             <Route
               path="/main"
-              render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}/>}
+              render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
+                reviewToggle={this.reviewToggle.bind(this)} 
+                handleSearchInput={this.searchForBook.bind(this)} />}
             />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />

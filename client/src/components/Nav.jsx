@@ -67,8 +67,10 @@ const Nav = props => (
     </div> 
   </nav>
 
-  {/* {props.items.map(item => <MainList item={item} key={item.title} />)} */}
-  {props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)}
+  {/* if statement switches between MainList and Reviews */}
+  
+  {props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle}/>)}
+  {/* {props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)} */}
 
   
   

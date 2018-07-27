@@ -24,8 +24,10 @@ const MainList = props => (
             <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="...">
               User Rating <span className="badge">{props.item.rating}</span>
             </button>
-            <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="...">
-              Favorite <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+            <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="..."
+              onClick={ console.log('clicked') } 
+              >
+              Review <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
             </button>
           </div>
         </div>

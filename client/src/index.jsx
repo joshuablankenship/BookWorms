@@ -22,10 +22,10 @@ class App extends React.Component {
     this.state = {
       items: []
     };
-    this.searchForBook = (query) => {
-      console.log(query, 'query in index.jsx');
+    this.searchForBook = (title) => {
+      console.log(title, 'query in index.jsx');
       axios.get('/googleData', {
-        params: { title: query },
+        params: { title },
       })
         .then((response) => {
           this.setState({ items: [response.data] });

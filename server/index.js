@@ -81,7 +81,6 @@ app.get('/googleDataTest', (req, response) => {
 
 // res.data.items[0] will access the first book on search of a title. with a proper title this works well.
 app.get('/googleData', (req, response) => {
-  console.log(req.query)
   const query = req.query.title;
   helpers.googleBooks(query)
     .then((res) => {

@@ -64,14 +64,8 @@ const Nav = props => (
     </div> 
   </nav>
 
-<<<<<<< HEAD
-    {/* {props.items.map(item => <MainList item={item} key={item.title} />)} */}
-
-      
-=======
   {props.items.map(item => <MainList item={item} key={item.title} />)}
 
->>>>>>> b43bfe8044fab54a39a21198bef97a3c3ab79a6a
 </div>  
 );
               

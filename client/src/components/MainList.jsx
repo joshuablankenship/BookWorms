@@ -6,7 +6,7 @@ const MainList = props => (
       <div className="media">
         <div className="media-left">
           <a href="#">
-            <img className="media-object" src={props.item.coverImage } alt="Harry Potter book cover" height="50%"></img>
+            <img className="media-object" src={props.item.coverImage } alt="book cover" ></img>
           </a>
           <div className="btn-group-vertical" role="group" aria-label="...">
             <button type="button" className="btn-group btn btn-default" role="group" aria-label="...">

@@ -5,7 +5,8 @@ class Search extends React.Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      toSearchList: false
     };
   }
 
@@ -17,6 +18,7 @@ class Search extends React.Component {
     e.preventDefault();
     this.props.handleSearchInput(this.state.value);
     this.setState({ value: '' });
+
   }
 
   handleKeyInput(e) {
@@ -36,9 +38,8 @@ class Search extends React.Component {
           onKeyPress={this.handleKeyInput.bind(this)}
           onChange={this.handleInputChange.bind(this)} />
       </div>
-      <button type="submit" className="btn btn-default" onClick={this.handleOnclick.bind(this)}>Submit</button>
+        <button type="submit" className="btn btn-default" onClick={this.handleOnclick.bind(this)}>Submit</button>
     </div>       
-
     );
   }
 }

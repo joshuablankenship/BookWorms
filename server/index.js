@@ -25,7 +25,7 @@ app.get('/genreTest', (req, res) => {
       const highRated = [];
       booksByGenre.forEach((book) => {
         if (+book.volumeInfo.averageRating > 2) {
-          let highRatedBook = {
+          const highRatedBook = {
             title: book.volumeInfo.title,
             rating: +book.volumeInfo.averageRating,
             coverImage: book.volumeInfo.imageLinks.thumbnail,
@@ -57,16 +57,23 @@ app.get('/googleData', (req, response) => {
       const ISBN13 = info.industryIdentifiers[1].identifier;
       helpers.libThingISBN(ISBN10)
         .then((libThings) => {
-          const libThingRating = +(libThings.data.split('<rating>')[1].slice(0, 1));
-          response.json({
-            longDescript,
-            genres,
-            rating,
-            coverImage,
-            ISBN10,
-            ISBN13,
-            libThingRating,
-          });
+          const libThingRating = (+(libThings.data.split('<rating>')[1].slice(0, 1))) / 2;
+          helpers.goodReadsData('Green Eggs and Ham')
+            .then((goodReads) => {
+              const gReadsRating = goodReads.data.split('<average_rating>')[1].slice(0, 4);
+              const aggregateRating = Math.floor(+rating + +libThingRating + +gReadsRating) / 3;
+              response.json({
+                longDescript,
+                genres,
+                rating,
+                coverImage,
+                ISBN10,
+                ISBN13,
+                libThingRating,
+                gReadsRating,
+                aggregateRating,
+              });
+            });
         });
     })
     .catch(err => console.log(err));

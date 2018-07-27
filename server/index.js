@@ -16,8 +16,12 @@ app.use(bodyParser.json());
 
 app.use(express.static(`${__dirname}/../client/dist`));
 
-// res.data.items[0] will access the first book on search of a title
-// with a proper title this works well.
+// skeleton of patch request for updating favrite title list of user
+app.patch('', (req, res) => {
+
+});
+
+
 app.get('/genreTest', (req, res) => {
   helpers.googleGenre('NonFiction')
     .then((response) => {

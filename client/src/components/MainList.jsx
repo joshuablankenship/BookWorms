@@ -19,23 +19,28 @@ class MainList extends React.Component {
         <div className="container">
           <div className="media">
             <div className="media-left">
-              <a href="#">
+              <a href="#" onClick={this.handleOnclick.bind(this)}>
                 <img className="media-object" src={this.props.item.coverImage} alt="book cover" ></img>
               </a>
               <div className="btn-group-vertical" role="group" aria-label="...">
-                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="...">
+                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
+                  onClick={this.handleOnclick.bind(this)}>
                   Bookworms <span className="badge">{this.props.item.aggregateRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="...">
+                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                  onClick={this.handleOnclick.bind(this)}>
                   Google Books <span className="badge">{this.props.item.rating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="...">
+                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                  onClick={this.handleOnclick.bind(this)}>
                   Library Thing <span className="badge">{this.props.item.libThingRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="...">
+                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                  onClick={this.handleOnclick.bind(this)}>
                   GoodReads <span className="badge">{this.props.item.gReadsRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="...">
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
+                  onClick={this.handleOnclick.bind(this)}>
                   User Rating <span className="badge">{this.props.item.rating}</span>
                 </button>
                 <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="..."

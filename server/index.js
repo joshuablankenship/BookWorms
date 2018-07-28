@@ -80,7 +80,7 @@ app.get('/googleData', (req, response) => {
                 coverImage,
               }, (err, data) => {
                 if (err) { console.log(err); } else {
-                  console.log(data, 'success');
+                  console.log('success');
                 }
               });
               response.json({

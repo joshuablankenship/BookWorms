@@ -49,7 +49,7 @@ const saveBook = (bookObj, cb) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(book, 'success');
+      console.log('success');
     }
   });
 };

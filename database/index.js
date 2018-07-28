@@ -20,6 +20,41 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+const bookSchema = mongoose.Schema({
+  title: String,
+  description: String,
+  ISBN: Number,
+  bookWormRating: Number,
+  googleRating: Number,
+  libThingRating: Number,
+  goodReadsRating: Number,
+  userRating: Number,
+  cover: String,
+  genre: String,
+});
+
+const Book = mongoose.model('Book', bookSchema);
+const saveBook = (bookObj) => {
+  const book = new Book({
+    title: bookObj.title,
+    description: bookObj.longDescript,
+    ISBN: bookObj.ISBN13,
+    bookWormRating: bookObj.aggregateRating,
+    googleRating: bookObj.rating,
+    libThingRating: bookObj.libThingRating,
+    goodReadsRating: bookObj.gReadsRating,
+    userRating: 2.5,
+    cover: bookObj.coverImage,
+    genre: bookObj.genres[0],
+  });
+};
+
+const userBooksSchema = mongoose.Schema({
+  username: String,
+});
+
+const UserBook = mongoose.model('UserBook', userBooksSchema);
+
 const saveUser = (name, pass) => {
   const user = new User({
     username: name,
@@ -45,5 +80,8 @@ const findUser = (username, callback) => {
   });
 };
 
-module.exports.findUser = findUser;
-module.exports.saveUser = saveUser;
+module.exports = {
+  findUser,
+  saveUser,
+  saveBook,
+};

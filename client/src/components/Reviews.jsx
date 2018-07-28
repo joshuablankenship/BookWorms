@@ -2,11 +2,6 @@ import React from 'react';
 import ReviewsList from './ReviewsList.jsx';
 const Rating = require('react-rating');
 
-{/* <Rating
-  emptySymbol={<img src="assets/images/star-empty.png" className="icon" />}
-  fullSymbol={<img src="assets/images/star-full.png" className="icon" />}
-/> */}
-
 class Reviews extends React.Component {
   constructor(props) {
     super(props);
@@ -50,7 +45,10 @@ class Reviews extends React.Component {
             <div className="media">
               <div className="media-right">
                 <Rating {...this.props} initialRating={this.state.starValue}
-                onChange={this.handleInputChange} />
+                onChange={this.handleInputChange}
+                // emptySymbol={<img src="../../../images/star-empty.png" className="icon" />}
+                // fullSymbol={<img src="../../../images/star-full.png" className="icon" />}
+                /> 
               </div>
             </div>
           </div>

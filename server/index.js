@@ -6,9 +6,8 @@ const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
-require('./models').connect(MONGOLINK.MONGOLINK);
-
-
+// require('./models').connect(MONGOLINK.MONGOLINK);
+const db = require('../database/index.js')
 
 const app = express();
 // tell the app to look for static files in these directories
@@ -91,21 +90,21 @@ app.get('/googleData', (req, response) => {
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
               const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating) / 3;
-              // db.saveBook({
-              //   title,
-              //   longDescript,
-              //   ISBN13,
-              //   aggregateRating,
-              //   rating,
-              //   libThingRating,
-              //   gReadsRating,
-              //   userRating: 2.75,
-              //   coverImage,
-              // }, (err, data) => {
-              //   if (err) { console.log(err); } else {
-              //     console.log('success');
-              //   }
-              // });
+              db.saveBook({
+                title,
+                longDescript,
+                ISBN13,
+                aggregateRating,
+                rating,
+                libThingRating,
+                gReadsRating,
+                userRating: 2.75,
+                coverImage,
+              }, (err, data) => {
+                if (err) { console.log(err); } else {
+                  console.log('success');
+                }
+              });
               response.json({
                 title,
                 longDescript,

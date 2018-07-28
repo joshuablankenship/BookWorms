@@ -6,8 +6,8 @@ const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
-// require('./models').connect(MONGOLINK.MONGOLINK);
-const db = require('../database/index.js')
+require('./models').connect(MONGOLINK.MONGOLINK);
+// const db = require('../database/index.js')
 
 const app = express();
 // tell the app to look for static files in these directories

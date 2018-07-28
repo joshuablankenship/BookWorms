@@ -1,6 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import React, { Component } from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import routes from './routes.js';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -8,22 +11,73 @@ import {
   Redirect,
   withRouter,
 } from 'react-router-dom';
+import Nav1 from './components/Nav1.jsx';
 import Nav from './components/Nav.jsx';
-import Login from './components/Login.jsx';
-import Signup from './components/Signup.jsx';
-import Main from './components/Main.jsx';
 import DATA from './mockData';
 import REVIEWS from './mockReview';
+import HomePage from './components/HomePage.jsx';
+import LoginPage from './containers/LoginPage.jsx';
+import Logout from './containers/Logout.jsx';
+import SignUpPage from './containers/SignUpPage.jsx';
+import Main from './components/Main.jsx';
+import Auth from './modules/Auth';
 
 const axios = require('axios');
 
-class App extends React.Component {
+// remove tap delay, essential for MaterialUI to work properly
+injectTapEventPlugin();
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      Auth.isUserAuthenticated() ? (
+        <Component {...props} {...rest} />
+      ) : (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location },
+        }}
+        />
+      )
+    )}
+  />
+);
+
+const LoggedOutRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      Auth.isUserAuthenticated() ? (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location },
+        }}
+        />
+      ) : (
+        <Component {...props} {...rest} />
+      )
+    )}
+  />
+);
+
+const PropsRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      <Component {...props} {...rest} />
+    )}
+  />
+);
+
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
       reviews: [],
       reviewToggled: false,
+      authenticated: false,
     };
     this.searchForBook = (title) => {
       axios.get('/googleData', {
@@ -38,56 +92,105 @@ class App extends React.Component {
     };
     this.reviewToggle = (item) => {
       if (item) {
-        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
+        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
       } else {
         // if no item is passed in, set reviewToggled to false to revert to MainList view when searching
         this.setState({ reviewToggled: false });
       }
-    }
+    };
   }
 
   componentDidMount() {
-    // $.ajax({
-    //   url: '/items',
-    //   success: (data) => {
+    // check if user is logged in on refresh
+    this.toggleAuthenticateStatus();
     this.setState({
       items: DATA,
-      reviews: REVIEWS
+      reviews: REVIEWS,
     });
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   },
-    // });
+  }
+
+  toggleAuthenticateStatus() {
+    // check authenticated status and toggle state based on that
+    this.setState({ authenticated: Auth.isUserAuthenticated() });
   }
 
   render() {
     return (
-      <div>
+
+      // <div>
+      //   <Router>
+      //     <div>
+      //       <Route
+      //         path="/"
+      //         render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
+      //           reviewToggle={this.reviewToggle.bind(this)}
+      //           reviewToggled={this.state.reviewToggled}
+      //           handleSearchInput={this.searchForBook.bind(this)}
+      //           />}
+      //       />
+      //       <Route
+      //         path="/main"
+      //         render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
+      //           reviewToggle={this.reviewToggle.bind(this)}
+      //           reviewToggled={this.state.reviewToggled}
+      //           handleSearchInput={this.searchForBook.bind(this)} />}
+      //       />
+      //       <Route path="/login" component={LoginPage} />
+      //       <Route path="/signup" component={SignUpPage} />
+      //     </div>
+      //   </Router>
+      // </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Router>
-          <div>            
-            <Route
-              path="/"
-              render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
-                reviewToggle={this.reviewToggle.bind(this)}
-                reviewToggled={this.state.reviewToggled}
-                handleSearchInput={this.searchForBook.bind(this)} 
-                />}
-            />
-            <Route
-              path="/main"
-              render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
-                reviewToggle={this.reviewToggle.bind(this)} 
-                reviewToggled={this.state.reviewToggled}
-                handleSearchInput={this.searchForBook.bind(this)} />}
-            />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+          <div>
+            {this.state.authenticated ? (
+              <div>
+                <Route
+                  path="/"
+                  render={props => (
+                    <Nav
+                    {...props}
+                    items={this.state.items}
+                    reviews={this.state.reviews}
+                    reviewToggle={this.reviewToggle.bind(this)}
+                    reviewToggled={this.state.reviewToggled}
+                    handleSearchInput={this.searchForBook.bind(this)}
+                  />
+                  )}
+                />
+                {/* <Route
+                  path="/main"
+                  render={props => (
+                    <Main
+                    {...props}
+                    items={this.state.items}
+                    reviews={this.state.reviews}
+                    reviewToggle={this.reviewToggle.bind(this)}
+                    reviewToggled={this.state.reviewToggled}
+                    handleSearchInput={this.searchForBook.bind(this)}
+                  />
+                  )}
+                /> */}
+              </div>
+            ) : (
+              <Route
+                path="/"
+                render={props => <Nav1 />}
+              />
+            )}
+
+
+            <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+            {/* <PrivateRoute path="/main" component={Main}/> */}
+            <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+            <LoggedOutRoute path="/signup" component={SignUpPage} />
+            <Route path="/logout" component={Logout} />
           </div>
+
         </Router>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default App;

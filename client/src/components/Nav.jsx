@@ -57,8 +57,8 @@ const Nav = props => (
             <Search handleSearchInput={props.handleSearchInput} reviewToggle={props.reviewToggle}/>         
         </form>
         <ul className="nav navbar-nav navbar-right">
-          <li><Link to="/signup">Signup</Link></li>
-          <li><Link to="/login">Login Page</Link></li>
+          {/* <li><Link to="/signup">Signup</Link></li>
+          <li><Link to="/login">Login Page</Link></li> */}
           <li><Link to="/logout">Log out</Link></li>
         </ul>
       </div>

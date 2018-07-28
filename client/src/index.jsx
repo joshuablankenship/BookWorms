@@ -11,6 +11,7 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom'
+import Nav1 from './components/Nav1.jsx';
 import Nav from './components/Nav.jsx';
 import DATA from './mockData';
 import REVIEWS from './mockReview';
@@ -18,7 +19,7 @@ import HomePage from './components/HomePage.jsx';
 import LoginPage from './containers/LoginPage.jsx';
 import Logout from './containers/Logout.jsx';
 import SignUpPage from './containers/SignUpPage.jsx';
-import MainPage from './containers/MainPage.jsx';
+import Main from './components/Main.jsx';
 import Auth from './modules/Auth';
 const axios = require('axios');
 
@@ -64,6 +65,7 @@ class App extends Component {
       items: [],
       reviews: [],
       reviewToggled: false,
+      authenticated: false
     };
     this.searchForBook = (title) => {
       axios.get('/googleData', {
@@ -102,19 +104,63 @@ class App extends Component {
   
   render() {
     return (
+
+      // <div>
+      //   <Router>
+      //     <div>            
+      //       <Route
+      //         path="/"
+      //         render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
+      //           reviewToggle={this.reviewToggle.bind(this)}
+      //           reviewToggled={this.state.reviewToggled}
+      //           handleSearchInput={this.searchForBook.bind(this)} 
+      //           />}
+      //       />
+      //       <Route
+      //         path="/main"
+      //         render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
+      //           reviewToggle={this.reviewToggle.bind(this)} 
+      //           reviewToggled={this.state.reviewToggled}
+      //           handleSearchInput={this.searchForBook.bind(this)} />}
+      //       />
+      //       <Route path="/login" component={LoginPage} />
+      //       <Route path="/signup" component={SignUpPage} />
+      //     </div>
+      //   </Router>
+      // </div>
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Router>
           <div>
-        <Route
+          {this.state.authenticated ? (
+            <div>
+                <Route
+                        path="/"
+                        render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
+                          reviewToggle={this.reviewToggle.bind(this)}
+                          reviewToggled={this.state.reviewToggled}
+                          handleSearchInput={this.searchForBook.bind(this)} 
+                          />}
+                      />
+                      <Route
+                        path="/main"
+                        render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
+                          reviewToggle={this.reviewToggle.bind(this)} 
+                          reviewToggled={this.state.reviewToggled}
+                          handleSearchInput={this.searchForBook.bind(this)} />}
+                      />
+                      </div>
+              ) : (
+                <Route
               path="/"
-              render={props => <Nav {...props} items={this.state.items} 
-                handleSearchInput={this.searchForBook.bind(this)} />}
+              render={props => <Nav1 />}
             />
-
+              )}
+        
+            
             
 
             <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            <PrivateRoute path="/main" component={MainPage}/>
+            {/* <PrivateRoute path="/main" component={Main}/> */}
             <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
             <LoggedOutRoute path="/signup" component={SignUpPage}/>
             <Route path="/logout" component={Logout} />

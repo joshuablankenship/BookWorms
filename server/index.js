@@ -6,9 +6,8 @@ const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
-require('./models').connect(MONGOLINK.MONGOLINK);
-
-
+// require('./models').connect(MONGOLINK.MONGOLINK);
+const db = require('../database/index.js')
 
 const app = express();
 // tell the app to look for static files in these directories
@@ -32,11 +31,19 @@ app.use('/api', authCheckMiddleware);
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
 app.use('/auth', authRoutes);
-app.use('/api', apiRoutes);
+// app.use('/api', apiRoutes);
 
 // skeleton of patch request for updating favrite title list of user
 app.patch('', (req, res) => {
-
+  // our patch method will need to do several things,we will need to update the
+  // user data that stores the book, we will also need to add the new
+  // review rating to our aggregate rating for that book in our books
+  // document
+  //
+  // The above is ideal, with the limited time we have, getting the userRating on the
+  // saved book document to an array, and allow reviews to just push another rating
+  // this will save time and complexity in data, and allow us to populate the user
+  // ratings without creating users or hardcoding. we can just push new review values
 });
 
 
@@ -68,16 +75,12 @@ app.get('/googleData', (req, response) => {
   const query = req.query.title;
   helpers.googleBooks(query)
     .then((res) => {
-      // console.log(res.data.items[0]);
       const info = res.data.items[0].volumeInfo;
       const title = info.title;
       const longDescript = info.description; // full description
       const genres = info.categories; // array of genre strings, often 1 element
       const rating = +info.averageRating || 2.75;
-      // number rating can be whole number or number.number in the range of 0-5
-      // const ageRating = info.maturityRating;// USELESS!!! naked lunch listed not mature
       const coverImage = info.imageLinks.thumbnail; // url to large format thumbnail
-      //   const shortDescript = res.data.items[0].searchInfo.textSnippet;
       const ISBN10 = info.industryIdentifiers[0].identifier;
       const ISBN13 = info.industryIdentifiers[1].identifier;
       helpers.libThingISBN(ISBN10)
@@ -87,6 +90,21 @@ app.get('/googleData', (req, response) => {
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
               const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating) / 3;
+              db.saveBook({
+                title,
+                longDescript,
+                ISBN13,
+                aggregateRating,
+                rating,
+                libThingRating,
+                gReadsRating,
+                userRating: 2.75,
+                coverImage,
+              }, (err, data) => {
+                if (err) { console.log(err); } else {
+                  console.log('success');
+                }
+              });
               response.json({
                 title,
                 longDescript,

@@ -84,6 +84,9 @@ class App extends Component {
         params: { title },
       })
         .then((response) => {
+          if (this.state.reviewToggled) {
+            this.setState({ reviewToggled: false });
+          }
           this.setState({ items: [response.data] });
         })
         .catch((error) => {
@@ -91,13 +94,8 @@ class App extends Component {
         });
     };
     this.reviewToggle = (item) => {
-      if (item) {
-        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
-      } else {
-        // if no item is passed in, set reviewToggled to false to revert to MainList view when searching
-        this.setState({ reviewToggled: false });
-      }
-    };
+      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
+    }
   }
 
   componentDidMount() {

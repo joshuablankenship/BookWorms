@@ -1,2 +1,2 @@
 # BookWorms
-Metacritic for children's books
+Metacritic for books

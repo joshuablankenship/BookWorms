@@ -1,6 +1,11 @@
 import React from 'react';
 import MainList from './MainList.jsx';
+import ReviewList from './ReviewsList.jsx';
 import Search from './Search.jsx';
+import LoginPage from '../containers/LoginPage.jsx';
+import Logout from '../containers/Logout.jsx';
+import Reviews from './Reviews.jsx';
+
 
 import {
 	BrowserRouter as Router,
@@ -14,11 +19,7 @@ import {
 const Nav = props => (
   
 <div>
-{/* <ul>
-				<li><Link to="/">Main Page</Link></li>
-				<li><Link to="/login">Login Page</Link></li>
-				<li><Link to="/signup">Signup</Link></li>
-			</ul> */}
+
 	
   <nav className="navbar navbar-default">
     <div className="container-fluid">
@@ -53,20 +54,29 @@ const Nav = props => (
           </li>
         </ul>
         <form className="navbar-form navbar-left">
-          <Search handleSearchInput={props.handleSearchInput}/>         
+            <Search handleSearchInput={props.handleSearchInput} reviewToggle={props.reviewToggle}/>         
         </form>
         <ul className="nav navbar-nav navbar-right">
-          <li><Link to="/signup">Signup</Link></li>
-          <li><Link to="/login">Login Page</Link></li>
-          <button type="button" className="btn btn-default navbar-btn">Log out</button>
+          {/* <li><Link to="/signup">Signup</Link></li>
+          <li><Link to="/login">Login Page</Link></li> */}
+          <li><Link to="/logout">Log out</Link></li>
         </ul>
       </div>
     </div> 
   </nav>
 
-  {props.items.map(item => <MainList item={item} key={item.title} />)}
+  {/* if statement switches between MainList and Reviews */}
+    {props.reviewToggled ? props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)
+      : props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle} />)}
+  
 
-</div>  
+  
+  {/* {props.items.map(item => <MainList item={item} key={item.title} reviewToggle={props.reviewToggle}/>)} */}
+  {/* {props.items.map(item => <Reviews item={item} key={item.title} reviews={props.reviews} />)} */}
+
+  
+  
+  </div>  
 );
               
 export default Nav;

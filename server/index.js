@@ -18,7 +18,6 @@ app.use(express.static(`${__dirname}/../client/dist`));
 
 // skeleton of patch request for updating favrite title list of user
 app.patch('', (req, res) => {
-
 });
 
 
@@ -69,6 +68,21 @@ app.get('/googleData', (req, response) => {
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
               const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating) / 3;
+              db.saveBook({
+                title,
+                longDescript,
+                ISBN13,
+                aggregateRating,
+                rating,
+                libThingRating,
+                gReadsRating,
+                userRating: 2.75,
+                coverImage,
+              }, (err, data) => {
+                if (err) { console.log(err); } else {
+                  console.log(data, 'success');
+                }
+              });
               response.json({
                 title,
                 longDescript,

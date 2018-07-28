@@ -30,11 +30,10 @@ const bookSchema = mongoose.Schema({
   goodReadsRating: Number,
   userRating: Number,
   cover: String,
-  genre: String,
 });
 
 const Book = mongoose.model('Book', bookSchema);
-const saveBook = (bookObj) => {
+const saveBook = (bookObj, cb) => {
   const book = new Book({
     title: bookObj.title,
     description: bookObj.longDescript,
@@ -45,7 +44,13 @@ const saveBook = (bookObj) => {
     goodReadsRating: bookObj.gReadsRating,
     userRating: 2.5,
     cover: bookObj.coverImage,
-    genre: bookObj.genres[0],
+  });
+  book.save((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(book, 'success');
+    }
   });
 };
 

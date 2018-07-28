@@ -123,7 +123,11 @@ userSchema.pre('save', (next) => {
     });
   });
 });
-module.exports.comparePassword = comparePassword;
-module.exports.findUser = findUser;
-module.exports.saveUser = saveUser;
-module.exports.saveBook = saveBook;
+
+module.exports = {
+  comparePassword,
+  findUser,
+  saveUser,
+  saveBook,
+};
+

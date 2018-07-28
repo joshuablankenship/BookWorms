@@ -6,7 +6,7 @@ const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers.js');
-require('./models').connect(MONGOLINK.MONGOLINK);
+require('./models').connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // const db = require('../database/index.js')
 
 const app = express();

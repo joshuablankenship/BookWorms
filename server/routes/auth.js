@@ -15,18 +15,18 @@ function validateSignupForm(payload) {
   const errors = {};
   let isFormValid = true;
   let message = '';
-
-  
-
+  if (!payload || typeof payload.name !== 'string' || payload.name.trim().length === 0) {
+    isFormValid = false;
+    errors.name = 'Please provide your name.';
+  }
+  console.log(isFormValid, "name");
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
     isFormValid = false;
     errors.password = 'Password must have at least 8 characters.';
   }
 
-  if (!payload || typeof payload.name !== 'string' || payload.name.trim().length === 0) {
-    isFormValid = false;
-    errors.name = 'Please provide your name.';
-  }
+  console.log(isFormValid, "password");
+  
 
   if (!isFormValid) {
     message = 'Check the form for errors.';
@@ -71,6 +71,7 @@ function validateLoginForm(payload) {
 
 router.post('/signup', (req, res, next) => {
   const validationResult = validateSignupForm(req.body);
+  console.log(req.body, 'request body signup');
   if (!validationResult.success) {
     return res.status(400).json({
       success: false,
@@ -83,7 +84,7 @@ router.post('/signup', (req, res, next) => {
   return passport.authenticate('local-signup', (err) => {
     if (err) {
       if (err.name === 'MongoError' && err.code === 11000) {
-        
+        console.log(mongo-error);
       }
 
       return res.status(400).json({

@@ -8,18 +8,18 @@ const config = require('../../config');
  * Return the Passport Local Strategy object.
  */
 module.exports = new PassportLocalStrategy({
-  usernameField: 'name',
+  usernameField: 'username',
   passwordField: 'password',
   session: false,
   passReqToCallback: true
-}, (req, name, password, done) => {
+}, (req, username, password, done) => {
   const userData = {
-    name: name.trim(),
+    username: username.trim(),
     password: password.trim()
   };
 
   // find a user by name
-  return User.findOne({ name: userData.name }, (err, user) => {
+  return User.findOne({ username: userData.username }, (err, user) => {
     if (err) { return done(err); }
 
     if (!user) {

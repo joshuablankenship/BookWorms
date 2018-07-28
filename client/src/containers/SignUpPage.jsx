@@ -15,7 +15,6 @@ class SignUpPage extends React.Component {
     this.state = {
       errors: {},
       user: {
-       
         name: '',
         password: ''
       }
@@ -69,6 +68,7 @@ class SignUpPage extends React.Component {
         });
       }
     });
+    console.log(formData);
     xhr.send(formData);
   }
 

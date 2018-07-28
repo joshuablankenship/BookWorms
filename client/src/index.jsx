@@ -21,6 +21,7 @@ import Logout from './containers/Logout.jsx';
 import SignUpPage from './containers/SignUpPage.jsx';
 import Main from './components/Main.jsx';
 import Auth from './modules/Auth';
+// import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 const axios = require('axios');
 

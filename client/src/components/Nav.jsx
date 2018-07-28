@@ -5,6 +5,9 @@ import Search from './Search.jsx';
 import LoginPage from '../containers/LoginPage.jsx';
 import Logout from '../containers/Logout.jsx';
 import Reviews from './Reviews.jsx';
+import { NavDropdown, MenuItem } from 'react-bootstrap';
+
+
 
 
 import {
@@ -41,7 +44,15 @@ const Nav = props => (
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul className="nav navbar-nav">
 
-          <li className="dropdown">
+            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+              <MenuItem eventKey={3.1}>Action</MenuItem>
+              <MenuItem eventKey={3.2}>Another action</MenuItem>
+              <MenuItem eventKey={3.3}>Something else here</MenuItem>
+              <MenuItem divider />
+              <MenuItem eventKey={3.4}>Separated link</MenuItem>
+            </NavDropdown>
+
+          {/* <li className="dropdown">
             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Genre <span className="caret"></span></a>
             <ul className="dropdown-menu">
               <li><a href="#">Action</a></li>
@@ -52,7 +63,7 @@ const Nav = props => (
               <li role="separator" className="divider"></li>
               <li><a href="#">One more separated link</a></li>
             </ul>
-          </li>
+          </li> */}
 
         </ul>
         <form className="navbar-form navbar-left">

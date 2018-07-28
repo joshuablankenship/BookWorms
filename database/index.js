@@ -49,11 +49,11 @@ const saveBook = (bookObj, cb) => {
     userRating: 2.5,
     cover: bookObj.coverImage,
   });
-  book.save((err) => {
+  book.save((err, data) => {
     if (err) {
-      console.log(err);
+      cb(err);
     } else {
-      console.log('success');
+      cb(data);
     }
   });
 };

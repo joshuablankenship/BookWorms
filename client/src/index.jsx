@@ -94,18 +94,8 @@ class App extends Component {
         });
     };
     this.reviewToggle = (item) => {
-<<<<<<< HEAD
       this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
     }
-=======
-      if (item) {
-        this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
-      } else {
-        // if no item is passed in, set reviewToggled to false to revert to MainList view when searching
-        this.setState({ reviewToggled: false });
-      }
-    };
->>>>>>> 08afb9923827abb8134d6f6c5b9e5d80fd193acf
   }
 
   componentDidMount() {

@@ -72,11 +72,10 @@ const userBooksSchema = mongoose.Schema({
 const UserBook = mongoose.model('UserBook', userBooksSchema);
 
 const saveUser = (name, pass) => {
-  var salt = bcrypt.genSaltSync(10);
+  const salt = bcrypt.genSaltSync(10);
 
 
-
-  var hash = bcrypt.hashSync(pass, salt);
+  const hash = bcrypt.hashSync(pass, salt);
   const user = new User({
     username: name,
     password: hash,
@@ -109,13 +108,10 @@ const findUser = (username, callback) => {
  * @returns {object} callback
  * * */
 
-const comparePassword = (password1, password2) => {
-  
-  return bcrypt.compareSync(password1, password2);
-};
+const comparePassword = (password1, password2) => bcrypt.compareSync(password1, password2);
 
 
-const passportValidate = (un, pw)=> {
+const passportValidate = (un, pw) => {
 // User.findOne({ username: un}, (err, user) => {
 //   if (err) { return done(err); }
 
@@ -148,11 +144,11 @@ const passportValidate = (un, pw)=> {
 //     };
 
 //     return done(null, token, data);
-  
+
 //   });
-  
+
 // });
-}
+};
 module.exports = {
   comparePassword,
   findUser,

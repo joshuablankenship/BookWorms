@@ -21,8 +21,6 @@ import Logout from './containers/Logout.jsx';
 import SignUpPage from './containers/SignUpPage.jsx';
 import Main from './components/Main.jsx';
 import Auth from './modules/Auth';
-// import { NavDropdown, MenuItem } from 'react-bootstrap';
-
 const axios = require('axios');
 
 // remove tap delay, essential for MaterialUI to work properly
@@ -105,8 +103,6 @@ class App extends Component {
           if (this.state.reviewToggled) {
             this.setState({ reviewToggled: false });
           }
-          // console.log(response, 'response in index')
-          console.log(response.data.highRated, 'response.highRated in index')
           this.setState({ items: response.data.highRated });
         })
         .catch((error) => {

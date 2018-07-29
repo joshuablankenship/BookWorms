@@ -72,10 +72,10 @@ app.get('/topRated', (req, res) => {
       books.forEach((book) => {
         if (book.bookWormRating > 1) {
           const uRatingLen = book.userRating.length;
-          const allUserRatings = book.userRating.reduce((accum, current) => {
+          const allUserRatings = Math.round(book.userRating.reduce((accum, current) => {
             accum += +current;
             return accum;
-          }, 0) / uRatingLen;
+          }, 0) / uRatingLen);
           const allRatings = Math.round(+book.googleRating + +book.libThingRating + +book.goodReadsRating + allUserRatings) / 4;
           top.push({
             title: book.title,

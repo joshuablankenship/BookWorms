@@ -103,6 +103,7 @@ app.get('/genreTest', (req, res) => {
             title: book.volumeInfo.title,
             rating: +book.volumeInfo.averageRating,
             coverImage: book.volumeInfo.imageLinks.thumbnail,
+            longDescript: book.volumeInfo.description,
 
           };
           highRated.push(highRatedBook);

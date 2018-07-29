@@ -48,7 +48,7 @@ app.patch('', (req, res) => {
   // this will save time and complexity in data, and allow us to populate the user
   // ratings without creating users or hardcoding. we can just push new review values
 });
-
+// topRated will pull all books rated over 3.5 and deliver them as array of book objects named top
 app.get('/topRated', (req, res) => {
   const top = [];
   db.allBooks((err, books) => {

@@ -28,16 +28,25 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const reviewSchema = mongoose.Schema({
-  title: { type: String, unique: true },
-  username: { type: String, unique: true },
-  reviewText: [String],
+  title: String,
+  username: String,
+  reviewText: String,
 });
+
 const Review = mongoose.model('Review', reviewSchema);
 
-const saveReview = (title, username, reviewText) => {
-  
+const saveReview = (title, username, reviewText, cb) => {
+  const review = new Review({
+    title,
+    username,
+    reviewText,
+  });
+  review.save((err) => {
+    if (err) {
+      cb(err);
+    }
+  });
 };
-
 const bookSchema = mongoose.Schema({
   title: { type: String, unique: true },
   description: String,
@@ -186,4 +195,5 @@ module.exports = {
   passportValidate,
   allBooks,
   addRating,
+  saveReview,
 };

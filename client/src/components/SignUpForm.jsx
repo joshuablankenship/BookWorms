@@ -17,11 +17,12 @@ const SignUpForm = ({
 }) => (
   <div className="container">
     <form  className="form-horizontal" action="/" onSubmit={onSubmit}>
+    <div className= "form-group">
     <div className="col-sm-9 col-sm-offset-4">
       <h2 className="card-heading">Sign Up</h2>
+      </div><div className="col-sm-9 col-sm-offset-4">
+      {errors.summary && <p className="error-message">{errors.summary}</p>}</div>
       </div>
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
-
       <div className="form-group">
       <div className="col-sm-9 col-sm-offset-4">
         <TextField
@@ -53,16 +54,7 @@ const SignUpForm = ({
           <DatePicker hintText="Birthdate" />
           </div>
         </div>
-        <div className="form-group">
-        <div className="col-sm-9 col-sm-offset-4">Favorite Genres
-        <Checkbox label="Fantasy" />
-        <Checkbox label="Science Fiction" />
-        <Checkbox label="Mystery" />
-        <Checkbox label="Biography" />
-        <Checkbox label="Non Fiction" />
-        <Checkbox label="Classics" />
-        </div>
-          </div>
+        
       <div className="button">
       <div className="col-sm-9 col-sm-offset-4">
         <RaisedButton  type="submit" label="Create New Account" />

@@ -19,14 +19,11 @@ function validateSignupForm(payload) {
     isFormValid = false;
     errors.name = 'Please provide your name.';
   }
-  console.log(isFormValid, "name");
+  
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
     isFormValid = false;
     errors.password = 'Password must have at least 8 characters.';
   }
-
-  console.log(isFormValid, "password");
-  
 
   if (!isFormValid) {
     message = 'Check the form for errors.';
@@ -78,12 +75,11 @@ router.post('/signup', (req, res, next) => {
       errors: validationResult.errors
     });
   }
-  console.log(req.body, 'request body signup');
   const { name, password } = req.body;
   
   db.findUser(name, (err, user) => {
     if (err) {
-      console.log('User.js post error: ', err)
+      console.error(err);
     } else if (user) {
    
        return res.status(418).json({
@@ -118,9 +114,7 @@ router.post('/login', (req, res, next) => {
     if (err) {
       console.error(err);
     } else if (user) {
-      console.log(user, 'user login attempt');
-      console.log(user.password, "user password in db");
-      console.log(password, "password input");
+     
       if(db.comparePassword(password, user.password)){
         return passport.authenticate('local-login', (err, token, userData) => {
           if (err) {

@@ -25,8 +25,8 @@ const Nav2 = props => (
           <span className="icon-bar"></span>
           <span className="icon-bar"></span>
         </button>
-        <div>Bookworms
-          {/* <Link to="/main" className="navbar-brand">Bookworms</Link> */}
+        <div>
+        <Link to="/" className="navbar-brand">Bookworms</Link>
           <img alt="Brand" src="https://i.pinimg.com/originals/d0/fb/73/d0fb73f0ab79cfc626ee14efaa475ea0.png" height="35px" width="35px"></img>
         </div>
       </div>

@@ -55,9 +55,9 @@ class Nav extends React.Component {
               <form className="navbar-form navbar-left">
                 <Search handleSearchInput={this.props.handleSearchInput} />
               </form>
+              
               <ul className="nav navbar-nav navbar-right">
-                {/* <li><Link to="/signup">Signup</Link></li>
-                <li><Link to="/login">Login Page</Link></li> */}
+                <li><Link to="">Hi <b>{this.props.username}</b>, you are logged in</Link></li>
                 <li><Link to="/logout">Log out</Link></li>
               </ul>
             </div>

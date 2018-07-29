@@ -112,8 +112,7 @@ class App extends Component {
         });
     };
     this.submitReview = (review, rating) => {
-      console.log(review, 'review in index');
-      console.log(rating, 'rating in index');
+      // console.log(review, 'review in index');
 
       axios.post('/addRating', rating)
         .then((response) => {

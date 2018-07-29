@@ -41,12 +41,25 @@ const saveReview = (title, username, reviewText, cb) => {
     username,
     reviewText,
   });
-  review.save((err) => {
+  review.save((err, doc) => {
     if (err) {
       cb(err);
+    } else {
+      cb(err, doc);
     }
   });
 };
+
+const allReviews = (cb) => {
+  Review.find({}, (err, books) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(err, books);
+    }
+  });
+};
+
 const bookSchema = mongoose.Schema({
   title: { type: String, unique: true },
   description: String,
@@ -191,4 +204,5 @@ module.exports = {
   allBooks,
   addRating,
   saveReview,
+  allReviews,
 };

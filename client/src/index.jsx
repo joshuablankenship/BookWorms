@@ -7,7 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
+  Link, 
   Redirect,
   withRouter,
 } from 'react-router-dom';
@@ -82,11 +82,6 @@ class App extends Component {
     };
     console.log(sessionStorage.getItem('username'));
 
-    // this.onUpdate = (val) => {
-    //   this.setState({
-    //     username: val
-    //   })
-    // };
 
     this.searchForBook = (title) => {
       axios.get('/googleData', {
@@ -157,6 +152,7 @@ class App extends Component {
    
   toggleAuthenticateStatus() {
     // check authenticated status and toggle state based on that
+    // set current username if authenticated
     this.setState({ authenticated: Auth.isUserAuthenticated(), username : sessionStorage.getItem('username') });
   }
   

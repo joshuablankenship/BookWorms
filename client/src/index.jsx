@@ -94,8 +94,22 @@ class App extends Component {
         });
     };
     this.reviewToggle = (item) => {
-      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
-    }
+      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
+    };
+    this.searchByGenre = (genre) => {
+      axios.get('/genreTest', {
+        params: { genre },
+      })
+        .then((response) => {
+          if (this.state.reviewToggled) {
+            this.setState({ reviewToggled: false });
+          }
+          this.setState({ items: response.data.highRated });
+        })
+        .catch((error) => {
+          console.error(error, 'error in index.jsx');
+        });
+    };
   }
 
   componentDidMount() {
@@ -162,6 +176,8 @@ class App extends Component {
                     reviewToggle={this.reviewToggle.bind(this)}
                     reviewToggled={this.state.reviewToggled}
                     handleSearchInput={this.searchForBook.bind(this)}
+                    handleSearchByGenre={this.searchByGenre.bind(this)}
+
                   />
                   )}
                 />

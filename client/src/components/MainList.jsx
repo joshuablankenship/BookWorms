@@ -53,7 +53,9 @@ class MainList extends React.Component {
               </div>
             </div>
             <div className="media-body">
-              <h4 className="media-heading">{this.props.item.title}</h4>
+              <a href="#" onClick={this.handleOnclick.bind(this)}>
+                <h4 className="media-heading">{this.props.item.title}</h4>
+              </a>
               {this.props.item.longDescript}
             </div>
             <div className="media-right">

@@ -14,12 +14,17 @@ const LoginForm = ({
 }) => (
   <div className="container">
     <form action="/" onSubmit={onSubmit}>
+    <div className="form-group">
+      <div className="col-sm-9 col-sm-offset-4">
       <h2 className="card-heading">Login</h2>
-
+      <div>
       {successMessage && <p className="success-message">{successMessage}</p>}
       {errors.summary && <p className="error-message">{errors.summary}</p>}
-
-      <div className="field-line">
+      </div>
+      </div>
+      </div>
+      <div className="form-group">
+      <div className="col-sm-9 col-sm-offset-4">
         <TextField
           floatingLabelText="Username"
           name="name"
@@ -27,9 +32,11 @@ const LoginForm = ({
           onChange={onChange}
           value={user.name}
         />
+        </div>
       </div>
 
-      <div className="field-line">
+      <div className="form-group">
+      <div className="col-sm-9 col-sm-offset-4">
         <TextField
           floatingLabelText="Password"
           type="password"
@@ -37,13 +44,19 @@ const LoginForm = ({
           onChange={onChange}
           value={user.password}
         />
+        </div>
       </div>
 
-      <div className="button-line">
+      <div className="form-group">
+      <div className="col-sm-9 col-sm-offset-4">
         <RaisedButton type="submit" label="Log in"/>
+        </div>
       </div>
-
+      <div className="form-group">
+      <div className="col-sm-9 col-sm-offset-4">
       <CardText>Don't have an account? <Link to={'/signup'}>Create one</Link>.</CardText>
+      </div>
+      </div>
     </form>
   </div>
 );

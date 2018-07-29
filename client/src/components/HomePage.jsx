@@ -14,8 +14,7 @@ class HomePage extends React.Component {
       <Card className="container">
       {Auth.isUserAuthenticated() ? (
         
-            <CardText style={{ fontSize: '16px', color: 'green' }}>You are logged in.</CardText>
-            
+        <div></div>    
           ) : (
             <div>
         <CardTitle title="Bookworms"/>

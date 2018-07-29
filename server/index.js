@@ -1,5 +1,5 @@
 
-'use strict';
+
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-console */
 
@@ -18,20 +18,23 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // create application/json parser
-const jsonParser = bodyParser.json()
+const jsonParser = bodyParser.json();
 
 // pass the passport middleware
 app.use(passport.initialize());
 // load passport strategies
 const localLoginStrategy = require('./passport/local-login');
+
 passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
+
 app.use('/api', authCheckMiddleware);
 
 // routes
 const authRoutes = require('./routes/auth');
+
 app.use('/auth', authRoutes);
 
 // skeleton of patch request for updating favrite title list of user
@@ -71,7 +74,7 @@ app.get('/topRated', (req, res) => {
           const uRatingLen = book.userRating.length;
           const allUserRatings = book.userRating.reduce((accum, current) => {
             accum += +current;
-            return accum
+            return accum;
           }, 0) / uRatingLen;
           const allRatings = Math.round(+book.googleRating + +book.libThingRating + +book.goodReadsRating + allUserRatings) / 4;
           top.push({
@@ -101,6 +104,23 @@ app.get('/topRated', (req, res) => {
         return comparison;
       });
       res.send({ len: top.length, top });
+    }
+  });
+});
+
+app.get('/reviewTest', (req, res) => {
+  db.saveReview('Lord of The Flies', 'Alec', 'One of the Best!', (err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('saved review');
+    }
+  });
+  db.allReviews((err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(doc);
     }
   });
 });

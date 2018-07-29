@@ -115,16 +115,13 @@ class App extends Component {
       console.log(review, 'review in index');
       console.log(rating, 'rating in index');
 
-      axios.post('/addReview', review)
+      axios.post('/addRating', rating)
         .then((response) => {
-          console.log(response, 'review added in index');
-          axios.post('/addRating', rating)
-            .then((response) => {
-              console.log(response, 'rating added in index');
-            })
-            // .catch((error) => {
-            //   console.error(error, 'error in index.jsx');
-            // });
+          console.log(response, 'rating added in index');
+          // axios.post('/addReview', review)
+          //   .then((response) => {
+          //     console.log(response, 'review added in index');
+          //   })
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');

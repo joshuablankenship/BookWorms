@@ -1,4 +1,6 @@
 /* eslint-disable prefer-destructuring */
+/* eslint-disable no-console */
+
 const express = require('express');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;

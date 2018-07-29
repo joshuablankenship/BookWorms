@@ -70,9 +70,14 @@ app.get('/topRated', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('success');
       books.forEach((book) => {
-        if (book.bookWormRating > 2) {
+        if (book.bookWormRating > 1) {
+          const uRatingLen = book.userRating.length;
+          const allUserRatings = book.userRating.reduce((accum, current) => {
+            accum += +current;
+            return accum
+          }, 0) / uRatingLen;
+          const allRatings = Math.round(+book.googleRating + +book.libThingRating + +book.goodReadsRating + allUserRatings) / 4;
           top.push({
             title: book.title,
             longDescript: book.description,
@@ -80,8 +85,8 @@ app.get('/topRated', (req, res) => {
             coverImage: book.cover,
             libThingRating: book.libThingRating,
             gReadsRating: book.goodReadsRating,
-            userRating: 2.75,
-            aggregateRating: book.bookWormRating,
+            userRating: allUserRatings,
+            aggregateRating: allRatings,
 
           });
         }
@@ -117,10 +122,6 @@ app.get('/genreTest', (req, res) => {
             rating: +book.volumeInfo.averageRating,
             coverImage: book.volumeInfo.imageLinks.thumbnail,
             longDescript: book.volumeInfo.description,
-<<<<<<< HEAD
-
-=======
->>>>>>> 5f22f2f4a515b59e023902ed8922e7ebabc849df
           };
           highRated.push(highRatedBook);
         }

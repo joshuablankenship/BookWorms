@@ -117,7 +117,10 @@ app.get('/genreTest', (req, res) => {
             rating: +book.volumeInfo.averageRating,
             coverImage: book.volumeInfo.imageLinks.thumbnail,
             longDescript: book.volumeInfo.description,
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5f22f2f4a515b59e023902ed8922e7ebabc849df
           };
           highRated.push(highRatedBook);
         }

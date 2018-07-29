@@ -18,7 +18,7 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // create application/json parser
-var jsonParser = bodyParser.json()
+const jsonParser = bodyParser.json()
 
 // pass the passport middleware
 app.use(passport.initialize());
@@ -51,7 +51,7 @@ app.post('/addRating', jsonParser, (req, res) => {
   // console.log(req, 'req');
   const rating = req.body;
   console.log(rating, 'rating in server');
-  db.addRating('Lord of the Flies', 5, (err, doc) => {
+  db.addRating('Lord of the Flies', rating, (err, doc) => {
     if (err) {
       console.log(err);
     } else {

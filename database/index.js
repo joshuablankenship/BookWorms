@@ -1,3 +1,4 @@
+'use strict';
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -66,16 +67,14 @@ const allBooks = (cb) => {
   });
 };
 
-const addRating = ((title, rating, cb) => {
-  Book.findOneAndUpdate({ title }, {
-    $push: { userRating: rating },
-    function(err, doc) {
-      if (err) { cb(err); } else {
-        cb(err, doc);
-      }
-    },
+const addRating = (title, rating, cb) => {
+  Book.findOneAndUpdate({ title }, { $push: { userRating: rating } }, (err, doc) => {
+    if (err) { cb(err); } else {
+      cb(err, doc);
+    }
   });
-});
+};
+
 // var query = {'username':req.user.username};
 // req.newData.username = req.user.username;
 // MyModel.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){

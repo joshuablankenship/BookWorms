@@ -1,3 +1,5 @@
+
+'use strict';
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-console */
 
@@ -49,6 +51,17 @@ app.patch('', (req, res) => {
   // saved book document to an array, and allow reviews to just push another rating
   // this will save time and complexity in data, and allow us to populate the user
   // ratings without creating users or hardcoding. we can just push new review values
+});
+
+app.get('/addRating', (req, res) => {
+  db.addRating('Lord of the Flies', 5, (err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success');
+      res.send(doc);
+    }
+  });
 });
 // topRated will pull all books rated over 3.5 and deliver them as array of book objects named top
 app.get('/topRated', (req, res) => {

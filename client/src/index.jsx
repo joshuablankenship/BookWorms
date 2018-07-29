@@ -114,8 +114,21 @@ class App extends Component {
   componentDidMount() {
     // check if user is logged in on refresh
     this.toggleAuthenticateStatus();
+
+    axios.get('/topRated')
+      .then((response) => {
+        // if (this.state.reviewToggled) {
+        //   this.setState({ reviewToggled: false });
+        // }
+        console.log(response.data.top, 'response.data in index');
+        this.setState({ items: response.data.top });
+      })
+      .catch((error) => {
+        console.error(error, 'error in index.jsx');
+      });
+    
     this.setState({
-      items: DATA,
+      // items: DATA,
       reviews: REVIEWS,
     });
   }

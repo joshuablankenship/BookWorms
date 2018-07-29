@@ -34,7 +34,7 @@ const bookSchema = mongoose.Schema({
   libThingRating: Number,
   goodReadsRating: Number,
   userRating: [Number],
-  cover: String,
+  coverImage: String,
 });
 
 const Book = mongoose.model('Book', bookSchema);
@@ -49,7 +49,7 @@ const saveBook = (bookObj, cb) => {
     libThingRating: bookObj.libThingRating,
     goodReadsRating: bookObj.gReadsRating,
     userRating: 2.5,
-    cover: bookObj.coverImage,
+    coverImage: bookObj.coverImage,
   });
   book.save((err) => {
     if (err) {

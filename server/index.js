@@ -1,12 +1,14 @@
+
+'use strict';
 /* eslint-disable prefer-destructuring */
+/* eslint-disable no-console */
+
 const express = require('express');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
-const MONGOLINK = require('../config.js');
 const helpers = require('./helpers.js');
-// require('./models').connect(MONGOLINK.MONGOLINK);
 const db = require('../database/index.js');
 
 const app = express();
@@ -16,25 +18,17 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.use(bodyParser.urlencoded({ extended: false }));
 // pass the passport middleware
 app.use(passport.initialize());
-
 // load passport strategies
-const localSignupStrategy = require('./passport/local-signup');
 const localLoginStrategy = require('./passport/local-login');
-
-passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
-
 app.use('/api', authCheckMiddleware);
 
 // routes
 const authRoutes = require('./routes/auth');
-const apiRoutes = require('./routes/api');
-
 app.use('/auth', authRoutes);
-// app.use('/api', apiRoutes);
 
 // skeleton of patch request for updating favrite title list of user
 app.patch('', (req, res) => {
@@ -48,6 +42,17 @@ app.patch('', (req, res) => {
   // this will save time and complexity in data, and allow us to populate the user
   // ratings without creating users or hardcoding. we can just push new review values
 });
+
+app.post('/addRating', (req, res) => {
+  db.addRating('Lord of the Flies', 5, (err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success');
+      res.send(doc);
+    }
+  });
+});
 // topRated will pull all books rated over 3.5 and deliver them as array of book objects named top
 app.get('/topRated', (req, res) => {
   const top = [];
@@ -55,9 +60,14 @@ app.get('/topRated', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('success');
       books.forEach((book) => {
-        if (book.bookWormRating > 2) {
+        if (book.bookWormRating > 1) {
+          const uRatingLen = book.userRating.length;
+          const allUserRatings = book.userRating.reduce((accum, current) => {
+            accum += +current;
+            return accum
+          }, 0) / uRatingLen;
+          const allRatings = Math.round(+book.googleRating + +book.libThingRating + +book.goodReadsRating + allUserRatings) / 4;
           top.push({
             title: book.title,
             longDescript: book.description,
@@ -65,8 +75,8 @@ app.get('/topRated', (req, res) => {
             coverImage: book.cover,
             libThingRating: book.libThingRating,
             gReadsRating: book.goodReadsRating,
-            userRating: 2.75,
-            aggregateRating: book.bookWormRating,
+            userRating: allUserRatings,
+            aggregateRating: allRatings,
 
           });
         }

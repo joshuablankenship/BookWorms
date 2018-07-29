@@ -27,22 +27,22 @@ const axios = require('axios');
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props => (
-      Auth.isUserAuthenticated() ? (
-        <Component {...props} {...rest} />
-      ) : (
-        <Redirect to={{
-          pathname: '/',
-          state: { from: props.location },
-        }}
-        />
-      )
-    )}
-  />
-);
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={props => (
+//       Auth.isUserAuthenticated() ? (
+//         <Component {...props} {...rest} />
+//       ) : (
+//         <Redirect to={{
+//           pathname: '/',
+//           state: { from: props.location },
+//         }}
+//         />
+//       )
+//     )}
+//   />
+// );
 
 const LoggedOutRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -70,7 +70,6 @@ const PropsRoute = ({ component: Component, ...rest }) => (
     )}
   />
 );
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +78,7 @@ class App extends Component {
       reviews: [],
       reviewToggled: false,
       authenticated: false,
+      user: "",
     };
     this.searchForBook = (title) => {
       axios.get('/googleData', {
@@ -143,7 +143,7 @@ class App extends Component {
       .catch((error) => {
         console.error(error, 'error in index.jsx');
       });
-    
+
     this.setState({
       // items: DATA,
       reviews: REVIEWS,
@@ -226,12 +226,11 @@ class App extends Component {
 
 
             <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            {/* <PrivateRoute path="/main" component={Main}/> */}
-            <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+            <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()}  user = {this.user}/>
             <LoggedOutRoute path="/signup" component={SignUpPage} />
             <Route path="/logout" component={Logout} />
           </div>
-
+              
         </Router>
       </MuiThemeProvider>
     );

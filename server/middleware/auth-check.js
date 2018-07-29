@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('mongoose').model('User');
+// const User = require('mongoose').model('User');
 const config = require('../../config');
 
 
@@ -21,14 +21,26 @@ module.exports = (req, res, next) => {
 
     const userId = decoded.sub;
 
+<<<<<<< HEAD
     // check if a user exists
     return User.findById(userId, (userErr, user) => {
       if (userErr || !user) {
         return res.status(401).end();
       }
       // pass user details onto next route
-      req.user = user
+      req.user = user;
       return next();
     });
+=======
+    // // check if a user exists
+    // return User.findById(userId, (userErr, user) => {
+    //   if (userErr || !user) {
+    //     return res.status(401).end();
+    //   }
+    //   // pass user details onto next route
+    //   req.user = user
+    //   return next();
+    // });
+>>>>>>> 703cdafebbaa871086f9ad2f51be5806bdd4ed89
   });
 };

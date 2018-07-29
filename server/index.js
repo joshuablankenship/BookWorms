@@ -57,7 +57,7 @@ app.get('/topRated', (req, res) => {
     } else {
       console.log('success');
       books.forEach((book) => {
-        if (book.bookWormRating > 3.5) {
+        if (book.bookWormRating > 2) {
           top.push({
             title: book.title,
             longDescript: book.description,

@@ -129,21 +129,10 @@ const findUser = (username, callback) => {
 
 const comparePassword = (password1, password2) => bcrypt.compareSync(password1, password2);
 
-<<<<<<< HEAD
-
-const passportValidate = (un, pw) => {
-// User.findOne({ username: un}, (err, user) => {
-//   if (err) { return done(err); }
-
-//   if (!user) {
-//     const error = new Error('Incorrect username or password');
-//     error.name = 'IncorrectCredentialsError';
-=======
 // find a user and validate them with passport
 const passportValidate = (un, pw)=> {
 User.findOne({ username: un}, (err, user) => {
   if (err) { return done(err); }
->>>>>>> 703cdafebbaa871086f9ad2f51be5806bdd4ed89
 
   if (!user) {
     const error = new Error('Incorrect username or password');
@@ -173,21 +162,12 @@ User.findOne({ username: un}, (err, user) => {
       name: user.name
     };
 
-<<<<<<< HEAD
-//     return done(null, token, data);
-
-//   });
-
-// });
-};
-=======
     return done(null, token, data);
   
   });
   
 });
 }
->>>>>>> 703cdafebbaa871086f9ad2f51be5806bdd4ed89
 module.exports = {
   comparePassword,
   findUser,

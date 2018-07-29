@@ -1,7 +1,7 @@
 const express = require('express');
 const validator = require('validator');
 const passport = require('passport');
-
+const db = require('../../database/index.js')
 const router = new express.Router();
 
 /**
@@ -71,7 +71,6 @@ function validateLoginForm(payload) {
 
 router.post('/signup', (req, res, next) => {
   const validationResult = validateSignupForm(req.body);
-  console.log(req.body, 'request body signup');
   if (!validationResult.success) {
     return res.status(400).json({
       success: false,
@@ -79,26 +78,27 @@ router.post('/signup', (req, res, next) => {
       errors: validationResult.errors
     });
   }
-
-
-  return passport.authenticate('local-signup', (err) => {
+  console.log(req.body, 'request body signup');
+  console.log(req.body.name);
+  const { name, password } = req.body;
+  db.findUser(name, (err, user) => {
     if (err) {
-      if (err.name === 'MongoError' && err.code === 11000) {
-        console.log('mongo-error');
-      }
-
-      return res.status(400).json({
-        success: false,
-        message: 'Could not process the form.'
-      });
+      console.log('User.js post error: ', err)
+    } else if (user) {
+      
+       message =`Sorry, already a user with the username: ${name}`;
+      
     }
+  });
+  db.saveUser(name, password);
 
-    return res.status(200).json({
-      success: true,
-      message: 'You have successfully signed up! Now you should be able to log in.'
-    });
-  })(req, res, next);
-});
+//   return res.status(200).json({
+//     success: true,
+//     message: validationResult.message,
+//     errors: validationResult.errors
+
+// });
+  });
 
 router.post('/login', (req, res, next) => {
   const validationResult = validateLoginForm(req.body);

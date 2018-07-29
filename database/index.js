@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const MONGOLINK= require('../config.js');
-// mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
+mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
@@ -15,10 +15,7 @@ db.once('open', () => {
 });
 
 const userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    index: { unique: true },
-  },
+  username: String,
   password: String,
 });
 
@@ -83,7 +80,7 @@ const findUser = (username, callback) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log('found', username);
+      console.log('found', user);
       callback(null, user);
     }
   });
@@ -100,29 +97,29 @@ const comparePassword = (password, callback) => {
 };
 
 
-/**
- * The pre-save hook method.
- */
-userSchema.pre('save', (next) => {
+// /**
+//  * The pre-save hook method.
+//  */
+// userSchema.pre('save', (next) => {
  
 
-  // proceed further only if the password is modified or the user is new
-  if (!User.isModified('password')) return next();
+//   // proceed further only if the password is modified or the user is new
+//   if (!User.isModified('password')) return next();
 
 
-  return bcrypt.genSalt((saltError, salt) => {
-    if (saltError) { return next(saltError); }
+//   return bcrypt.genSalt((saltError, salt) => {
+//     if (saltError) { return next(saltError); }
 
-    return bcrypt.hash(user.password, salt, (hashError, hash) => {
-      if (hashError) { return next(hashError); }
+//     return bcrypt.hash(user.password, salt, (hashError, hash) => {
+//       if (hashError) { return next(hashError); }
 
-      // replace a password string with hash value
-      User.password = hash;
+//       // replace a password string with hash value
+//       User.password = hash;
 
-      return next();
-    });
-  });
-});
+//       return next();
+//     });
+//   });
+// });
 
 module.exports = {
   comparePassword,

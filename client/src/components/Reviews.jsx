@@ -6,16 +6,30 @@ class Reviews extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      starValue: 0 
+      starValue: 0,
+      value: '' 
     };
+    this.handleChange = (e) => {
+      this.setState({ value: e.target.value });
+    }
     this.handleInputChange = (value) => {
       this.setState({ starValue: value });
     }
-    this.handleOnclick = (e) => {
+    this.handleSubmit = (e) => {
       e.preventDefault();
-      // console.log('submit clicked');
-      // console.log(this.state.starValue, 'starValue on submit');
-      // this.props.handleSearchInput(this.state.value);
+
+      const rating = {
+        title: this.props.item.title,
+        rating: this.state.starValue
+      }
+
+      const review = {
+        title: this.props.item.title,
+        username: "Bob",
+        reviewTextBody: this.state.value,
+      }
+      this.props.handleReviewInput(review, rating);
+      this.setState({ value: '' });
     }
   }
 
@@ -39,9 +53,9 @@ class Reviews extends React.Component {
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Add your review" aria-describedby="basic-addon2"></textarea>
+              <textarea className="form-control" value={this.state.value} onChange={this.handleChange.bind(this)} id="exampleFormControlTextarea1" rows="3" placeholder="Add your review" aria-describedby="basic-addon2"></textarea>
             </div>
-            <button type="submit" className="btn btn-primary" onClick={this.handleOnclick.bind(this)} >Submit</button>
+            <button type="submit" className="btn btn-primary" onClick={this.handleSubmit.bind(this)} >Submit</button>
             <div className="media">
               <div className="media-right">
                 <Rating {...this.props} initialRating={this.state.starValue}

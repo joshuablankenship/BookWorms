@@ -122,12 +122,26 @@ router.post('/login', (req, res, next) => {
       console.log(user.password, "user password in db");
       console.log(password, "password input");
       if(db.comparePassword(password, user.password)){
-      
-          return res.status(200).json({
+        return passport.authenticate('local-login', (err, token, userData) => {
+          if (err) {
+            if (err.name === 'IncorrectCredentialsError') {
+              return res.status(400).json({
+                success: false,
+                message: err.message
+              });
+            }
+            return res.status(400).json({
+              success: false,
+              message: 'Could not process the form.'
+            });
+          }
+          return res.json({
             success: true,
-            message: validationResult.message,
-            errors: validationResult.errors
-      });
+            message: 'You have successfully logged in!',
+            token,
+            user: userData
+          });
+        })(req, res, next);
     }
     }else{
       return res.status(400).json({
@@ -138,29 +152,7 @@ router.post('/login', (req, res, next) => {
 
     }
 });
-  //  passport.authenticate('local-login', (err, token, userData) => {
-  //   if (err) {
-  //     if (err.name === 'IncorrectCredentialsError') {
-  //       return res.status(400).json({
-  //         success: false,
-  //         message: err.message
-  //       });
-  //     }
-
-  //     return res.status(400).json({
-  //       success: false,
-  //       message: 'Could not process the form.'
-  //     });
-  //   }
-
-
-  //   return res.json({
-  //     success: true,
-  //     message: 'You have successfully logged in!',
-  //     token,
-  //     user: userData
-  //   });
-  // })(req, res, next);
+   
 });
 
 module.exports = router;

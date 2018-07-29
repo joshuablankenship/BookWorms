@@ -46,7 +46,7 @@ class MainList extends React.Component {
                 </button>
                 <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
-                  User Rating <span className="badge">{this.props.item.rating}</span>
+                  User Rating <span className="badge">{this.props.item.userRating}</span>
                 </button>
                 <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>

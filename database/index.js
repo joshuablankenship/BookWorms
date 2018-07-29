@@ -1,6 +1,11 @@
+
+
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const MONGOLINK = require('../config.js');
+const config = require('../config');
 
 mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
@@ -22,6 +27,26 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+const reviewSchema = mongoose.Schema({
+  title: String,
+  username: String,
+  reviewText: String,
+});
+
+const Review = mongoose.model('Review', reviewSchema);
+
+const saveReview = (title, username, reviewText, cb) => {
+  const review = new Review({
+    title,
+    username,
+    reviewText,
+  });
+  review.save((err) => {
+    if (err) {
+      cb(err);
+    }
+  });
+};
 const bookSchema = mongoose.Schema({
   title: { type: String, unique: true },
   description: String,
@@ -65,6 +90,21 @@ const allBooks = (cb) => {
   });
 };
 
+const addRating = (title, rating, cb) => {
+  Book.findOneAndUpdate({ title }, { $push: { userRating: rating } }, (err, doc) => {
+    if (err) { cb(err); } else {
+      cb(err, doc);
+    }
+  });
+};
+
+// var query = {'username':req.user.username};
+// req.newData.username = req.user.username;
+// MyModel.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
+//     if (err) return res.send(500, { error: err });
+//     return res.send("succesfully saved");
+// });
+
 const userBooksSchema = mongoose.Schema({
   username: String,
 });
@@ -72,11 +112,10 @@ const userBooksSchema = mongoose.Schema({
 const UserBook = mongoose.model('UserBook', userBooksSchema);
 
 const saveUser = (name, pass) => {
-  var salt = bcrypt.genSaltSync(10);
+  const salt = bcrypt.genSaltSync(10);
 
 
-
-  var hash = bcrypt.hashSync(pass, salt);
+  const hash = bcrypt.hashSync(pass, salt);
   const user = new User({
     username: name,
     password: hash,
@@ -109,50 +148,45 @@ const findUser = (username, callback) => {
  * @returns {object} callback
  * * */
 
-const comparePassword = (password1, password2) => {
-  
-  return bcrypt.compareSync(password1, password2);
+const comparePassword = (password1, password2) => bcrypt.compareSync(password1, password2);
+
+// find a user and validate them with passport
+const passportValidate = (un, pw) => {
+  User.findOne({ username: un }, (err, user) => {
+    if (err) { return done(err); }
+
+    if (!user) {
+      const error = new Error('Incorrect username or password');
+      error.name = 'IncorrectCredentialsError';
+
+      return done(error);
+    }
+    console.log(user);
+    // check if a hashed user's password is equal to a value saved in the database
+    return comparePassword(pw, user.password, (passwordErr, isMatch) => {
+      if (err) { return done(err); }
+
+      if (!user) {
+        const error = new Error('Incorrect username or password');
+        error.name = 'IncorrectCredentialsError';
+
+        return done(error);
+      }
+
+      const payload = {
+        sub: user._id,
+      };
+
+      // create a token string
+      const token = jwt.sign(payload, config.jwtSecret);
+      const data = {
+        name: user.name,
+      };
+
+      return done(null, token, data);
+    });
+  });
 };
-
-
-const passportValidate = (un, pw)=> {
-// User.findOne({ username: un}, (err, user) => {
-//   if (err) { return done(err); }
-
-//   if (!user) {
-//     const error = new Error('Incorrect username or password');
-//     error.name = 'IncorrectCredentialsError';
-
-//     return done(error);
-//   }
-
-//   // check if a hashed user's password is equal to a value saved in the database
-//   return comparePassword(pw, user.password (passwordErr, isMatch) => {
-//     if (err) { return done(err); }
-
-//     if (!isMatch) {
-//       const error = new Error('Incorrect username or password');
-//       error.name = 'IncorrectCredentialsError';
-
-//       return done(error);
-//     }
-
-//     const payload = {
-//       sub: user._id
-//     };
-
-//     // create a token string
-//     const token = jwt.sign(payload, config.jwtSecret);
-//     const data = {
-//       name: user.name
-//     };
-
-//     return done(null, token, data);
-  
-//   });
-  
-// });
-}
 module.exports = {
   comparePassword,
   findUser,
@@ -160,4 +194,6 @@ module.exports = {
   saveBook,
   passportValidate,
   allBooks,
+  addRating,
+  saveReview,
 };

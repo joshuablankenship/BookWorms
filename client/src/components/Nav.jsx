@@ -36,7 +36,7 @@ class Nav extends React.Component {
                 <span className="icon-bar"></span>
               </button>
               <div>
-                <Link to="/main" className="navbar-brand">Bookworms</Link>
+                <Link to="/" className="navbar-brand">Bookworms</Link>
                 <img alt="Brand" src="https://i.pinimg.com/originals/d0/fb/73/d0fb73f0ab79cfc626ee14efaa475ea0.png" height="35px" width="35px"></img>
               </div>
             </div>
@@ -64,7 +64,8 @@ class Nav extends React.Component {
           </div>
         </nav>
 
-        {this.props.reviewToggled ? this.props.items.map(item => <Reviews item={item} key={item.title} reviews={this.props.reviews} />)
+        {this.props.reviewToggled ? 
+          this.props.items.map(item => <Reviews item={item} key={item.title} reviews={this.props.reviews} handleReviewInput={this.props.handleReviewInput}/>)
           : this.props.items.map(item => <MainList item={item} key={item.title} reviewToggle={this.props.reviewToggle} handleSearchInput={this.props.handleSearchInput} />)}
 
       </div>

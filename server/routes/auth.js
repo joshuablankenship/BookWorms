@@ -114,53 +114,53 @@ router.post('/login', (req, res, next) => {
     });
   }
   const { name, password } = req.body;
-  // db.findUser(name, (err, user) => {
-  //   if (err) {
-  //     console.error(err);
-  //   } else if (user) {
-  //     console.log(user, 'user login attempt');
-  //     console.log(user.password, "user password in db");
-  //     console.log(password, "password input");
-  //     if(db.comparePassword(password, user.password)){
-      
-  //         return res.status(200).json({
-  //           success: true,
-  //           message: validationResult.message,
-  //           errors: validationResult.errors
-  //     });
-  //   }
-  //   }else{
-  //     return res.status(400).json({
-  //       success: false,
-  //       message: 'Incorrect username or password',
-  //       errors: validationResult.errors
-  //     });
-
-  //   }
-// });
-   passport.authenticate('local-login', (err, token, userData) => {
+  db.findUser(name, (err, user) => {
     if (err) {
-      if (err.name === 'IncorrectCredentialsError') {
-        return res.status(400).json({
-          success: false,
-          message: err.message
-        });
-      }
-
+      console.error(err);
+    } else if (user) {
+      console.log(user, 'user login attempt');
+      console.log(user.password, "user password in db");
+      console.log(password, "password input");
+      if(db.comparePassword(password, user.password)){
+        return passport.authenticate('local-login', (err, token, userData) => {
+          if (err) {
+            if (err.name === 'IncorrectCredentialsError') {
+              return res.status(400).json({
+                success: false,
+                message: err.message
+              });
+            }
+      
+            return res.status(400).json({
+              success: false,
+              message: 'Could not process the form.'
+            });
+          }
+      
+      
+          return res.json({
+            success: true,
+            message: 'You have successfully logged in!',
+            token,
+            user: userData
+          });
+        })(req, res, next);
+      //     return res.status(200).json({
+      //       success: true,
+      //       message: 'You have successfully logged in!',
+      //       errors: validationResult.errors
+      // });
+    }
+    }else{
       return res.status(400).json({
         success: false,
-        message: 'Could not process the form.'
+        message: 'Incorrect username or password',
+        errors: validationResult.errors
       });
+
     }
-
-
-    return res.json({
-      success: true,
-      message: 'You have successfully logged in!',
-      token,
-      user: userData
-    });
-  })(req, res, next);
+});
+   
 });
 
 module.exports = router;

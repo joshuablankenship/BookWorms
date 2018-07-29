@@ -71,6 +71,19 @@ app.get('/topRated', (req, res) => {
           });
         }
       });
+      top.sort((a, b) => {
+        // Use toUpperCase() to ignore character casing
+        const ratingA = a.aggregateRating;
+        const ratingB = b.aggregateRating;
+
+        let comparison = 0;
+        if (ratingA < ratingB) {
+          comparison = 1;
+        } else if (ratingA > ratingB) {
+          comparison = -1;
+        }
+        return comparison;
+      });
       res.send({ len: top.length, top });
     }
   });
@@ -88,7 +101,7 @@ app.get('/genreTest', (req, res) => {
             title: book.volumeInfo.title,
             rating: +book.volumeInfo.averageRating,
             coverImage: book.volumeInfo.imageLinks.thumbnail,
-
+            longDescript: book.volumeInfo.description,
           };
           highRated.push(highRatedBook);
         }

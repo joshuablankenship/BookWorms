@@ -83,6 +83,7 @@ const findUser = (username, callback) => {
     } else {
       console.log('found', user);
       callback(null, user);
+      return true;
     }
   });
 };
@@ -93,17 +94,54 @@ const findUser = (username, callback) => {
  * @param {string} password
  * @returns {object} callback
  * * */
-const comparePassword = (password, callback) => {
-  bcrypt.compare(password, this.password, callback);
+const comparePassword = (password) => {
+  return bcrypt.compare(password, hash);
 };
 
 
+const passportValidate = (un, pw)=> {
+User.findOne({ username: un}, (err, user) => {
+  if (err) { return done(err); }
 
+  if (!user) {
+    const error = new Error('Incorrect username or password');
+    error.name = 'IncorrectCredentialsError';
 
+    return done(error);
+  }
+
+  // check if a hashed user's password is equal to a value saved in the database
+  return comparePassword(pw, (passwordErr, isMatch) => {
+    if (err) { return done(err); }
+
+    if (!isMatch) {
+      const error = new Error('Incorrect username or password');
+      error.name = 'IncorrectCredentialsError';
+
+      return done(error);
+    }
+
+    const payload = {
+      sub: user._id
+    };
+
+    // create a token string
+    const token = jwt.sign(payload, config.jwtSecret);
+    const data = {
+      name: user.name
+    };
+
+    return done(null, token, data);
+  
+  });
+  
+});
+}
 module.exports = {
   comparePassword,
   findUser,
   saveUser,
   saveBook,
+  passportValidate
 };
 

@@ -25,7 +25,7 @@ class Reviews extends React.Component {
 
       const review = {
         title: this.props.item.title,
-        username: "Bob",
+        username: this.props.username,
         reviewTextBody: this.state.value,
       }
       this.props.handleReviewInput(review, rating);

@@ -65,7 +65,7 @@ class Nav extends React.Component {
         </nav>
 
         {this.props.reviewToggled ? 
-          this.props.items.map(item => <Reviews item={item} key={item.title} reviews={this.props.reviews} handleReviewInput={this.props.handleReviewInput}/>)
+          this.props.items.map(item => <Reviews item={item} key={item.title} reviews={this.props.reviews} handleReviewInput={this.props.handleReviewInput} username={this.props.username} />)
           : this.props.items.map(item => <MainList item={item} key={item.title} reviewToggle={this.props.reviewToggle} handleSearchInput={this.props.handleSearchInput} />)}
 
       </div>

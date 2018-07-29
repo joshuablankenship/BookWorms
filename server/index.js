@@ -49,14 +49,13 @@ app.patch('', (req, res) => {
 
 app.post('/addRating', jsonParser, (req, res) => {
   // console.log(req, 'req');
-  const rating = req.body;
-  console.log(rating, 'rating in server');
-  db.addRating('Lord of the Flies', rating, (err, doc) => {
+  const body = req.body;
+
+  db.addRating(body.title, body.rating, (err, doc) => {
     if (err) {
       console.log(err);
     } else {
       console.log('success');
-      res.send(doc);
     }
   });
 });

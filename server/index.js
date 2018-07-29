@@ -37,18 +37,7 @@ const authRoutes = require('./routes/auth');
 
 app.use('/auth', authRoutes);
 
-// skeleton of patch request for updating favrite title list of user
-app.patch('', (req, res) => {
-  // our patch method will need to do several things,we will need to update the
-  // user data that stores the book, we will also need to add the new
-  // review rating to our aggregate rating for that book in our books
-  // document
-  //
-  // The above is ideal, with the limited time we have, getting the userRating on the
-  // saved book document to an array, and allow reviews to just push another rating
-  // this will save time and complexity in data, and allow us to populate the user
-  // ratings without creating users or hardcoding. we can just push new review values
-});
+
 
 app.post('/addRating', jsonParser, (req, res) => {
   // console.log(req, 'req');
@@ -91,7 +80,6 @@ app.get('/topRated', (req, res) => {
         }
       });
       top.sort((a, b) => {
-        // Use toUpperCase() to ignore character casing
         const ratingA = a.aggregateRating;
         const ratingB = b.aggregateRating;
 
@@ -129,6 +117,7 @@ app.post('/addReview', (req, res) => {
           title: review.title,
           user: review.username,
           bookReview: review.reviewText,
+          reviewRating: review.reviewRating,
         };
         if (review.title === title) { userReviews.push(currentBook); }
       });

@@ -18,8 +18,6 @@ class Search extends React.Component {
     e.preventDefault();
     this.props.handleSearchInput(this.state.value);
     this.setState({ value: '' });
-    this.props.reviewToggle();
-
   }
 
   handleKeyInput(e) {
@@ -27,8 +25,6 @@ class Search extends React.Component {
       e.preventDefault();
       this.props.handleSearchInput(this.state.value);
       this.setState({ value: '' });
-      this.props.reviewToggle();
-
     }
   }
 

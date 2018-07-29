@@ -47,7 +47,8 @@ app.patch('', (req, res) => {
 
 
 app.get('/genreTest', (req, res) => {
-  helpers.googleGenre('NonFiction')
+  const query = req.query.genre;
+  helpers.googleGenre(query)
     .then((response) => {
       const booksByGenre = response.data.items;
       const highRated = [];

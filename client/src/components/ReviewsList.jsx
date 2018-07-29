@@ -15,7 +15,7 @@ const ReviewsList = props => (
           </div>
           <div className="media-body">
             <h4 className="media-heading">{props.review.source}</h4>
-            {props.review.text}
+            {/* {props.review.text} */}
           </div>
         </div>
       </div>

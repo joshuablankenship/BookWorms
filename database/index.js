@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const MONGOLINK= require('../config.js');
+const MONGOLINK = require('../config.js');
+
 mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
 mongoose.Promise = global.Promise;
@@ -37,6 +38,7 @@ const bookSchema = mongoose.Schema({
 });
 
 const Book = mongoose.model('Book', bookSchema);
+
 const saveBook = (bookObj, cb) => {
   const book = new Book({
     title: bookObj.title,
@@ -52,6 +54,16 @@ const saveBook = (bookObj, cb) => {
   book.save((err) => {
     if (err) {
       cb(err);
+    }
+  });
+};
+
+const topRatedBooks = (cb) => {
+  Book.find({}, (err, books) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(err, books);
     }
   });
 };
@@ -102,8 +114,6 @@ const comparePassword = (password, callback) => {
  * The pre-save hook method.
  */
 userSchema.pre('save', (next) => {
- 
-
   // proceed further only if the password is modified or the user is new
   if (!User.isModified('password')) return next();
 
@@ -127,4 +137,5 @@ module.exports = {
   findUser,
   saveUser,
   saveBook,
+  topRatedBooks,
 };

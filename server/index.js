@@ -1,13 +1,13 @@
 /* eslint-disable prefer-destructuring */
-const MONGOLINK= require('../config.js');
 const express = require('express');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
+const MONGOLINK = require('../config.js');
 const helpers = require('./helpers.js');
 // require('./models').connect(MONGOLINK.MONGOLINK);
-const db = require('../database/index.js')
+const db = require('../database/index.js');
 
 const app = express();
 // tell the app to look for static files in these directories
@@ -20,16 +20,19 @@ app.use(passport.initialize());
 // load passport strategies
 const localSignupStrategy = require('./passport/local-signup');
 const localLoginStrategy = require('./passport/local-login');
+
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
+
 app.use('/api', authCheckMiddleware);
 
 // routes
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
+
 app.use('/auth', authRoutes);
 // app.use('/api', apiRoutes);
 
@@ -46,6 +49,16 @@ app.patch('', (req, res) => {
   // ratings without creating users or hardcoding. we can just push new review values
 });
 
+app.get('/topRated', (req, res) => {
+  db.topRatedBooks((err, books) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success');
+      res.send(books);
+    }
+  });
+});
 
 app.get('/genreTest', (req, res) => {
   helpers.googleGenre('NonFiction')
@@ -134,8 +147,6 @@ app.get('/goodreads', (req, res) => {
     })
     .catch(err => console.log(err));
 });
-
-
 
 
 // Set Port, hosting services will look for process.env.PORT

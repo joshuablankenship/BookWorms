@@ -48,8 +48,8 @@ app.patch('', (req, res) => {
 });
 
 app.post('/addRating', jsonParser, (req, res) => {
-  // console.log(req, 'req');
   const body = req.body;
+  // console.log(body, 'body in server');
 
   db.addRating(body.title, body.rating, (err, doc) => {
     if (err) {

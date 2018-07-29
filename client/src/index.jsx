@@ -80,7 +80,7 @@ class App extends Component {
       authenticated: false,
       username: null,
     };
-    console.log(sessionStorage.getItem('username'));
+    // console.log(sessionStorage.getItem('username'));
 
     // this.onUpdate = (val) => {
     //   this.setState({
@@ -154,7 +154,7 @@ class App extends Component {
     });
   }
   
-   
+  
   toggleAuthenticateStatus() {
     // check authenticated status and toggle state based on that
     this.setState({ authenticated: Auth.isUserAuthenticated(), username : sessionStorage.getItem('username') });

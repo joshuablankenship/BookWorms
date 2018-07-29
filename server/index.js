@@ -130,7 +130,27 @@ app.post('/addReview', (req, res) => {
           user: review.username,
           bookReview: review.reviewText,
         };
-        if (review.title === title) {userReviews.push(currentBook); }
+        if (review.title === title) { userReviews.push(currentBook); }
+      });
+      res.send(userReviews);
+    }
+  });
+});
+
+app.get('/singleReviews', (req, res) => {
+  const title = req.query.title;
+  const userReviews = [];
+  db.allReviews((err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      doc.forEach((review) => {
+        const currentBook = {
+          title: review.title,
+          user: review.username,
+          bookReview: review.reviewText,
+        };
+        if (review.title === title) { userReviews.push(currentBook); }
       });
       res.send(userReviews);
     }

@@ -44,6 +44,7 @@ app.patch('', (req, res) => {
 });
 
 app.post('/addRating', (req, res) => {
+  console.log(req.body, 'req.body');
   db.addRating('Lord of the Flies', 5, (err, doc) => {
     if (err) {
       console.log(err);

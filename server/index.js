@@ -50,12 +50,18 @@ app.patch('', (req, res) => {
 });
 
 app.get('/topRated', (req, res) => {
+  const top = [];
   db.allBooks((err, books) => {
     if (err) {
       console.log(err);
     } else {
       console.log('success');
-      res.send({ len: books.length, books });
+      books.forEach((book) => {
+        if (book.bookWormRating > 3.5) {
+          top.push(book);
+        }
+      });
+      res.send({ len: top.length, top });
     }
   });
 });

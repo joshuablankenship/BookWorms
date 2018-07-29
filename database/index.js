@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const MONGOLINK = require('../config.js');
+const config = require('../config');
+const jwt = require('jsonwebtoken');
 
 mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
@@ -114,7 +116,7 @@ const comparePassword = (password1, password2) => {
   return bcrypt.compareSync(password1, password2);
 };
 
-
+// find a user and validate them with passport
 const passportValidate = (un, pw)=> {
 User.findOne({ username: un}, (err, user) => {
   if (err) { return done(err); }

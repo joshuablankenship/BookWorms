@@ -130,14 +130,11 @@ router.post('/login', (req, res, next) => {
                 message: err.message
               });
             }
-      
             return res.status(400).json({
               success: false,
               message: 'Could not process the form.'
             });
           }
-      
-      
           return res.json({
             success: true,
             message: 'You have successfully logged in!',
@@ -145,11 +142,6 @@ router.post('/login', (req, res, next) => {
             user: userData
           });
         })(req, res, next);
-      //     return res.status(200).json({
-      //       success: true,
-      //       message: 'You have successfully logged in!',
-      //       errors: validationResult.errors
-      // });
     }
     }else{
       return res.status(400).json({

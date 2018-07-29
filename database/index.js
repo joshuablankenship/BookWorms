@@ -1,10 +1,11 @@
-'use strict';
+
+
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const MONGOLINK = require('../config.js');
 const config = require('../config');
-const jwt = require('jsonwebtoken');
 
 mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
@@ -26,6 +27,26 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+const reviewSchema = mongoose.Schema({
+  title: String,
+  username: String,
+  reviewText: String,
+});
+
+const Review = mongoose.model('Review', reviewSchema);
+
+const saveReview = (title, username, reviewText, cb) => {
+  const review = new Review({
+    title,
+    username,
+    reviewText,
+  });
+  review.save((err) => {
+    if (err) {
+      cb(err);
+    }
+  });
+};
 const bookSchema = mongoose.Schema({
   title: { type: String, unique: true },
   description: String,
@@ -130,44 +151,42 @@ const findUser = (username, callback) => {
 const comparePassword = (password1, password2) => bcrypt.compareSync(password1, password2);
 
 // find a user and validate them with passport
-const passportValidate = (un, pw)=> {
-User.findOne({ username: un}, (err, user) => {
-  if (err) { return done(err); }
-
-  if (!user) {
-    const error = new Error('Incorrect username or password');
-    error.name = 'IncorrectCredentialsError';
-
-    return done(error);
-  }
-  console.log(user);
-  // check if a hashed user's password is equal to a value saved in the database
-  return comparePassword(pw, user.password, (passwordErr, isMatch) => {
+const passportValidate = (un, pw) => {
+  User.findOne({ username: un }, (err, user) => {
     if (err) { return done(err); }
 
-    if (!isMatch) {
+    if (!user) {
       const error = new Error('Incorrect username or password');
       error.name = 'IncorrectCredentialsError';
 
       return done(error);
     }
+    console.log(user);
+    // check if a hashed user's password is equal to a value saved in the database
+    return comparePassword(pw, user.password, (passwordErr, isMatch) => {
+      if (err) { return done(err); }
 
-    const payload = {
-      sub: user._id
-    };
+      if (!user) {
+        const error = new Error('Incorrect username or password');
+        error.name = 'IncorrectCredentialsError';
 
-    // create a token string
-    const token = jwt.sign(payload, config.jwtSecret);
-    const data = {
-      name: user.name
-    };
+        return done(error);
+      }
 
-    return done(null, token, data);
-  
+      const payload = {
+        sub: user._id,
+      };
+
+      // create a token string
+      const token = jwt.sign(payload, config.jwtSecret);
+      const data = {
+        name: user.name,
+      };
+
+      return done(null, token, data);
+    });
   });
-  
-});
-}
+};
 module.exports = {
   comparePassword,
   findUser,
@@ -176,5 +195,5 @@ module.exports = {
   passportValidate,
   allBooks,
   addRating,
+  saveReview,
 };
-

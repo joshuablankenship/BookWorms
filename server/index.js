@@ -18,7 +18,7 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // create application/json parser
-var jsonParser = bodyParser.json()
+const jsonParser = bodyParser.json()
 
 // pass the passport middleware
 app.use(passport.initialize());
@@ -49,14 +49,13 @@ app.patch('', (req, res) => {
 
 app.post('/addRating', jsonParser, (req, res) => {
   // console.log(req, 'req');
-  const rating = req.body;
-  console.log(rating, 'rating in server');
-  db.addRating('Lord of the Flies', 5, (err, doc) => {
+  const body = req.body;
+
+  db.addRating(body.title, body.rating, (err, doc) => {
     if (err) {
       console.log(err);
     } else {
       console.log('success');
-      res.send(doc);
     }
   });
 });
@@ -149,7 +148,7 @@ app.get('/googleData', (req, response) => {
           helpers.goodReadsData(query)
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
-              const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating) / 3;
+              const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating + 3) / 4;
               db.saveBook({
                 title,
                 longDescript,
@@ -158,7 +157,7 @@ app.get('/googleData', (req, response) => {
                 rating,
                 libThingRating,
                 gReadsRating,
-                userRating: 2.75,
+                userRating: 3.0,
                 coverImage,
               }, (err) => {
                 if (err) { console.log(err); } else {

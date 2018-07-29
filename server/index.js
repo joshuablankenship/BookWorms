@@ -200,7 +200,7 @@ app.get('/googleData', (req, response) => {
           helpers.goodReadsData(query)
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
-              const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating + 3) / 4;
+              const aggregateRating = Math.round((+rating + +libThingRating + +gReadsRating + 3) / 4);
               db.saveBook({
                 title,
                 longDescript,

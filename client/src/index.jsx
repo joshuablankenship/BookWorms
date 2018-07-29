@@ -104,6 +104,7 @@ class App extends Component {
     };
     this.reviewToggle = (item) => {
       this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
+      // GET req to server with title of book
     };
     this.searchByGenre = (genre) => {
       axios.get('/genreTest', {

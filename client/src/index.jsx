@@ -21,6 +21,7 @@ import Logout from './containers/Logout.jsx';
 import SignUpPage from './containers/SignUpPage.jsx';
 import Main from './components/Main.jsx';
 import Auth from './modules/Auth';
+
 const axios = require('axios');
 
 // remove tap delay, essential for MaterialUI to work properly
@@ -94,21 +95,7 @@ class App extends Component {
     };
     this.reviewToggle = (item) => {
       this.setState({ reviewToggled: !this.state.reviewToggled, items: [item]});
-    };
-    this.searchByGenre = (genre) => {
-      axios.get('/genreTest', {
-        params: { genre },
-      })
-        .then((response) => {
-          if (this.state.reviewToggled) {
-            this.setState({ reviewToggled: false });
-          }
-          this.setState({ items: response.data.highRated });
-        })
-        .catch((error) => {
-          console.error(error, 'error in index.jsx');
-        });
-    };
+    }
   }
 
   componentDidMount() {
@@ -175,7 +162,6 @@ class App extends Component {
                     reviewToggle={this.reviewToggle.bind(this)}
                     reviewToggled={this.state.reviewToggled}
                     handleSearchInput={this.searchForBook.bind(this)}
-                    handleSearchByGenre={this.searchByGenre.bind(this)}  
                   />
                   )}
                 />

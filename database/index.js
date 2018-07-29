@@ -16,10 +16,7 @@ db.once('open', () => {
 });
 
 const userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    index: { unique: true },
-  },
+  username: String,
   password: String,
 });
 
@@ -75,9 +72,14 @@ const userBooksSchema = mongoose.Schema({
 const UserBook = mongoose.model('UserBook', userBooksSchema);
 
 const saveUser = (name, pass) => {
+  var salt = bcrypt.genSaltSync(10);
+
+
+
+  var hash = bcrypt.hashSync(pass, salt);
   const user = new User({
     username: name,
-    password: pass,
+    password: hash,
   });
   user.save((error) => {
     if (error) {
@@ -93,8 +95,9 @@ const findUser = (username, callback) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log('found', username);
+      console.log('found', user);
       callback(null, user);
+      return true;
     }
   });
 };
@@ -105,37 +108,56 @@ const findUser = (username, callback) => {
  * @param {string} password
  * @returns {object} callback
  * * */
-const comparePassword = (password, callback) => {
-  bcrypt.compare(password, this.password, callback);
+
+const comparePassword = (password1, password2) => {
+  
+  return bcrypt.compareSync(password1, password2);
 };
 
 
-/**
- * The pre-save hook method.
- */
-userSchema.pre('save', (next) => {
-  // proceed further only if the password is modified or the user is new
-  if (!User.isModified('password')) return next();
+const passportValidate = (un, pw)=> {
+// User.findOne({ username: un}, (err, user) => {
+//   if (err) { return done(err); }
 
+//   if (!user) {
+//     const error = new Error('Incorrect username or password');
+//     error.name = 'IncorrectCredentialsError';
 
-  return bcrypt.genSalt((saltError, salt) => {
-    if (saltError) { return next(saltError); }
+//     return done(error);
+//   }
 
-    return bcrypt.hash(user.password, salt, (hashError, hash) => {
-      if (hashError) { return next(hashError); }
+//   // check if a hashed user's password is equal to a value saved in the database
+//   return comparePassword(pw, user.password (passwordErr, isMatch) => {
+//     if (err) { return done(err); }
 
-      // replace a password string with hash value
-      User.password = hash;
+//     if (!isMatch) {
+//       const error = new Error('Incorrect username or password');
+//       error.name = 'IncorrectCredentialsError';
 
-      return next();
-    });
-  });
-});
+//       return done(error);
+//     }
 
+//     const payload = {
+//       sub: user._id
+//     };
+
+//     // create a token string
+//     const token = jwt.sign(payload, config.jwtSecret);
+//     const data = {
+//       name: user.name
+//     };
+
+//     return done(null, token, data);
+  
+//   });
+  
+// });
+}
 module.exports = {
   comparePassword,
   findUser,
   saveUser,
   saveBook,
+  passportValidate,
   allBooks,
 };

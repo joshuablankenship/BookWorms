@@ -39,7 +39,6 @@ const LoggedOutRoute = ({ component: Component, ...rest }) => (
         />
       ) : (
         <Component {...props} {...rest} />
-        
       )
     )}
   />
@@ -122,14 +121,11 @@ class App extends Component {
       .catch((error) => {
         console.error(error, 'error in index.jsx');
       });
-
     this.setState({
       // items: DATA,
       reviews: REVIEWS,
     });
   }
-  
-   
   toggleAuthenticateStatus() {
     // check authenticated status and toggle state based on that
     // set current username if authenticated
@@ -138,33 +134,8 @@ class App extends Component {
   
   render() {
     return (
-
-      // <div>
-      //   <Router>
-      //     <div>
-      //       <Route
-      //         path="/"
-      //         render={props => <Nav {...props} items={this.state.items} reviews={this.state.reviews}
-      //           reviewToggle={this.reviewToggle.bind(this)}
-      //           reviewToggled={this.state.reviewToggled}
-      //           handleSearchInput={this.searchForBook.bind(this)}
-      //           />}
-      //       />
-      //       <Route
-      //         path="/main"
-      //         render={props => <Main {...props} items={this.state.items} reviews={this.state.reviews}
-      //           reviewToggle={this.reviewToggle.bind(this)}
-      //           reviewToggled={this.state.reviewToggled}
-      //           handleSearchInput={this.searchForBook.bind(this)} />}
-      //       />
-      //       <Route path="/login" component={LoginPage} />
-      //       <Route path="/signup" component={SignUpPage} />
-      //     </div>
-      //   </Router>
-      // </div>
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Router>
-          
           <div>
             {this.state.authenticated ? (
               <div>
@@ -180,34 +151,13 @@ class App extends Component {
                     handleSearchInput={this.searchForBook.bind(this)}
                     handleSearchByGenre={this.searchByGenre.bind(this)}
                     handleReviewInput={this.submitReview.bind(this)}
-
-
                   />
                   )}
-                />
-                {/* <Route
-                  path="/main"
-                  render={props => (
-                    <Main
-                    {...props}
-                    items={this.state.items}
-                    reviews={this.state.reviews}
-                    reviewToggle={this.reviewToggle.bind(this)}
-                    reviewToggled={this.state.reviewToggled}
-                    handleSearchInput={this.searchForBook.bind(this)}
-                  />
-                  )}
-                /> */}
-              </div>
-      
+                />  
+              </div>  
     ) : ( 
-              <Route
-                path="/"
-                render={props => <Nav1 />}
-              /> 
+              <Route path="/" render={props => <Nav1 />} /> 
             )}
-
-
             <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
             <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()}  />
             <LoggedOutRoute path="/signup" component={SignUpPage} />

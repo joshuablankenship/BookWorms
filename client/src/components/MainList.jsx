@@ -9,7 +9,9 @@ class MainList extends React.Component {
     };
     this.handleOnclick = (e) => {
       e.preventDefault();
-      this.props.reviewToggle(this.props.item);
+      const title = this.props.item.title;
+      this.props.handleSearchInput(title);
+      // this.props.reviewToggle(this.props.item);
     }
   }
 
@@ -44,8 +46,7 @@ class MainList extends React.Component {
                   User Rating <span className="badge">{this.props.item.rating}</span>
                 </button>
                 <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="..."
-                  onClick={this.handleOnclick.bind(this)}
-                >
+                  onClick={this.handleOnclick.bind(this)}>
                   Review 
                   {/* <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span> */}
                 </button>

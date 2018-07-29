@@ -53,7 +53,7 @@ app.patch('', (req, res) => {
   // ratings without creating users or hardcoding. we can just push new review values
 });
 
-app.get('/addRating', (req, res) => {
+app.post('/addRating', (req, res) => {
   db.addRating('Lord of the Flies', 5, (err, doc) => {
     if (err) {
       console.log(err);

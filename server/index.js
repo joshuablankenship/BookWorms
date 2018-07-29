@@ -52,13 +52,13 @@ app.patch('', (req, res) => {
 
 app.post('/addRating', jsonParser, (req, res) => {
   const body = req.body;
-  // console.log(body, 'body in server');
 
   db.addRating(body.title, body.rating, (err, doc) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('success');
+      console.log('rating added in server, success');
+      res.send(201);
     }
   });
 });
@@ -108,7 +108,8 @@ app.get('/topRated', (req, res) => {
   });
 });
 
-app.post('/addReview', (req, res) => {
+app.post('/addReview', jsonParser, (req, res) => {
+  console.log(req.body, 'body in server');
   const userReviews = [];
   const title = req.body.title;
   const username = req.body.username;
@@ -132,6 +133,7 @@ app.post('/addReview', (req, res) => {
         };
         if (review.title === title) { userReviews.push(currentBook); }
       });
+      res.status(201);
       res.send(userReviews);
     }
   });
@@ -139,6 +141,7 @@ app.post('/addReview', (req, res) => {
 
 app.get('/singleReviews', (req, res) => {
   const title = req.query.title;
+  console.log(title, 'title in server');
   const userReviews = [];
   db.allReviews((err, doc) => {
     if (err) {
@@ -148,7 +151,7 @@ app.get('/singleReviews', (req, res) => {
         const currentBook = {
           title: review.title,
           user: review.username,
-          bookReview: review.reviewText,
+          bookReview: review.reviewText
         };
         if (review.title === title) { userReviews.push(currentBook); }
       });

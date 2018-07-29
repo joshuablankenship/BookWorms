@@ -1,6 +1,6 @@
 import React from 'react';
 import MainList from './MainList.jsx';
-import ReviewList from './ReviewsList.jsx';
+import UserReviewsList from './UserReviewsList.jsx';
 import Search from './Search.jsx';
 import LoginPage from '../containers/LoginPage.jsx';
 import Logout from '../containers/Logout.jsx';

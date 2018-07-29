@@ -103,8 +103,24 @@ class App extends Component {
         });
     };
     this.reviewToggle = (item) => {
-      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
-      // GET req to server with title of book
+      // this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
+      const title = item.title;
+      console.log(title, 'title in index');
+      axios.get('/singleReviews', {
+        params: { title },
+      })
+        .then((response) => {
+          console.log(response.data, 'response.data in index');
+          this.setState({ 
+            reviewToggled: !this.state.reviewToggled, 
+            items: [item],
+            reviews: response.data
+          });        
+        })
+        .catch((error) => {
+          console.error(error, 'error in index.jsx');
+        });
+
     };
     this.searchByGenre = (genre) => {
       axios.get('/genreTest', {
@@ -121,15 +137,14 @@ class App extends Component {
         });
     };
     this.submitReview = (review, rating) => {
-      // console.log(review, 'review in index');
 
       axios.post('/addRating', rating)
         .then((response) => {
-          console.log(response, 'rating added in index');
-          // axios.post('/addReview', review)
-          //   .then((response) => {
-          //     console.log(response, 'review added in index');
-          //   })
+          // console.log(response, 'rating added in index');
+          axios.post('/addReview', review)
+            .then((response) => {
+              console.log(response.data, 'response, review added in index');
+            })
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');
@@ -151,7 +166,7 @@ class App extends Component {
 
     this.setState({
       // items: DATA,
-      reviews: REVIEWS,
+      // reviews: REVIEWS,
     });
   }
   

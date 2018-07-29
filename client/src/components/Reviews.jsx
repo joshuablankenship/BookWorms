@@ -1,5 +1,5 @@
 import React from 'react';
-import ReviewsList from './ReviewsList.jsx';
+import UserReviewsList from './UserReviewsList.jsx';
 const Rating = require('react-rating');
 
 class Reviews extends React.Component {
@@ -26,7 +26,8 @@ class Reviews extends React.Component {
       const review = {
         title: this.props.item.title,
         username: this.props.username,
-        reviewTextBody: this.state.value,
+        reviewText: this.state.value,
+        // rating: this.state.starValue
       }
       this.props.handleReviewInput(review, rating);
       this.setState({ value: '' });
@@ -78,7 +79,7 @@ class Reviews extends React.Component {
             </div>
             <div className="container-fluid" style={{ paddingTop: '20px' }}>
               <h4 className="media-heading">Critics Reviews</h4>
-              {this.props.reviews.map(review => <ReviewsList review={review} key={review.reviewer} />)}
+              {/* {this.props.reviews.map(review => <ReviewsList review={review} key={review.user} />)} */}
             </div>
           </div>
           <div className="col-md-6">
@@ -89,6 +90,8 @@ class Reviews extends React.Component {
             </div>
             <div className="container-fluid" style={{ paddingTop: '20px' }}>
               <h4 className="media-heading">User Reviews</h4>
+              {this.props.reviews.map(review => <UserReviewsList review={review} key={review.user} />)}
+
             </div>
           </div>
         </div>

@@ -100,7 +100,7 @@ app.get('/googleData', (req, response) => {
                 gReadsRating,
                 userRating: 2.75,
                 coverImage,
-              }, (err, data) => {
+              }, (err) => {
                 if (err) { console.log(err); } else {
                   console.log('success');
                 }

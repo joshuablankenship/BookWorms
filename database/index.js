@@ -25,14 +25,14 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const bookSchema = mongoose.Schema({
-  title: String,
+  title: { type: String, unique: true },
   description: String,
-  ISBN: Number,
+  ISBN13: Number,
   bookWormRating: Number,
   googleRating: Number,
   libThingRating: Number,
   goodReadsRating: Number,
-  userRating: Number,
+  userRating: [Number],
   cover: String,
 });
 
@@ -49,11 +49,9 @@ const saveBook = (bookObj, cb) => {
     userRating: 2.5,
     cover: bookObj.coverImage,
   });
-  book.save((err, data) => {
+  book.save((err) => {
     if (err) {
       cb(err);
-    } else {
-      cb(data);
     }
   });
 };

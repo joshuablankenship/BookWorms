@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const MONGOLINK= require('../config.js');
+const MONGOLINK = require('../config.js');
+
 mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
 mongoose.Promise = global.Promise;
@@ -22,18 +23,19 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const bookSchema = mongoose.Schema({
-  title: String,
+  title: { type: String, unique: true },
   description: String,
-  ISBN: Number,
+  ISBN13: Number,
   bookWormRating: Number,
   googleRating: Number,
   libThingRating: Number,
   goodReadsRating: Number,
-  userRating: Number,
+  userRating: [Number],
   cover: String,
 });
 
 const Book = mongoose.model('Book', bookSchema);
+
 const saveBook = (bookObj, cb) => {
   const book = new Book({
     title: bookObj.title,
@@ -46,11 +48,19 @@ const saveBook = (bookObj, cb) => {
     userRating: 2.5,
     cover: bookObj.coverImage,
   });
-  book.save((err, data) => {
+  book.save((err) => {
+    if (err) {
+      cb(err);
+    }
+  });
+};
+
+const allBooks = (cb) => {
+  Book.find({}, (err, books) => {
     if (err) {
       cb(err);
     } else {
-      cb(data);
+      cb(err, books);
     }
   });
 };
@@ -105,6 +115,7 @@ const comparePassword = (password1, password2) => {
 };
 
 
+<<<<<<< HEAD
 const passportValidate = (un, pw)=> {
 // User.findOne({ username: un}, (err, user) => {
 //   if (err) { return done(err); }
@@ -112,6 +123,14 @@ const passportValidate = (un, pw)=> {
 //   if (!user) {
 //     const error = new Error('Incorrect username or password');
 //     error.name = 'IncorrectCredentialsError';
+=======
+/**
+ * The pre-save hook method.
+ */
+userSchema.pre('save', (next) => {
+  // proceed further only if the password is modified or the user is new
+  if (!User.isModified('password')) return next();
+>>>>>>> abf23eda791804e3ea1da6e7acea073a73d6f45e
 
 //     return done(error);
 //   }
@@ -148,6 +167,11 @@ module.exports = {
   findUser,
   saveUser,
   saveBook,
+<<<<<<< HEAD
   passportValidate
 };
 
+=======
+  allBooks,
+};
+>>>>>>> abf23eda791804e3ea1da6e7acea073a73d6f45e

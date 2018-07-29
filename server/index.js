@@ -1,13 +1,19 @@
 /* eslint-disable prefer-destructuring */
-const MONGOLINK= require('../config.js');
 const express = require('express');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const path = require('path');
 const bodyParser = require('body-parser');
+const MONGOLINK = require('../config.js');
 const helpers = require('./helpers.js');
+<<<<<<< HEAD
 // require('./models').connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 const db = require('../database/index.js')
+=======
+// require('./models').connect(MONGOLINK.MONGOLINK);
+const db = require('../database/index.js');
+
+>>>>>>> abf23eda791804e3ea1da6e7acea073a73d6f45e
 const app = express();
 // tell the app to look for static files in these directories
 app.use(express.static(`${__dirname}/../client/dist`));
@@ -19,16 +25,19 @@ app.use(passport.initialize());
 // load passport strategies
 const localSignupStrategy = require('./passport/local-signup');
 const localLoginStrategy = require('./passport/local-login');
+
 passport.use('local-signup', localSignupStrategy);
 passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
+
 app.use('/api', authCheckMiddleware);
 
 // routes
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
+
 app.use('/auth', authRoutes);
 // app.use('/api', apiRoutes);
 
@@ -44,7 +53,33 @@ app.patch('', (req, res) => {
   // this will save time and complexity in data, and allow us to populate the user
   // ratings without creating users or hardcoding. we can just push new review values
 });
+// topRated will pull all books rated over 3.5 and deliver them as array of book objects named top
+app.get('/topRated', (req, res) => {
+  const top = [];
+  db.allBooks((err, books) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('success');
+      books.forEach((book) => {
+        if (book.bookWormRating > 2) {
+          top.push({
+            title: book.title,
+            longDescript: book.description,
+            rating: book.googleRating,
+            coverImage: book.cover,
+            libThingRating: book.libThingRating,
+            gReadsRating: book.goodReadsRating,
+            userRating: 2.75,
+            aggregateRating: book.bookWormRating,
 
+          });
+        }
+      });
+      res.send({ len: top.length, top });
+    }
+  });
+});
 
 app.get('/genreTest', (req, res) => {
   const query = req.query.genre;
@@ -100,7 +135,7 @@ app.get('/googleData', (req, response) => {
                 gReadsRating,
                 userRating: 2.75,
                 coverImage,
-              }, (err, data) => {
+              }, (err) => {
                 if (err) { console.log(err); } else {
                   console.log('success');
                 }
@@ -113,6 +148,7 @@ app.get('/googleData', (req, response) => {
                 coverImage,
                 libThingRating,
                 gReadsRating,
+                userRating: 2.75,
                 aggregateRating,
               });
             });
@@ -134,8 +170,6 @@ app.get('/goodreads', (req, res) => {
     })
     .catch(err => console.log(err));
 });
-
-
 
 
 // Set Port, hosting services will look for process.env.PORT

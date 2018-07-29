@@ -16,6 +16,10 @@ const app = express();
 app.use(express.static(`${__dirname}/../client/dist`));
 // tell the app to parse HTTP body messages
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// create application/json parser
+var jsonParser = bodyParser.json()
+
 // pass the passport middleware
 app.use(passport.initialize());
 // load passport strategies
@@ -43,7 +47,10 @@ app.patch('', (req, res) => {
   // ratings without creating users or hardcoding. we can just push new review values
 });
 
-app.post('/addRating', (req, res) => {
+app.post('/addRating', jsonParser, (req, res) => {
+  // console.log(req, 'req');
+  const rating = req.body;
+  console.log(rating, 'rating in server');
   db.addRating('Lord of the Flies', 5, (err, doc) => {
     if (err) {
       console.log(err);

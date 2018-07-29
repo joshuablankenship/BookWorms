@@ -166,7 +166,7 @@ const passportValidate = (un, pw) => {
     return comparePassword(pw, user.password, (passwordErr, isMatch) => {
       if (err) { return done(err); }
 
-      if (!isMatch) {
+      if (!user) {
         const error = new Error('Incorrect username or password');
         error.name = 'IncorrectCredentialsError';
 

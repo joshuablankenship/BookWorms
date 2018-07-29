@@ -56,6 +56,7 @@ const LoggedOutRoute = ({ component: Component, ...rest }) => (
         />
       ) : (
         <Component {...props} {...rest} />
+        
       )
     )}
   />
@@ -105,6 +106,21 @@ class App extends Component {
             this.setState({ reviewToggled: false });
           }
           this.setState({ items: response.data.highRated });
+        })
+        .catch((error) => {
+          console.error(error, 'error in index.jsx');
+        });
+    };
+    this.submitReview = (review, rating) => {
+      // console.log(review, 'review in index');
+
+      axios.post('/addRating', rating)
+        .then((response) => {
+          console.log(response, 'rating added in index');
+          // axios.post('/addReview', review)
+          //   .then((response) => {
+          //     console.log(response, 'review added in index');
+          //   })
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');
@@ -170,14 +186,17 @@ class App extends Component {
                   path="/"
                   render={props => (
                     <Nav
-                      {...props}
-                      items={this.state.items}
-                      reviews={this.state.reviews}
-                      reviewToggle={this.reviewToggle.bind(this)}
-                      reviewToggled={this.state.reviewToggled}
-                      handleSearchInput={this.searchForBook.bind(this)}
-                      handleSearchByGenre={this.searchByGenre.bind(this)}
-                    />
+                    {...props}
+                    items={this.state.items}
+                    reviews={this.state.reviews}
+                    reviewToggle={this.reviewToggle.bind(this)}
+                    reviewToggled={this.state.reviewToggled}
+                    handleSearchInput={this.searchForBook.bind(this)}
+                    handleSearchByGenre={this.searchByGenre.bind(this)}
+                    handleReviewInput={this.submitReview.bind(this)}
+
+
+                  />
                   )}
                 />
                 {/* <Route

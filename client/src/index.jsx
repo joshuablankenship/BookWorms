@@ -117,10 +117,6 @@ class App extends Component {
 
     axios.get('/topRated')
       .then((response) => {
-        // if (this.state.reviewToggled) {
-        //   this.setState({ reviewToggled: false });
-        // }
-        console.log(response.data.top, 'response.data in index');
         this.setState({ items: response.data.top });
       })
       .catch((error) => {

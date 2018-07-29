@@ -50,12 +50,12 @@ app.patch('', (req, res) => {
 });
 
 app.get('/topRated', (req, res) => {
-  db.topRatedBooks((err, books) => {
+  db.allBooks((err, books) => {
     if (err) {
       console.log(err);
     } else {
       console.log('success');
-      res.send(books);
+      res.send({ len: books.length, books });
     }
   });
 });

@@ -58,7 +58,7 @@ const saveBook = (bookObj, cb) => {
   });
 };
 
-const topRatedBooks = (cb) => {
+const allBooks = (cb) => {
   Book.find({}, (err, books) => {
     if (err) {
       cb(err);
@@ -137,5 +137,5 @@ module.exports = {
   findUser,
   saveUser,
   saveBook,
-  topRatedBooks,
+  allBooks,
 };

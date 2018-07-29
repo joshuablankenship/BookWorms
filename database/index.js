@@ -31,15 +31,17 @@ const reviewSchema = mongoose.Schema({
   title: String,
   username: String,
   reviewText: String,
+  reviewRating: Number,
 });
 
 const Review = mongoose.model('Review', reviewSchema);
 
-const saveReview = (title, username, reviewText, cb) => {
+const saveReview = (title, username, reviewText, reviewRating, cb) => {
   const review = new Review({
     title,
     username,
     reviewText,
+    reviewRating,
   });
   review.save((err, doc) => {
     if (err) {

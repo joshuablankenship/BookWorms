@@ -118,47 +118,49 @@ router.post('/login', (req, res, next) => {
     if (err) {
       console.error(err);
     } else if (user) {
-      db.comparePassword(user.password).then((res =>{
-        if(!!res){
+      console.log(user, 'user login attempt');
+      console.log(user.password, "user password in db");
+      console.log(password, "password input");
+      if(db.comparePassword(password, user.password)){
+      
           return res.status(200).json({
             success: true,
             message: validationResult.message,
             errors: validationResult.errors
-        });
-        }
-      }));
+      });
+    }
     }else{
       return res.status(400).json({
         success: false,
-        message: validationResult.message,
+        message: 'Incorrect username or password',
         errors: validationResult.errors
       });
 
     }
 });
-   passport.authenticate('local-login', (err, token, userData) => {
-    if (err) {
-      if (err.name === 'IncorrectCredentialsError') {
-        return res.status(400).json({
-          success: false,
-          message: err.message
-        });
-      }
+  //  passport.authenticate('local-login', (err, token, userData) => {
+  //   if (err) {
+  //     if (err.name === 'IncorrectCredentialsError') {
+  //       return res.status(400).json({
+  //         success: false,
+  //         message: err.message
+  //       });
+  //     }
 
-      return res.status(400).json({
-        success: false,
-        message: 'Could not process the form.'
-      });
-    }
+  //     return res.status(400).json({
+  //       success: false,
+  //       message: 'Could not process the form.'
+  //     });
+  //   }
 
 
-    return res.json({
-      success: true,
-      message: 'You have successfully logged in!',
-      token,
-      user: userData
-    });
-  })(req, res, next);
+  //   return res.json({
+  //     success: true,
+  //     message: 'You have successfully logged in!',
+  //     token,
+  //     user: userData
+  //   });
+  // })(req, res, next);
 });
 
 module.exports = router;

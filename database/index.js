@@ -62,7 +62,11 @@ const userBooksSchema = mongoose.Schema({
 const UserBook = mongoose.model('UserBook', userBooksSchema);
 
 const saveUser = (name, pass) => {
-  var hash = bcrypt.hashSync(pass, 8);
+  var salt = bcrypt.genSaltSync(10);
+
+
+
+  var hash = bcrypt.hashSync(pass, salt);
   const user = new User({
     username: name,
     password: hash,
@@ -94,48 +98,50 @@ const findUser = (username, callback) => {
  * @param {string} password
  * @returns {object} callback
  * * */
-const comparePassword = (password) => {
-  return bcrypt.compare(password, hash);
+
+const comparePassword = (password1, password2) => {
+  
+  return bcrypt.compareSync(password1, password2);
 };
 
 
 const passportValidate = (un, pw)=> {
-User.findOne({ username: un}, (err, user) => {
-  if (err) { return done(err); }
+// User.findOne({ username: un}, (err, user) => {
+//   if (err) { return done(err); }
 
-  if (!user) {
-    const error = new Error('Incorrect username or password');
-    error.name = 'IncorrectCredentialsError';
+//   if (!user) {
+//     const error = new Error('Incorrect username or password');
+//     error.name = 'IncorrectCredentialsError';
 
-    return done(error);
-  }
+//     return done(error);
+//   }
 
-  // check if a hashed user's password is equal to a value saved in the database
-  return comparePassword(pw, (passwordErr, isMatch) => {
-    if (err) { return done(err); }
+//   // check if a hashed user's password is equal to a value saved in the database
+//   return comparePassword(pw, user.password (passwordErr, isMatch) => {
+//     if (err) { return done(err); }
 
-    if (!isMatch) {
-      const error = new Error('Incorrect username or password');
-      error.name = 'IncorrectCredentialsError';
+//     if (!isMatch) {
+//       const error = new Error('Incorrect username or password');
+//       error.name = 'IncorrectCredentialsError';
 
-      return done(error);
-    }
+//       return done(error);
+//     }
 
-    const payload = {
-      sub: user._id
-    };
+//     const payload = {
+//       sub: user._id
+//     };
 
-    // create a token string
-    const token = jwt.sign(payload, config.jwtSecret);
-    const data = {
-      name: user.name
-    };
+//     // create a token string
+//     const token = jwt.sign(payload, config.jwtSecret);
+//     const data = {
+//       name: user.name
+//     };
 
-    return done(null, token, data);
+//     return done(null, token, data);
   
-  });
+//   });
   
-});
+// });
 }
 module.exports = {
   comparePassword,

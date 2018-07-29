@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const MONGOLINK = require('../config.js');
+const config = require('../config');
+const jwt = require('jsonwebtoken');
 
 mongoose.connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
 // plug in the promise library:
@@ -114,44 +116,44 @@ const comparePassword = (password1, password2) => {
   return bcrypt.compareSync(password1, password2);
 };
 
-
+// find a user and validate them with passport
 const passportValidate = (un, pw)=> {
-// User.findOne({ username: un}, (err, user) => {
-//   if (err) { return done(err); }
+User.findOne({ username: un}, (err, user) => {
+  if (err) { return done(err); }
 
-//   if (!user) {
-//     const error = new Error('Incorrect username or password');
-//     error.name = 'IncorrectCredentialsError';
+  if (!user) {
+    const error = new Error('Incorrect username or password');
+    error.name = 'IncorrectCredentialsError';
 
-//     return done(error);
-//   }
+    return done(error);
+  }
+  console.log(user);
+  // check if a hashed user's password is equal to a value saved in the database
+  return comparePassword(pw, user.password, (passwordErr, isMatch) => {
+    if (err) { return done(err); }
 
-//   // check if a hashed user's password is equal to a value saved in the database
-//   return comparePassword(pw, user.password (passwordErr, isMatch) => {
-//     if (err) { return done(err); }
+    if (!isMatch) {
+      const error = new Error('Incorrect username or password');
+      error.name = 'IncorrectCredentialsError';
 
-//     if (!isMatch) {
-//       const error = new Error('Incorrect username or password');
-//       error.name = 'IncorrectCredentialsError';
+      return done(error);
+    }
 
-//       return done(error);
-//     }
+    const payload = {
+      sub: user._id
+    };
 
-//     const payload = {
-//       sub: user._id
-//     };
+    // create a token string
+    const token = jwt.sign(payload, config.jwtSecret);
+    const data = {
+      name: user.name
+    };
 
-//     // create a token string
-//     const token = jwt.sign(payload, config.jwtSecret);
-//     const data = {
-//       name: user.name
-//     };
-
-//     return done(null, token, data);
+    return done(null, token, data);
   
-//   });
+  });
   
-// });
+});
 }
 module.exports = {
   comparePassword,

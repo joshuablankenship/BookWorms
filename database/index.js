@@ -115,7 +115,6 @@ const comparePassword = (password1, password2) => {
 };
 
 
-<<<<<<< HEAD
 const passportValidate = (un, pw)=> {
 // User.findOne({ username: un}, (err, user) => {
 //   if (err) { return done(err); }
@@ -123,14 +122,6 @@ const passportValidate = (un, pw)=> {
 //   if (!user) {
 //     const error = new Error('Incorrect username or password');
 //     error.name = 'IncorrectCredentialsError';
-=======
-/**
- * The pre-save hook method.
- */
-userSchema.pre('save', (next) => {
-  // proceed further only if the password is modified or the user is new
-  if (!User.isModified('password')) return next();
->>>>>>> abf23eda791804e3ea1da6e7acea073a73d6f45e
 
 //     return done(error);
 //   }
@@ -167,11 +158,6 @@ module.exports = {
   findUser,
   saveUser,
   saveBook,
-<<<<<<< HEAD
-  passportValidate
-};
-
-=======
+  passportValidate,
   allBooks,
 };
->>>>>>> abf23eda791804e3ea1da6e7acea073a73d6f45e

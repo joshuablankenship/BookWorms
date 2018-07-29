@@ -6,14 +6,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const MONGOLINK = require('../config.js');
 const helpers = require('./helpers.js');
-<<<<<<< HEAD
-// require('./models').connect(MONGOLINK.MONGOLINK, { useMongoClient: true });
-const db = require('../database/index.js')
-=======
 // require('./models').connect(MONGOLINK.MONGOLINK);
 const db = require('../database/index.js');
 
->>>>>>> abf23eda791804e3ea1da6e7acea073a73d6f45e
 const app = express();
 // tell the app to look for static files in these directories
 app.use(express.static(`${__dirname}/../client/dist`));

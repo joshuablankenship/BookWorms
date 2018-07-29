@@ -62,9 +62,10 @@ const userBooksSchema = mongoose.Schema({
 const UserBook = mongoose.model('UserBook', userBooksSchema);
 
 const saveUser = (name, pass) => {
+  var hash = bcrypt.hashSync(pass, 8);
   const user = new User({
     username: name,
-    password: pass,
+    password: hash,
   });
   user.save((error) => {
     if (error) {
@@ -97,29 +98,7 @@ const comparePassword = (password, callback) => {
 };
 
 
-// /**
-//  * The pre-save hook method.
-//  */
-// userSchema.pre('save', (next) => {
- 
 
-//   // proceed further only if the password is modified or the user is new
-//   if (!User.isModified('password')) return next();
-
-
-//   return bcrypt.genSalt((saltError, salt) => {
-//     if (saltError) { return next(saltError); }
-
-//     return bcrypt.hash(user.password, salt, (hashError, hash) => {
-//       if (hashError) { return next(hashError); }
-
-//       // replace a password string with hash value
-//       User.password = hash;
-
-//       return next();
-//     });
-//   });
-// });
 
 module.exports = {
   comparePassword,

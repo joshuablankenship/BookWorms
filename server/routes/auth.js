@@ -92,12 +92,12 @@ router.post('/signup', (req, res, next) => {
   });
   db.saveUser(name, password);
 
-//   return res.status(200).json({
-//     success: true,
-//     message: validationResult.message,
-//     errors: validationResult.errors
+  return res.status(200).json({
+    success: true,
+    message: validationResult.message,
+    errors: validationResult.errors
 
-// });
+});
   });
 
 router.post('/login', (req, res, next) => {

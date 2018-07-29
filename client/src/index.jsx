@@ -27,23 +27,6 @@ const axios = require('axios');
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
 
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props => (
-//       Auth.isUserAuthenticated() ? (
-//         <Component {...props} {...rest} />
-//       ) : (
-//         <Redirect to={{
-//           pathname: '/',
-//           state: { from: props.location },
-//         }}
-//         />
-//       )
-//     )}
-//   />
-// );
-
 const LoggedOutRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -80,8 +63,6 @@ class App extends Component {
       authenticated: false,
       username: null,
     };
-    console.log(sessionStorage.getItem('username'));
-
 
     this.searchForBook = (title) => {
       axios.get('/googleData', {
@@ -115,7 +96,6 @@ class App extends Component {
         });
     };
     this.submitReview = (review, rating) => {
-      // console.log(review, 'review in index');
 
       axios.post('/addRating', rating)
         .then((response) => {

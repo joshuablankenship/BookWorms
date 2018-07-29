@@ -57,8 +57,18 @@ app.get('/topRated', (req, res) => {
     } else {
       console.log('success');
       books.forEach((book) => {
-        if (book.bookWormRating > 3.5) {
-          top.push(book);
+        if (book.bookWormRating > 2) {
+          top.push({
+            title: book.title,
+            longDescript: book.description,
+            rating: book.googleRating,
+            coverImage: book.cover,
+            libThingRating: book.libThingRating,
+            gReadsRating: book.goodReadsRating,
+            userRating: 2.75,
+            aggregateRating: book.bookWormRating,
+
+          });
         }
       });
       res.send({ len: top.length, top });
@@ -133,6 +143,7 @@ app.get('/googleData', (req, response) => {
                 coverImage,
                 libThingRating,
                 gReadsRating,
+                userRating: 2.75,
                 aggregateRating,
               });
             });

@@ -108,8 +108,12 @@ app.get('/topRated', (req, res) => {
   });
 });
 
-app.get('/reviewTest', (req, res) => {
-  db.saveReview('Lord of The Flies', 'Alec', 'One of the Best!', (err, doc) => {
+app.post('/addReview', (req, res) => {
+  const userReviews = [];
+  const title = req.body.title;
+  const username = req.body.username;
+  const reviewText = req.body.reviewText;
+  db.saveReview(title, username, reviewText, (err, doc) => {
     if (err) {
       console.log(err);
     } else {
@@ -120,7 +124,15 @@ app.get('/reviewTest', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(doc);
+      doc.forEach((review) => {
+        const currentBook = {
+          title: review.title,
+          user: review.username,
+          bookReview: review.reviewText,
+        };
+        if (review.title === title) {userReviews.push(currentBook); }
+      });
+      res.send(userReviews);
     }
   });
 });

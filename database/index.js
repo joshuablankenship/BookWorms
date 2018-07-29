@@ -30,9 +30,14 @@ const User = mongoose.model('User', userSchema);
 const reviewSchema = mongoose.Schema({
   title: { type: String, unique: true },
   username: { type: String, unique: true },
-  rating: Number,
+  reviewText: [String],
 });
 const Review = mongoose.model('Review', reviewSchema);
+
+const saveReview = (title, username, reviewText) => {
+  
+};
+
 const bookSchema = mongoose.Schema({
   title: { type: String, unique: true },
   description: String,

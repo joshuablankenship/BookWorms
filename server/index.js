@@ -151,7 +151,7 @@ app.get('/googleData', (req, response) => {
                 rating,
                 libThingRating,
                 gReadsRating,
-                userRating: 2.75,
+                userRating: 3.0,
                 coverImage,
               }, (err) => {
                 if (err) { console.log(err); } else {

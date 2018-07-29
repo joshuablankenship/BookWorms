@@ -1,3 +1,5 @@
+'use strict';
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const MONGOLINK = require('../config.js');
@@ -67,6 +69,21 @@ const allBooks = (cb) => {
   });
 };
 
+const addRating = (title, rating, cb) => {
+  Book.findOneAndUpdate({ title }, { $push: { userRating: rating } }, (err, doc) => {
+    if (err) { cb(err); } else {
+      cb(err, doc);
+    }
+  });
+};
+
+// var query = {'username':req.user.username};
+// req.newData.username = req.user.username;
+// MyModel.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
+//     if (err) return res.send(500, { error: err });
+//     return res.send("succesfully saved");
+// });
+
 const userBooksSchema = mongoose.Schema({
   username: String,
 });
@@ -74,11 +91,10 @@ const userBooksSchema = mongoose.Schema({
 const UserBook = mongoose.model('UserBook', userBooksSchema);
 
 const saveUser = (name, pass) => {
-  var salt = bcrypt.genSaltSync(10);
+  const salt = bcrypt.genSaltSync(10);
 
 
-
-  var hash = bcrypt.hashSync(pass, salt);
+  const hash = bcrypt.hashSync(pass, salt);
   const user = new User({
     username: name,
     password: hash,
@@ -111,15 +127,23 @@ const findUser = (username, callback) => {
  * @returns {object} callback
  * * */
 
-const comparePassword = (password1, password2) => {
-  
-  return bcrypt.compareSync(password1, password2);
-};
+const comparePassword = (password1, password2) => bcrypt.compareSync(password1, password2);
 
+<<<<<<< HEAD
+
+const passportValidate = (un, pw) => {
+// User.findOne({ username: un}, (err, user) => {
+//   if (err) { return done(err); }
+
+//   if (!user) {
+//     const error = new Error('Incorrect username or password');
+//     error.name = 'IncorrectCredentialsError';
+=======
 // find a user and validate them with passport
 const passportValidate = (un, pw)=> {
 User.findOne({ username: un}, (err, user) => {
   if (err) { return done(err); }
+>>>>>>> 703cdafebbaa871086f9ad2f51be5806bdd4ed89
 
   if (!user) {
     const error = new Error('Incorrect username or password');
@@ -149,12 +173,21 @@ User.findOne({ username: un}, (err, user) => {
       name: user.name
     };
 
+<<<<<<< HEAD
+//     return done(null, token, data);
+
+//   });
+
+// });
+};
+=======
     return done(null, token, data);
   
   });
   
 });
 }
+>>>>>>> 703cdafebbaa871086f9ad2f51be5806bdd4ed89
 module.exports = {
   comparePassword,
   findUser,
@@ -162,4 +195,5 @@ module.exports = {
   saveBook,
   passportValidate,
   allBooks,
+  addRating,
 };

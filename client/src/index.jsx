@@ -123,7 +123,7 @@ class App extends Component {
       .catch((error) => {
         console.error(error, 'error in index.jsx');
       });
-    
+
     this.setState({
       // items: DATA,
       reviews: REVIEWS,
@@ -170,15 +170,14 @@ class App extends Component {
                   path="/"
                   render={props => (
                     <Nav
-                    {...props}
-                    items={this.state.items}
-                    reviews={this.state.reviews}
-                    reviewToggle={this.reviewToggle.bind(this)}
-                    reviewToggled={this.state.reviewToggled}
-                    handleSearchInput={this.searchForBook.bind(this)}
-                    handleSearchByGenre={this.searchByGenre.bind(this)}
-
-                  />
+                      {...props}
+                      items={this.state.items}
+                      reviews={this.state.reviews}
+                      reviewToggle={this.reviewToggle.bind(this)}
+                      reviewToggled={this.state.reviewToggled}
+                      handleSearchInput={this.searchForBook.bind(this)}
+                      handleSearchByGenre={this.searchByGenre.bind(this)}
+                    />
                   )}
                 />
                 {/* <Route

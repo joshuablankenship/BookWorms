@@ -151,6 +151,7 @@ class App extends Component {
                     handleSearchInput={this.searchForBook.bind(this)}
                     handleSearchByGenre={this.searchByGenre.bind(this)}
                     handleReviewInput={this.submitReview.bind(this)}
+                    username = {this.state.username}
                   />
                   )}
                 />  

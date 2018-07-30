@@ -93,10 +93,13 @@ class App extends Component {
         params: { title },
       })
         .then((response) => {
+          // GET /openLibLink
+          
           if (this.state.reviewToggled) {
             this.setState({ reviewToggled: false });
           }
           this.setState({ items: [response.data] });
+
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');

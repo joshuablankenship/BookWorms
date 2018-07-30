@@ -185,10 +185,16 @@ app.get('/googleData', (req, response) => {
       const rating = +info.averageRating || 2.75;
       const coverImage = info.imageLinks.thumbnail; // url to large format thumbnail
       const ISBN10 = info.industryIdentifiers[0].identifier;
-      const ISBN13 = info.industryIdentifiers[1].identifier;
+      let ISBN13;
+      if (info.industryIdentifiers[1]) {
+        ISBN13 = info.industryIdentifiers[1].identifier;
+      }
       helpers.libThingISBN(ISBN10)
         .then((libThings) => {
-          const libThingRating = (+(libThings.data.split('<rating>')[1].slice(0, 1))) / 2;
+          let libThingRating;
+          if (libThings.data.split('<rating>')[1]) {
+            libThingRating = (+(libThings.data.split('<rating>')[1].slice(0, 1))) / 2;
+          }
           helpers.goodReadsData(query)
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
@@ -231,15 +237,15 @@ app.get('/openLibLink', (req, res) => {
   helpers.openLibrary(ISBN)
     .then((libLink) => {
       if (libLink.data[`ISBN:${ISBN}`]) {
-      const readerLink = libLink.data[`ISBN:${ISBN}`].preview_url;
-      res.send({ readerLink });
+        const readerLink = libLink.data[`ISBN:${ISBN}`].preview_url;
+        res.send({ readerLink });
       } else {
         res.send(200);
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err, 'error in server');
-    })
+    });
 });
 
 // this is the average rating pulled from the HTML

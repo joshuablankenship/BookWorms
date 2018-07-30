@@ -69,46 +69,23 @@ class App extends Component {
         params: { title },
       })
         .then((response) => {
-          console.log(response.data, 'response.data from googleData');
           const items = [response.data];
           const isbn = response.data.ISBN13;
-          console.log(isbn, 'isbn');
           axios.get('/openLibLink', {
             params: { isbn },
           })
             .then((response) => {
-              console.log(response.data, 'response.data from openLibLink')
-              // const openLibLink = response.data...
+              const openLibLink = response.data.readerLink;
               if (this.state.reviewToggled) {
                 this.setState({ reviewToggled: false });
               }
-              // add to state: openLibLink: openLibLink
-              this.setState({ items: items });
-            
+              this.setState({ items: items, openLibLink: openLibLink });
             })
           })
         .catch((error) => {
           console.error(error, 'error in index.jsx');
         });
     };
-      // this.searchForBook = (title) => {
-      //   axios.get('/googleData', {
-      //     params: { title },
-      //   })
-      //     .then((response) => {
-      //       // GET /openLibLink
-
-      //       if (this.state.reviewToggled) {
-      //         this.setState({ reviewToggled: false });
-      //       }
-      //       this.setState({ items: [response.data] });
-
-      //     })
-      //     .catch((error) => {
-      //       console.error(error, 'error in index.jsx');
-      //     });
-      // };
-
     this.reviewToggle = (item) => {
       const title = item.title;
       axios.get('/singleReviews', {

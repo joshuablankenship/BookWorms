@@ -18,7 +18,7 @@ const googleBooks = (title) => {
   return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${format}&key=${google}`);
 };
 const openLibrary = (isbn) => {
-  return axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}`);
+  return axios.get(`https://openlibrary.org/api/books.json?bibkeys=ISBN:${isbn}`);
 };
 const googleGenre = genre => axios.get(`https://www.googleapis.com/books/v1/volumes?q=${genre}&key=${google}&maxResults=40`);
 

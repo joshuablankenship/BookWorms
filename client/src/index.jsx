@@ -78,7 +78,21 @@ class App extends Component {
         });
     };
     this.reviewToggle = (item) => {
-      this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
+      const title = item.title;
+      axios.get('/singleReviews', {
+        params: { title },
+      })
+        .then((response) => {
+          this.setState({ 
+            reviewToggled: !this.state.reviewToggled, 
+            items: [item],
+            reviews: response.data
+          });        
+        })
+        .catch((error) => {
+          console.error(error, 'error in index.jsx');
+        });
+
     };
     this.searchByGenre = (genre) => {
       axios.get('/genreTest', {
@@ -98,11 +112,11 @@ class App extends Component {
 
       axios.post('/addRating', rating)
         .then((response) => {
-          console.log(response, 'rating added in index');
-          // axios.post('/addReview', review)
-          //   .then((response) => {
-          //     console.log(response, 'review added in index');
-          //   })
+          // console.log(response, 'rating added in index');
+          axios.post('/addReview', review)
+            .then((response) => {
+              // console.log(response.data, 'response, review added in index');
+            })
         })
         .catch((error) => {
           console.error(error, 'error in index.jsx');
@@ -123,7 +137,7 @@ class App extends Component {
       });
     this.setState({
       // items: DATA,
-      reviews: REVIEWS,
+      // reviews: REVIEWS,
     });
   }
   toggleAuthenticateStatus() {

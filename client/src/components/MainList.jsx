@@ -67,7 +67,10 @@ class MainList extends React.Component {
             </div>
             <div className="media-right">
               <ul className="nav nav-pills">
-                <li role="presentation" className="enabled"><a onClick={() => window.open(this.props.openLibLink, "_blank")} >Open Library</a></li>
+
+                {this.props.openLibLink ?
+                  <li role="presentation" className="enabled"><a onClick={() => window.open(this.props.openLibLink, "_blank")} >Open Library</a></li>
+                  :  <div />}
                 {/* <li role="presentation" className="disabled"><a href="#">Open Library</a></li> */}
                 {/* <li role="presentation" className="disabled"><a href="#">Check local library</a></li> */}
               </ul>

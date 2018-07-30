@@ -86,6 +86,29 @@ class App extends Component {
           console.error(error, 'error in index.jsx');
         });
     };
+    
+    // this.searchForBook = (title) => {
+    //   axios.get('/googleData', {
+    //     params: { title },
+    //   })
+    //     .then((response) => {
+    //       const items = [response.data];
+    //       const isbn = response.data.ISBN13;
+    //       axios.get('/openLibLink', {
+    //         params: { isbn },
+    //       })
+    //         .then((response) => {
+    //           const openLibLink = response.data.readerLink;
+    //           if (this.state.reviewToggled) {
+    //             this.setState({ reviewToggled: false });
+    //           }
+    //           this.setState({ items: items, openLibLink: openLibLink });
+    //         })
+    //     })
+    //     .catch((error) => {
+    //       console.error(error, 'error in index.jsx');
+    //     });
+    // };
     this.reviewToggle = (item) => {
       const title = item.title;
       axios.get('/singleReviews', {

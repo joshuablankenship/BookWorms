@@ -74,6 +74,7 @@ app.get('/topRated', (req, res) => {
             gReadsRating: book.goodReadsRating,
             userRating: allUserRatings,
             aggregateRating: allRatings,
+            ISBN: book.ISBN13,
 
           });
         }

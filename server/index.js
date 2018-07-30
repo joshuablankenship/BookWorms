@@ -102,7 +102,8 @@ app.post('/addReview', jsonParser, (req, res) => {
   const title = req.body.title;
   const username = req.body.username;
   const reviewText = req.body.reviewText;
-  db.saveReview(title, username, reviewText, (err, doc) => {
+  const reviewRating = req.body.reviewRating;
+  db.saveReview(title, username, reviewText, reviewRating, (err, doc) => {
     if (err) {
       console.log(err);
     } else {

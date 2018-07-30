@@ -36,19 +36,19 @@ class MainList extends React.Component {
                   onClick={this.handleReviewClick.bind(this)}>
                   Bookworms <span className="badge">{this.props.item.aggregateRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Google Books <span className="badge">{this.props.item.rating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Library Thing <span className="badge">{this.props.item.libThingRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   GoodReads <span className="badge">{this.props.item.gReadsRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   User Rating <span className="badge">{this.props.item.userRating}</span>
                 </button>
@@ -67,7 +67,8 @@ class MainList extends React.Component {
             </div>
             <div className="media-right">
               <ul className="nav nav-pills">
-                <li role="presentation" className="disabled"><a href="#">Open Library</a></li>
+                <li role="presentation" className="enabled"><a onClick={() => window.open(this.props.openLibLink, "_blank")} >Open Library</a></li>
+                {/* <li role="presentation" className="disabled"><a href="#">Open Library</a></li> */}
                 {/* <li role="presentation" className="disabled"><a href="#">Check local library</a></li> */}
               </ul>
             </div>

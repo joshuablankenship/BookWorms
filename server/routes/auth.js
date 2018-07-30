@@ -1,7 +1,10 @@
+'use strict';
+
 const express = require('express');
 const validator = require('validator');
 const passport = require('passport');
 const db = require('../../database/index.js')
+;
 const router = new express.Router();
 
 /**
@@ -19,7 +22,7 @@ function validateSignupForm(payload) {
     isFormValid = false;
     errors.name = 'Please provide your name.';
   }
-  
+
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
     isFormValid = false;
     errors.password = 'Password must have at least 8 characters.';
@@ -32,7 +35,7 @@ function validateSignupForm(payload) {
   return {
     success: isFormValid,
     message,
-    errors
+    errors,
   };
 }
 
@@ -48,7 +51,6 @@ function validateLoginForm(payload) {
   let isFormValid = true;
   let message = '';
 
-  
 
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
     isFormValid = false;
@@ -62,7 +64,7 @@ function validateLoginForm(payload) {
   return {
     success: isFormValid,
     message,
-    errors
+    errors,
   };
 }
 
@@ -72,33 +74,32 @@ router.post('/signup', (req, res, next) => {
     return res.status(400).json({
       success: false,
       message: validationResult.message,
-      errors: validationResult.errors
+      errors: validationResult.errors,
     });
   }
-  const { name, password } = req.body;
-  
+
+  const name = req.body.name;
+  const password = req.body.password;
+
   db.findUser(name, (err, user) => {
     if (err) {
       console.error(err);
     } else if (user) {
-   
-       return res.status(418).json({
+      return res.status(418).json({
         success: true,
         message: `Sorry, already a user with the username: ${name}`,
-        errors: validationResult.errors
-    });
-
-    }else{
-    db.saveUser(name, password);
-    return res.status(200).json({
-      success: true,
-      message: validationResult.message,
-      errors: validationResult.errors
-  });
-
+        errors: validationResult.errors,
+      });
+    }else {
+      db.saveUser(name, password);
+      return res.status(200).json({
+        success: true,
+        message: validationResult.message,
+        errors: validationResult.errors,
+      });
     }
-});
   });
+});
 
 router.post('/login', (req, res, next) => {
   const validationResult = validateLoginForm(req.body);
@@ -106,47 +107,46 @@ router.post('/login', (req, res, next) => {
     return res.status(400).json({
       success: false,
       message: validationResult.message,
-      errors: validationResult.errors
+      errors: validationResult.errors,
     });
   }
-  const { name, password } = req.body;
+  const name = req.body.name;
+  const password = req.body.password;
+
   db.findUser(name, (err, user) => {
     if (err) {
       console.error(err);
     } else if (user) {
-     
-      if(db.comparePassword(password, user.password)){
+      if (db.comparePassword(password, user.password)) {
         return passport.authenticate('local-login', (err, token, userData) => {
           if (err) {
             if (err.name === 'IncorrectCredentialsError') {
               return res.status(400).json({
                 success: false,
-                message: err.message
+                message: err.message,
               });
             }
             return res.status(400).json({
               success: false,
-              message: 'Could not process the form.'
+              message: 'Could not process the form.',
             });
           }
           return res.json({
             success: true,
             message: 'You have successfully logged in!',
             token,
-            user: userData
+            user: userData,
           });
         })(req, res, next);
-    }
-    }else{
+      }
+    } else {
       return res.status(400).json({
         success: false,
         message: 'Incorrect username or password',
-        errors: validationResult.errors
+        errors: validationResult.errors,
       });
-
     }
-});
-   
+  });
 });
 
 module.exports = router;

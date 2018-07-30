@@ -61,6 +61,7 @@ class App extends Component {
       reviewToggled: false,
       authenticated: false,
       username: null,
+      openLibLink: null,
     };
 
     this.searchForBook = (title) => {
@@ -68,15 +69,25 @@ class App extends Component {
         params: { title },
       })
         .then((response) => {
-          if (this.state.reviewToggled) {
-            this.setState({ reviewToggled: false });
-          }
-          this.setState({ items: [response.data] });
-        })
+          const items = [response.data];
+          const isbn = response.data.ISBN13;
+          axios.get('/openLibLink', {
+            params: { isbn },
+          })
+            .then((response) => {
+              const openLibLink = response.data.readerLink;
+              if (this.state.reviewToggled) {
+                this.setState({ reviewToggled: false });
+              }
+              this.setState({ items: items, openLibLink: openLibLink });
+            })
+          })
         .catch((error) => {
+          // tell user there was no result
           console.error(error, 'error in index.jsx');
         });
     };
+
     this.reviewToggle = (item) => {
       const title = item.title;
       axios.get('/singleReviews', {
@@ -94,6 +105,7 @@ class App extends Component {
         });
 
     };
+
     this.searchByGenre = (genre) => {
       axios.get('/genreTest', {
         params: { genre },
@@ -108,6 +120,7 @@ class App extends Component {
           console.error(error, 'error in index.jsx');
         });
     };
+
     this.submitReview = (review, rating) => {
 
       axios.post('/addRating', rating)
@@ -135,11 +148,12 @@ class App extends Component {
       .catch((error) => {
         console.error(error, 'error in index.jsx');
       });
-    this.setState({
-      // items: DATA,
-      // reviews: REVIEWS,
-    });
+    // this.setState({
+    //   // items: DATA,
+    //   // reviews: REVIEWS,
+    // });
   }
+
   toggleAuthenticateStatus() {
     // check authenticated status and toggle state based on that
     // set current username if authenticated
@@ -165,7 +179,8 @@ class App extends Component {
                     handleSearchInput={this.searchForBook.bind(this)}
                     handleSearchByGenre={this.searchByGenre.bind(this)}
                     handleReviewInput={this.submitReview.bind(this)}
-                    username = {this.state.username}
+                    username={this.state.username}
+                    openLibLink={this.state.openLibLink}
                   />
                   )}
                 />  

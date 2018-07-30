@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 class MainList extends React.Component {
   constructor(props) {
@@ -20,8 +21,11 @@ class MainList extends React.Component {
 
   render() {
     return (
+      
       <div>
         <div className="container">
+        <Card >
+          <div className="book-card">
           <div className="media">
             <div className="media-left">
               <a href="#" onClick={this.handleSearchClick.bind(this)}>
@@ -32,15 +36,15 @@ class MainList extends React.Component {
                   onClick={this.handleReviewClick.bind(this)}>
                   Bookworms <span className="badge">{this.props.item.aggregateRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Google Books <span className="badge">{this.props.item.rating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Library Thing <span className="badge">{this.props.item.libThingRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   GoodReads <span className="badge">{this.props.item.gReadsRating}</span>
                 </button>
@@ -48,7 +52,7 @@ class MainList extends React.Component {
                   onClick={this.handleReviewClick.bind(this)}>
                   User Rating <span className="badge">{this.props.item.userRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-danger btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Review 
                   {/* <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span> */}
@@ -63,11 +67,18 @@ class MainList extends React.Component {
             </div>
             <div className="media-right">
               <ul className="nav nav-pills">
-                <li role="presentation" className="disabled"><a href="#">Open Library</a></li>
+
+                {this.props.openLibLink ?
+                  <li role="presentation" className="enabled"><a onClick={() => window.open(this.props.openLibLink, "_blank")} >Open Library</a></li>
+                  :  <div />}
+                {/* <li role="presentation" className="disabled"><a href="#">Open Library</a></li> */}
                 {/* <li role="presentation" className="disabled"><a href="#">Check local library</a></li> */}
               </ul>
             </div>
           </div>
+          </div>
+      </Card>
+
         </div>
       </div>
     );

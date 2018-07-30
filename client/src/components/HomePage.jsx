@@ -16,7 +16,7 @@ class HomePage extends React.Component {
         
         <div></div>    
           ) : (
-            <div>
+            <div className="home">
               <Card className="container">
         <CardTitle title="Bookworms"/>
             <CardText style={{ fontSize: '16px', color: 'green' }}>You are not logged in.</CardText>

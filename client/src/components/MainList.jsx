@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
+
 class MainList extends React.Component {
   constructor(props) {
     super(props);
@@ -35,23 +36,23 @@ class MainList extends React.Component {
                   onClick={this.handleReviewClick.bind(this)}>
                   Bookworms <span className="badge">{this.props.item.aggregateRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Google Books <span className="badge">{this.props.item.rating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Library Thing <span className="badge">{this.props.item.libThingRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-success btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   GoodReads <span className="badge">{this.props.item.gReadsRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-info btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-primary btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   User Rating <span className="badge">{this.props.item.userRating}</span>
                 </button>
-                <button type="button" className="btn-group btn btn-warning btn-sm" role="group" aria-label="..."
+                <button type="button" className="btn-group btn btn-danger btn-sm" role="group" aria-label="..."
                   onClick={this.handleReviewClick.bind(this)}>
                   Review 
                   {/* <span className="glyphicon glyphicon-star-empty" aria-hidden="true"></span> */}

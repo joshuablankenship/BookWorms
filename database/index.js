@@ -31,22 +31,37 @@ const reviewSchema = mongoose.Schema({
   title: String,
   username: String,
   reviewText: String,
+  reviewRating: Number,
 });
 
 const Review = mongoose.model('Review', reviewSchema);
 
-const saveReview = (title, username, reviewText, cb) => {
+const saveReview = (title, username, reviewText, reviewRating, cb) => {
   const review = new Review({
     title,
     username,
     reviewText,
+    reviewRating,
   });
-  review.save((err) => {
+  review.save((err, doc) => {
     if (err) {
       cb(err);
+    } else {
+      cb(err, doc);
     }
   });
 };
+
+const allReviews = (cb) => {
+  Review.find({}, (err, books) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(err, books);
+    }
+  });
+};
+
 const bookSchema = mongoose.Schema({
   title: { type: String, unique: true },
   description: String,
@@ -123,10 +138,7 @@ const saveUser = (name, pass) => {
   user.save((error) => {
     if (error) {
       console.error(error);
-    } else {
-      console.log(user);
-      console.log('Your user has been saved!');
-    }
+    } 
   });
 };
 const findUser = (username, callback) => {
@@ -134,7 +146,6 @@ const findUser = (username, callback) => {
     if (err) {
       callback(err, null);
     } else {
-      console.log('found', user);
       callback(null, user);
       return true;
     }
@@ -161,7 +172,6 @@ const passportValidate = (un, pw) => {
 
       return done(error);
     }
-    console.log(user);
     // check if a hashed user's password is equal to a value saved in the database
     return comparePassword(pw, user.password, (passwordErr, isMatch) => {
       if (err) { return done(err); }
@@ -196,4 +206,5 @@ module.exports = {
   allBooks,
   addRating,
   saveReview,
+  allReviews,
 };

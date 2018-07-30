@@ -1,6 +1,6 @@
 import React from 'react';
 import MainList from './MainList.jsx';
-import ReviewList from './ReviewsList.jsx';
+import UserReviewsList from './UserReviewsList.jsx';
 import Search from './Search.jsx';
 import LoginPage from '../containers/LoginPage.jsx';
 import Logout from '../containers/Logout.jsx';
@@ -55,9 +55,9 @@ class Nav extends React.Component {
               <form className="navbar-form navbar-left">
                 <Search handleSearchInput={this.props.handleSearchInput} />
               </form>
+              
               <ul className="nav navbar-nav navbar-right">
-                {/* <li><Link to="/signup">Signup</Link></li>
-                <li><Link to="/login">Login Page</Link></li> */}
+                <li><Link to="">Hi <b>{this.props.username}</b>, you are logged in</Link></li>
                 <li><Link to="/logout">Log out</Link></li>
               </ul>
             </div>
@@ -65,7 +65,7 @@ class Nav extends React.Component {
         </nav>
 
         {this.props.reviewToggled ? 
-          this.props.items.map(item => <Reviews item={item} key={item.title} reviews={this.props.reviews} handleReviewInput={this.props.handleReviewInput}/>)
+          this.props.items.map(item => <Reviews item={item} key={item.title} reviews={this.props.reviews} handleReviewInput={this.props.handleReviewInput} username={this.props.username} />)
           : this.props.items.map(item => <MainList item={item} key={item.title} reviewToggle={this.props.reviewToggle} handleSearchInput={this.props.handleSearchInput} />)}
 
       </div>

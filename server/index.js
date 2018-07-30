@@ -1,5 +1,5 @@
 
-'use strict';
+
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-console */
 
@@ -18,44 +18,36 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // create application/json parser
-const jsonParser = bodyParser.json()
+const jsonParser = bodyParser.json();
 
 // pass the passport middleware
 app.use(passport.initialize());
 // load passport strategies
 const localLoginStrategy = require('./passport/local-login');
+
 passport.use('local-login', localLoginStrategy);
 
 // pass the authenticaion checker middleware
 const authCheckMiddleware = require('./middleware/auth-check');
+
 app.use('/api', authCheckMiddleware);
 
 // routes
 const authRoutes = require('./routes/auth');
+
 app.use('/auth', authRoutes);
 
-// skeleton of patch request for updating favrite title list of user
-app.patch('', (req, res) => {
-  // our patch method will need to do several things,we will need to update the
-  // user data that stores the book, we will also need to add the new
-  // review rating to our aggregate rating for that book in our books
-  // document
-  //
-  // The above is ideal, with the limited time we have, getting the userRating on the
-  // saved book document to an array, and allow reviews to just push another rating
-  // this will save time and complexity in data, and allow us to populate the user
-  // ratings without creating users or hardcoding. we can just push new review values
-});
+
 
 app.post('/addRating', jsonParser, (req, res) => {
   const body = req.body;
-  // console.log(body, 'body in server');
 
   db.addRating(body.title, body.rating, (err, doc) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('success');
+      console.log('rating added in server, success');
+      res.send(201);
     }
   });
 });
@@ -69,10 +61,10 @@ app.get('/topRated', (req, res) => {
       books.forEach((book) => {
         if (book.bookWormRating > 1) {
           const uRatingLen = book.userRating.length;
-          const allUserRatings = book.userRating.reduce((accum, current) => {
+          const allUserRatings = Math.round(book.userRating.reduce((accum, current) => {
             accum += +current;
-            return accum
-          }, 0) / uRatingLen;
+            return accum;
+          }, 0) / uRatingLen);
           const allRatings = Math.round(+book.googleRating + +book.libThingRating + +book.goodReadsRating + allUserRatings) / 4;
           top.push({
             title: book.title,
@@ -88,7 +80,6 @@ app.get('/topRated', (req, res) => {
         }
       });
       top.sort((a, b) => {
-        // Use toUpperCase() to ignore character casing
         const ratingA = a.aggregateRating;
         const ratingB = b.aggregateRating;
 
@@ -101,6 +92,59 @@ app.get('/topRated', (req, res) => {
         return comparison;
       });
       res.send({ len: top.length, top });
+    }
+  });
+});
+
+app.post('/addReview', jsonParser, (req, res) => {
+  const userReviews = [];
+  const title = req.body.title;
+  const username = req.body.username;
+  const reviewText = req.body.reviewText;
+  const reviewRating = req.body.reviewRating;
+  db.saveReview(title, username, reviewText, reviewRating, (err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('saved review');
+    }
+  });
+  db.allReviews((err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      doc.forEach((review) => {
+        const currentBook = {
+          title: review.title,
+          user: review.username,
+          bookReview: review.reviewText,
+          reviewRating: review.reviewRating,
+        };
+        if (review.title === title) { userReviews.push(currentBook); }
+      });
+      res.status(201);
+      res.send(userReviews);
+    }
+  });
+});
+
+app.get('/singleReviews', (req, res) => {
+  const title = req.query.title;
+  const userReviews = [];
+  db.allReviews((err, doc) => {
+    if (err) {
+      console.log(err);
+    } else {
+      doc.forEach((review) => {
+        const currentBook = {
+          title: review.title,
+          user: review.username,
+          bookReview: review.reviewText,
+          reviewRating: review.reviewRating,
+        };
+        if (review.title === title) { userReviews.push(currentBook); }
+      });
+      res.send(userReviews);
     }
   });
 });
@@ -148,7 +192,7 @@ app.get('/googleData', (req, response) => {
           helpers.goodReadsData(query)
             .then((goodReads) => {
               const gReadsRating = +goodReads.data.split('<average_rating>')[1].slice(0, 4);
-              const aggregateRating = Math.round(+rating + +libThingRating + +gReadsRating + 3) / 4;
+              const aggregateRating = Math.round((+rating + +libThingRating + +gReadsRating + 3) / 4);
               db.saveBook({
                 title,
                 longDescript,

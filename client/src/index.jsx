@@ -83,7 +83,7 @@ class App extends Component {
             })
           })
         .catch((error) => {
-          // tell user there was no result
+          // TODO: tell user there was no result
           console.error(error, 'error in index.jsx');
         });
     };
@@ -121,14 +121,15 @@ class App extends Component {
         });
     };
 
-    this.submitReview = (review, rating) => {
-
+    this.submitReview = (review, rating, item) => {
+      // add rating to db
       axios.post('/addRating', rating)
         .then((response) => {
-          // console.log(response, 'rating added in index');
+          // add review to db
           axios.post('/addReview', review)
             .then((response) => {
-              // console.log(response.data, 'response, review added in index');
+              // update state of reviews with new review
+              this.reviewToggle(item);
             })
         })
         .catch((error) => {

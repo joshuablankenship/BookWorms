@@ -20,6 +20,8 @@ class Reviews extends React.Component {
     this.handleSubmit = (e) => {
       e.preventDefault();
 
+      const item = this.props.item;
+
       const rating = {
         title: this.props.item.title,
         rating: this.state.starValue
@@ -31,7 +33,7 @@ class Reviews extends React.Component {
         reviewText: this.state.value,
         reviewRating: this.state.starValue,
       }
-      this.props.handleReviewInput(review, rating);
+      this.props.handleReviewInput(review, rating, item);
       this.setState({ value: '' });
     }
   }

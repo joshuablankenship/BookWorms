@@ -61,6 +61,7 @@ class App extends Component {
       reviewToggled: false,
       authenticated: false,
       username: null,
+      openLibLink: null,
     };
 
     this.searchForBook = (title) => {
@@ -77,10 +78,11 @@ class App extends Component {
           })
             .then((response) => {
               console.log(response, 'response from openLibLink')
-          
+              // const openLibLink = response.data...
               if (this.state.reviewToggled) {
                 this.setState({ reviewToggled: false });
               }
+              // add to state: openLibLink: openLibLink
               this.setState({ items: items });
             
             })
@@ -195,7 +197,8 @@ class App extends Component {
                     handleSearchInput={this.searchForBook.bind(this)}
                     handleSearchByGenre={this.searchByGenre.bind(this)}
                     handleReviewInput={this.submitReview.bind(this)}
-                    username = {this.state.username}
+                    username={this.state.username}
+                    openLibLink={this.state.openLibLink}
                   />
                   )}
                 />  

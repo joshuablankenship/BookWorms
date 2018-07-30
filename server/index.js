@@ -230,11 +230,12 @@ app.get('/openLibLink', (req, res) => {
   const ISBN = req.query.isbn;
   helpers.openLibrary(ISBN)
     .then((libLink) => {
-      console.log(libLink.data, 'libLink.data');
       const readerLink = libLink.data[`ISBN:${ISBN}`].preview_url;
-      console.log(readerLink, 'readerLink');
       res.send({ readerLink });
-    });
+    })
+    .catch(err => {
+      console.error(err);
+    })
 });
 
 // this is the average rating pulled from the HTML

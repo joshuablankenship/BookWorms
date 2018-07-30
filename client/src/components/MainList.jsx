@@ -63,7 +63,8 @@ class MainList extends React.Component {
             </div>
             <div className="media-right">
               <ul className="nav nav-pills">
-                <li role="presentation" className="disabled"><a href="#">Open Library</a></li>
+                <li role="presentation" className="enabled"><a href={this.props.openLibLink}>Open Library</a></li>
+                {/* <li role="presentation" className="disabled"><a href="#">Open Library</a></li> */}
                 {/* <li role="presentation" className="disabled"><a href="#">Check local library</a></li> */}
               </ul>
             </div>

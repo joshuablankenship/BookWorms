@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 class MainList extends React.Component {
   constructor(props) {
     super(props);
@@ -20,8 +20,11 @@ class MainList extends React.Component {
 
   render() {
     return (
+      
       <div>
         <div className="container">
+        <Card >
+          <div className="book-card">
           <div className="media">
             <div className="media-left">
               <a href="#" onClick={this.handleSearchClick.bind(this)}>
@@ -68,6 +71,9 @@ class MainList extends React.Component {
               </ul>
             </div>
           </div>
+          </div>
+      </Card>
+
         </div>
       </div>
     );

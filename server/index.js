@@ -38,7 +38,6 @@ const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
 
-
 app.post('/addRating', jsonParser, (req, res) => {
   const body = req.body;
 
@@ -218,11 +217,21 @@ app.get('/googleData', (req, response) => {
                 gReadsRating,
                 userRating: 2.75,
                 aggregateRating,
+                ISBN13,
               });
             });
         });
     })
     .catch(err => console.log(err));
+});
+
+app.get('/openLibLink', (req, res) => {
+  const ISBN = req.body.ISBN13;
+  helpers.openLibrary(ISBN)
+    .then((libLink) => {
+      const readerLink = libLink.preview_url;
+      res.send({ readerLink });
+    });
 });
 
 // this is the average rating pulled from the HTML

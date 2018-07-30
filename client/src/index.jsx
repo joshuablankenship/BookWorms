@@ -115,7 +115,7 @@ class App extends Component {
 
       axios.post('/addRating', rating)
         .then((response) => {
-          // console.log(response, 'rating added in index');
+          console.log(response, 'rating added in index');
           axios.post('/addReview', review)
             .then((response) => {
               console.log(response.data, 'response, review added in index');

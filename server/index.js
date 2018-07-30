@@ -226,10 +226,13 @@ app.get('/googleData', (req, response) => {
 });
 
 app.get('/openLibLink', (req, res) => {
-  const ISBN = req.body.ISBN13;
+  console.log(req.query, 'req.query');
+  const ISBN = req.query.isbn;
   helpers.openLibrary(ISBN)
     .then((libLink) => {
-      const readerLink = libLink.preview_url;
+      console.log(libLink.data, 'libLink.data');
+      const readerLink = libLink.data;
+      console.log(readerLink, 'readerLink');
       res.send({ readerLink });
     });
 });

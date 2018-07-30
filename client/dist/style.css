@@ -2,7 +2,11 @@
   font-family: 'Quicksand', sans-serif;
   
 }
-
+.home{
+  padding: 16px;
+  text-align: center;
+  
+}
 
 .book-card:hover {
   padding: 16px;
@@ -13,7 +17,6 @@
   margin-top: 20px;
   -webkit-box-shadow: -2px 10px 51px 8px rgba(0,0,0,0.35); 
   box-shadow: -2px 10px 51px 8px rgba(0,0,0,0.35);
-  
   padding: 16px;
   font-size: 16px;
 }

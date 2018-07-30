@@ -11,18 +11,21 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <Card className="container">
+      <div className= "home">
+      <Card className= "home">
       {Auth.isUserAuthenticated() ? (
         
-        <div></div>    
+        <div ></div>    
           ) : (
             <div>
-        <CardTitle title="Bookworms"/>
+        <CardTitle  title="Bookworms"/>
             <CardText style={{ fontSize: '16px', color: 'green' }}>You are not logged in.</CardText>
             </div>
           )}
       </Card>
+     </div>
     )
+    
   }
 };
 

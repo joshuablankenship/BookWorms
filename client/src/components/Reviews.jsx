@@ -77,7 +77,7 @@ class Reviews extends React.Component {
             <div className="container-fluid" style={{ paddingTop: '20px' }}>
               <div className="btn-group-vertical" role="group" aria-label="...">
                 <button type="button" className="btn-group btn btn-primary btn-lg" role="group" aria-label="...">
-                  Composite Critic Rating <span className="badge">{this.props.item.rating}</span>
+                  Composite Critic Rating <span className="badge">{this.props.item.aggregateRating}</span>
                 </button>
               </div>
             </div>
@@ -89,8 +89,9 @@ class Reviews extends React.Component {
           <div className="col-md-6">
             <div className="container-fluid" style={{ paddingTop: '20px' }}>
               <button type="button" className="btn-group btn btn-info btn-lg" role="group" aria-label="...">
-                Composite User Rating <span className="badge">{this.props.item.rating}</span>
+                Composite User Rating <span className="badge">{this.props.item.userRating}</span>
               </button>
+              
             </div>
             <div className="container-fluid" style={{ paddingTop: '20px' }}>
               <h4 className="media-heading">User Reviews</h4>

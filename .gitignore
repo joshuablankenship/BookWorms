@@ -22,7 +22,7 @@ coverage
 build/
 dist/
 config.js
-client/dist/
+
 
 # Config
 config.js

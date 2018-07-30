@@ -231,7 +231,7 @@ app.get('/openLibLink', (req, res) => {
   helpers.openLibrary(ISBN)
     .then((libLink) => {
       console.log(libLink.data, 'libLink.data');
-      const readerLink = libLink.data;
+      const readerLink = libLink.data[`ISBN:${ISBN}`].preview_url;
       console.log(readerLink, 'readerLink');
       res.send({ readerLink });
     });

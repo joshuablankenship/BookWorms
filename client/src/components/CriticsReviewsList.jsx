@@ -10,13 +10,13 @@ const CriticsReviewsList = props => (
             <button type="button" className="btn-group btn btn-primary btn-lg" role="group" aria-label="...">
               Bookworms <span className="badge">{props.item.aggregateRating}</span>
             </button>
-            <button type="button" className="btn-group btn btn-success btn-lg" role="group" aria-label="...">
+            <button type="button" className="btn-group btn btn-info btn-lg" role="group" aria-label="...">
               Google Books <span className="badge">{props.item.rating}</span>
             </button>
-            <button type="button" className="btn-group btn btn-success btn-lg" role="group" aria-label="...">
+            <button type="button" className="btn-group btn btn-info btn-lg" role="group" aria-label="...">
               Library Thing <span className="badge">{props.item.libThingRating}</span>
             </button>
-            <button type="button" className="btn-group btn btn-success btn-lg" role="group" aria-label="...">
+            <button type="button" className="btn-group btn btn-info btn-lg" role="group" aria-label="...">
               GoodReads <span className="badge">{props.item.gReadsRating}</span>
             </button>         
           </div>

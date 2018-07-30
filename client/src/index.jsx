@@ -80,7 +80,7 @@ class App extends Component {
     this.reviewToggle = (item) => {
       // this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
       const title = item.title;
-      console.log(title, 'title in index');
+      // console.log(title, 'title in index');
       axios.get('/singleReviews', {
         params: { title },
       })

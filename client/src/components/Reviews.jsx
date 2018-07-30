@@ -27,7 +27,7 @@ class Reviews extends React.Component {
         title: this.props.item.title,
         username: this.props.username,
         reviewText: this.state.value,
-        // rating: this.state.starValue
+        reviewRating: this.state.starValue,
       }
       this.props.handleReviewInput(review, rating);
       this.setState({ value: '' });

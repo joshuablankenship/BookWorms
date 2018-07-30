@@ -1,0 +1,23 @@
+* {
+  font-family: 'Quicksand', sans-serif;
+  
+}
+
+
+.book-card:hover {
+  padding: 16px;
+  -webkit-box-shadow: inset 0px 0px 51px 8px rgba(0,0,0,0.35); 
+  box-shadow: inset 0px 0px 51px 8px rgba(0,0,0,0.35);
+}
+.book-card {
+  -webkit-box-shadow: -2px 10px 51px 8px rgba(0,0,0,0.35); 
+  box-shadow: -2px 10px 51px 8px rgba(0,0,0,0.35);
+  
+  padding: 16px;
+  font-size: 16px;
+}
+.card-heading {
+  padding: 16px;
+}
+
+

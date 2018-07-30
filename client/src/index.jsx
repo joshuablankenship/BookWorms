@@ -83,9 +83,11 @@ class App extends Component {
             })
           })
         .catch((error) => {
+          // tell user there was no result
           console.error(error, 'error in index.jsx');
         });
     };
+
     this.reviewToggle = (item) => {
       const title = item.title;
       axios.get('/singleReviews', {
@@ -103,6 +105,7 @@ class App extends Component {
         });
 
     };
+
     this.searchByGenre = (genre) => {
       axios.get('/genreTest', {
         params: { genre },
@@ -117,6 +120,7 @@ class App extends Component {
           console.error(error, 'error in index.jsx');
         });
     };
+
     this.submitReview = (review, rating) => {
 
       axios.post('/addRating', rating)
@@ -144,11 +148,12 @@ class App extends Component {
       .catch((error) => {
         console.error(error, 'error in index.jsx');
       });
-    this.setState({
-      // items: DATA,
-      // reviews: REVIEWS,
-    });
+    // this.setState({
+    //   // items: DATA,
+    //   // reviews: REVIEWS,
+    // });
   }
+
   toggleAuthenticateStatus() {
     // check authenticated status and toggle state based on that
     // set current username if authenticated

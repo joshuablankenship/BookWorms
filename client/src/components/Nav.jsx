@@ -21,6 +21,9 @@ class Nav extends React.Component {
     this.handleGenreSelect = (e) => {
       this.props.handleSearchByGenre(e);
     }
+    this.handleBookwormsSelect = () => {
+      this.props.handleHomeLink(); 
+    }
   }
   render() {
     return (
@@ -36,7 +39,7 @@ class Nav extends React.Component {
                 <span className="icon-bar"></span>
               </button>
               <div>
-                <Link to="/" className="navbar-brand">Bookworms</Link>
+                <Link to="/" className="navbar-brand" onClick={this.handleBookwormsSelect.bind(this)}>Bookworms</Link>
                 <img alt="Brand" src="https://i.pinimg.com/originals/d0/fb/73/d0fb73f0ab79cfc626ee14efaa475ea0.png" height="35px" width="35px"></img>
               </div>
             </div>

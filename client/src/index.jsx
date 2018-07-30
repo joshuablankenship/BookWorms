@@ -135,6 +135,18 @@ class App extends Component {
           console.error(error, 'error in index.jsx');
         });
     };
+    this.getTopRated = () => {
+      axios.get('/topRated')
+        .then((response) => {
+          if (this.state.reviewToggled) {
+            this.setState({ reviewToggled: false });
+          }
+          this.setState({ items: response.data.top });
+        })
+        .catch((error) => {
+          console.error(error, 'error in index.jsx');
+        });
+    }
   }
 
   componentDidMount() {
@@ -181,6 +193,8 @@ class App extends Component {
                     handleReviewInput={this.submitReview.bind(this)}
                     username={this.state.username}
                     openLibLink={this.state.openLibLink}
+                    handleHomeLink={this.getTopRated.bind(this)}
+                      
                   />
                   )}
                 />  
@@ -201,3 +215,4 @@ class App extends Component {
 }
 
 export default App;
+

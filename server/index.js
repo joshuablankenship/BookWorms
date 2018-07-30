@@ -227,15 +227,18 @@ app.get('/googleData', (req, response) => {
 });
 
 app.get('/openLibLink', (req, res) => {
-  console.log(req.query, 'req.query');
   const ISBN = req.query.isbn;
   helpers.openLibrary(ISBN)
     .then((libLink) => {
+      if (libLink.data[`ISBN:${ISBN}`]) {
       const readerLink = libLink.data[`ISBN:${ISBN}`].preview_url;
       res.send({ readerLink });
+      } else {
+        res.send(200);
+      }
     })
     .catch(err => {
-      console.error(err);
+      console.error(err, 'error in server');
     })
 });
 

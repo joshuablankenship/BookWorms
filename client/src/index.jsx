@@ -77,7 +77,7 @@ class App extends Component {
             params: { isbn },
           })
             .then((response) => {
-              console.log(response, 'response from openLibLink')
+              console.log(response.data, 'response.data from openLibLink')
               // const openLibLink = response.data...
               if (this.state.reviewToggled) {
                 this.setState({ reviewToggled: false });

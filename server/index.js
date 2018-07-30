@@ -97,7 +97,6 @@ app.get('/topRated', (req, res) => {
 });
 
 app.post('/addReview', jsonParser, (req, res) => {
-  console.log(req.body, 'body in server');
   const userReviews = [];
   const title = req.body.title;
   const username = req.body.username;
@@ -131,7 +130,6 @@ app.post('/addReview', jsonParser, (req, res) => {
 
 app.get('/singleReviews', (req, res) => {
   const title = req.query.title;
-  console.log(title, 'title in server');
   const userReviews = [];
   db.allReviews((err, doc) => {
     if (err) {

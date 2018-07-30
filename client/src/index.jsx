@@ -78,14 +78,11 @@ class App extends Component {
         });
     };
     this.reviewToggle = (item) => {
-      // this.setState({ reviewToggled: !this.state.reviewToggled, items: [item] });
       const title = item.title;
-      // console.log(title, 'title in index');
       axios.get('/singleReviews', {
         params: { title },
       })
         .then((response) => {
-          console.log(response.data, 'response.data in index');
           this.setState({ 
             reviewToggled: !this.state.reviewToggled, 
             items: [item],
@@ -115,10 +112,10 @@ class App extends Component {
 
       axios.post('/addRating', rating)
         .then((response) => {
-          console.log(response, 'rating added in index');
+          // console.log(response, 'rating added in index');
           axios.post('/addReview', review)
             .then((response) => {
-              console.log(response.data, 'response, review added in index');
+              // console.log(response.data, 'response, review added in index');
             })
         })
         .catch((error) => {

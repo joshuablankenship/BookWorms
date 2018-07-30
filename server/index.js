@@ -141,7 +141,8 @@ app.get('/singleReviews', (req, res) => {
         const currentBook = {
           title: review.title,
           user: review.username,
-          bookReview: review.reviewText
+          bookReview: review.reviewText,
+          reviewRating: review.reviewRating,
         };
         if (review.title === title) { userReviews.push(currentBook); }
       });
